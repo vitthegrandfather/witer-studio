@@ -437,6 +437,10 @@ window.addEventListener('load', () => {
         document.getElementById('preloader').classList.add('hidden');
     }, 1800);
 });
+// Фолбек: якщо load не спрацював через CDN
+setTimeout(() => {
+    document.getElementById('preloader')?.classList.add('hidden');
+}, 4000);
 
 // Theme Toggle
 const themeToggle = document.getElementById('themeToggle');
@@ -735,6 +739,7 @@ if (carousel) {
 }
 
 // ==================== GSAP + ScrollTrigger ====================
+try {
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 gsap.registerPlugin(ScrollTrigger);
 
@@ -875,6 +880,7 @@ if (scrollTopBtnEl) {
     });
 }
 } // end GSAP check
+} catch (e) { console.warn('GSAP error:', e); }
 
 // ==================== EMAIL FULLSCREEN FORM ====================
 const emailFab = document.getElementById('emailFab');
