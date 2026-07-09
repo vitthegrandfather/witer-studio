@@ -739,6 +739,7 @@ if (carousel) {
 }
 
 // ==================== GSAP + ScrollTrigger ====================
+try {
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 gsap.registerPlugin(ScrollTrigger);
 
@@ -879,6 +880,7 @@ if (scrollTopBtnEl) {
     });
 }
 } // end GSAP check
+} catch (e) { console.warn('GSAP error:', e); }
 
 // ==================== EMAIL FULLSCREEN FORM ====================
 const emailFab = document.getElementById('emailFab');
