@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://witer.studio/sitemap.xml
+Sitemap: https://witerstudio.online/sitemap.xml
