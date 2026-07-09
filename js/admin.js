@@ -37,26 +37,8 @@ const loginScreen = document.getElementById('loginScreen');
 const dashboard = document.getElementById('dashboard');
 const setupScreen = document.getElementById('setupScreen');
 
-// First-time setup: no password set yet → show setup form
-if (!localStorage.getItem('witer_password')) {
-    if (setupScreen) {
-        loginScreen.style.display = 'none';
-        setupScreen.style.display = 'flex';
-
-        document.getElementById('setupForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const pass = document.getElementById('setupPassword').value.trim();
-            if (!pass || pass.length < 4) {
-                showToast('Пароль має бути мінімум 4 символи', true);
-                return;
-            }
-            setData('witer_password', hashStr(pass));
-            setupScreen.style.display = 'none';
-            loginScreen.style.display = 'flex';
-            showToast('Пароль встановлено. Увійдіть.');
-        });
-    }
-}
+// Hide setup screen - password is set via settings page
+if (setupScreen) setupScreen.style.display = 'none';
 
 // Rate limit: max 5 attempts per 5 minutes
 let loginAttempts = getData('witer_login_attempts', { count: 0, ts: 0 });
