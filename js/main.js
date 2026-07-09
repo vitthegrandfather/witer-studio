@@ -775,7 +775,7 @@ gsap.utils.toArray('.section__title').forEach(el => {
         scrollTrigger: {
             trigger: el,
             start: 'top 85%',
-            toggleActions: 'play reverse play reverse'
+            toggleActions: 'play none none none'
         }
     });
 });
@@ -791,7 +791,7 @@ gsap.utils.toArray('.stat-card, .process-card').forEach((card, i) => {
         scrollTrigger: {
             trigger: card,
             start: 'top 90%',
-            toggleActions: 'play reverse play reverse'
+            toggleActions: 'play none none none'
         }
     });
 });
@@ -805,7 +805,7 @@ gsap.from('.about__content', {
     scrollTrigger: {
         trigger: '.about__content',
         start: 'top 85%',
-        toggleActions: 'play reverse play reverse'
+        toggleActions: 'play none none none'
     }
 });
 
@@ -820,7 +820,7 @@ gsap.utils.toArray('.faq-item').forEach((item, i) => {
         scrollTrigger: {
             trigger: item,
             start: 'top 90%',
-            toggleActions: 'play reverse play reverse'
+            toggleActions: 'play none none none'
         }
     });
 });
@@ -834,7 +834,7 @@ gsap.from('.contact__content', {
     scrollTrigger: {
         trigger: '.contact__content',
         start: 'top 85%',
-        toggleActions: 'play reverse play reverse'
+        toggleActions: 'play none none none'
     }
 });
 
@@ -849,7 +849,7 @@ gsap.utils.toArray('.tech-card').forEach((card, i) => {
         scrollTrigger: {
             trigger: card,
             start: 'top 90%',
-            toggleActions: 'play reverse play reverse'
+            toggleActions: 'play none none none'
         }
     });
 });
@@ -864,10 +864,13 @@ gsap.utils.toArray('.service__content').forEach(content => {
         scrollTrigger: {
             trigger: content,
             start: 'top 85%',
-            toggleActions: 'play reverse play reverse'
+            toggleActions: 'play none none none'
         }
     });
 });
+
+// Перезапуск ScrollTrigger після ініціалізації
+setTimeout(() => ScrollTrigger.refresh(), 100);
 
 // Scroll top button animation
 const scrollTopBtnEl = document.getElementById('scrollTop');
