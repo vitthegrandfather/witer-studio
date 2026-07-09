@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WITER | Адмін-панель</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Login -->
+    <div class="login" id="loginScreen">
+        <div class="login__card glass">
+            <div class="login__logo">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="6" width="28" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 18L13 12L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="20" y1="18" x2="24" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>WITER</span>
+            </div>
+            <h1>Адмін-панель</h1>
+            <p>Увійдіть для керування сайтом</p>
+            <form id="loginForm">
+                <input type="password" id="loginPassword" placeholder="Пароль" required>
+                <button type="submit" class="btn">Увійти</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- First-time Setup -->
+    <div class="login" id="setupScreen" style="display:none;">
+        <div class="login__card glass">
+            <div class="login__logo">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="6" width="28" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 18L13 12L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="20" y1="18" x2="24" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>WITER</span>
+            </div>
+            <h1>Перше налаштування</h1>
+            <p>Встановіть пароль для адмін-панелі</p>
+            <form id="setupForm">
+                <input type="password" id="setupPassword" placeholder="Новий пароль (мін. 4 символи)" required minlength="4">
+                <button type="submit" class="btn">Встановити</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard" style="display:none;">
+        <aside class="sidebar">
+            <div class="sidebar__logo">
+                <svg viewBox="0 0 32 32" fill="none">
+                    <rect x="2" y="6" width="28" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                    <path d="M8 18L13 12L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <line x1="20" y1="18" x2="24" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+                <span>WITER</span>
+            </div>
+            <nav class="sidebar__nav">
+                <button class="sidebar__link active" data-tab="overview">Огляд</button>
+                <button class="sidebar__link" data-tab="texts">Тексти</button>
+                <button class="sidebar__link" data-tab="projects">Проєкти</button>
+                <button class="sidebar__link" data-tab="messages">Повідомлення</button>
+                <button class="sidebar__link" data-tab="settings">Налаштування</button>
+            </nav>
+            <div class="sidebar__footer">
+                <a href="index.html" class="sidebar__link sidebar__link--site">Перейти на сайт</a>
+                <button class="sidebar__link sidebar__link--exit" id="logoutBtn">Вийти</button>
+            </div>
+        </aside>
+
+        <main class="main">
+            <!-- Overview -->
+            <section class="tab active" id="tab-overview">
+                <h2>Огляд</h2>
+                <div class="stats-row">
+                    <div class="stat-box glass">
+                        <span class="stat-box__number" id="statVisits">0</span>
+                        <span class="stat-box__label">Відвідувань</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-box__number" id="statMessages">0</span>
+                        <span class="stat-box__label">Повідомлень</span>
+                    </div>
+                    <div class="stat-box glass">
+                        <span class="stat-box__number" id="statProjects">0</span>
+                        <span class="stat-box__label">Проєктів</span>
+                    </div>
+                </div>
+                <div class="recent glass">
+                    <h3>Останні повідомлення</h3>
+                    <div id="recentMessages"><p class="empty">Поки немає повідомлень</p></div>
+                </div>
+            </section>
+
+            <!-- Texts -->
+            <section class="tab" id="tab-texts">
+                <h2>Редагувати тексти</h2>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Заголовок героя (UA)</label>
+                        <input type="text" id="text_hero_brand" placeholder="WITER">
+                    </div>
+                    <div class="form-field">
+                        <label>Підзаголовок (UA)</label>
+                        <input type="text" id="text_hero_subtitle" placeholder="Digital Studio">
+                    </div>
+                    <div class="form-field full">
+                        <label>Опис героя (UA)</label>
+                        <textarea id="text_hero_desc" rows="3" placeholder="Створюємо сучасні веб-рішення..."></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 1</label>
+                        <textarea id="text_about_1" rows="2"></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 2</label>
+                        <textarea id="text_about_2" rows="3"></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 3</label>
+                        <textarea id="text_about_3" rows="2"></textarea>
+                    </div>
+                </div>
+                <button class="btn" id="saveTexts">Зберегти тексти</button>
+            </section>
+
+            <!-- Projects -->
+            <section class="tab" id="tab-projects">
+                <h2>Проєкти</h2>
+                <div id="projectsList"></div>
+                <button class="btn btn--outline" id="addProject">+ Додати проєкт</button>
+                <div class="project-form glass" id="projectForm" style="display:none;">
+                    <h3 id="projectFormTitle">Новий проєкт</h3>
+                    <div class="form-field">
+                        <label>Назва</label>
+                        <input type="text" id="projName" placeholder="Назва проєкту">
+                    </div>
+                    <div class="form-field">
+                        <label>Опис</label>
+                        <textarea id="projDesc" rows="3" placeholder="Короткий опис"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label>Технології (через кому)</label>
+                        <input type="text" id="projStack" placeholder="React, Node.js, MongoDB">
+                    </div>
+                    <div class="form-field">
+                        <label>Посилання (необов'язково)</label>
+                        <input type="text" id="projLink" placeholder="https://...">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn" id="saveProject">Зберегти</button>
+                        <button class="btn btn--outline" id="cancelProject">Скасувати</button>
+                    </div>
+                    <input type="hidden" id="projEditId">
+                </div>
+            </section>
+
+            <!-- Messages -->
+            <section class="tab" id="tab-messages">
+                <h2>Повідомлення</h2>
+                <div id="allMessages"></div>
+                <button class="btn btn--outline" id="clearMessages" style="margin-top:16px;">Очистити все</button>
+            </section>
+
+            <!-- Settings -->
+            <section class="tab" id="tab-settings">
+                <h2>Налаштування</h2>
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label>Змінити пароль</label>
+                        <input type="password" id="newPassword" placeholder="Новий пароль">
+                    </div>
+                    <div class="form-field">
+                        <label>Email для повідомлень</label>
+                        <input type="email" id="settingsEmail" placeholder="your@email.com">
+                    </div>
+                </div>
+                <button class="btn" id="saveSettings">Зберегти</button>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

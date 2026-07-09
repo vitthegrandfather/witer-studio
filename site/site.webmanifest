@@ -1,0 +1,16 @@
+{
+  "name": "WITER — Digital Studio",
+  "short_name": "WITER",
+  "description": "Сучасні веб-рішення від Vitalii Chursanov",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#080810",
+  "theme_color": "#080810",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
