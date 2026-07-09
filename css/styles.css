@@ -752,6 +752,76 @@ body.light .hero__bg-number { opacity: 0.04; }
     line-height: 1.6;
 }
 
+/* ==================== PROJECTS ==================== */
+.projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+}
+
+.project-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-hover);
+}
+
+.project-card__img {
+    width: 100%;
+    aspect-ratio: 16/10;
+    object-fit: cover;
+    display: block;
+}
+
+.project-card__info {
+    padding: 20px;
+}
+
+.project-card__name {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.project-card__desc {
+    font-size: 0.82rem;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.project-card__stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.project-card__tag {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text-dim);
+    border: 1px solid var(--border);
+}
+
+.project-card__link {
+    font-size: 0.78rem;
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+body.light .project-card { background: var(--surface); border-color: var(--border); }
+body.light .project-card__tag { background: rgba(0,0,0,0.04); border-color: var(--border); }
+
 /* ==================== SERVICE SECTIONS ==================== */
 .service { padding: 100px 0; }
 .service--alt { background: var(--surface); }
@@ -1931,6 +2001,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
     .stat-card__number { font-size: 1.8rem; }
 
     .process__grid { grid-template-columns: 1fr; }
+    .projects__grid { grid-template-columns: 1fr; }
 
     .tech__grid { grid-template-columns: repeat(2, 1fr); }
     .tech-card { padding: 20px 12px; }

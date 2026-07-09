@@ -109,24 +109,48 @@
                         <input type="text" id="text_hero_brand" placeholder="WITER">
                     </div>
                     <div class="form-field">
+                        <label>Заголовок героя (EN)</label>
+                        <input type="text" id="text_hero_brand_en" placeholder="WITER">
+                    </div>
+                    <div class="form-field">
                         <label>Підзаголовок (UA)</label>
                         <input type="text" id="text_hero_subtitle" placeholder="Digital Studio">
+                    </div>
+                    <div class="form-field">
+                        <label>Підзаголовок (EN)</label>
+                        <input type="text" id="text_hero_subtitle_en" placeholder="Digital Studio">
                     </div>
                     <div class="form-field full">
                         <label>Опис героя (UA)</label>
                         <textarea id="text_hero_desc" rows="3" placeholder="Створюємо сучасні веб-рішення..."></textarea>
                     </div>
                     <div class="form-field full">
-                        <label>Про мене — абзац 1</label>
+                        <label>Опис героя (EN)</label>
+                        <textarea id="text_hero_desc_en" rows="3" placeholder="We create modern web solutions..."></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 1 (UA)</label>
                         <textarea id="text_about_1" rows="2"></textarea>
                     </div>
                     <div class="form-field full">
-                        <label>Про мене — абзац 2</label>
+                        <label>Про мене — абзац 1 (EN)</label>
+                        <textarea id="text_about_1_en" rows="2"></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 2 (UA)</label>
                         <textarea id="text_about_2" rows="3"></textarea>
                     </div>
                     <div class="form-field full">
-                        <label>Про мене — абзац 3</label>
+                        <label>Про мене — абзац 2 (EN)</label>
+                        <textarea id="text_about_2_en" rows="3"></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 3 (UA)</label>
                         <textarea id="text_about_3" rows="2"></textarea>
+                    </div>
+                    <div class="form-field full">
+                        <label>Про мене — абзац 3 (EN)</label>
+                        <textarea id="text_about_3_en" rows="2"></textarea>
                     </div>
                 </div>
                 <button class="btn" id="saveTexts">Зберегти тексти</button>
@@ -140,12 +164,20 @@
                 <div class="project-form glass" id="projectForm" style="display:none;">
                     <h3 id="projectFormTitle">Новий проєкт</h3>
                     <div class="form-field">
-                        <label>Назва</label>
+                        <label>Назва (UA)</label>
                         <input type="text" id="projName" placeholder="Назва проєкту">
                     </div>
                     <div class="form-field">
-                        <label>Опис</label>
+                        <label>Назва (EN)</label>
+                        <input type="text" id="projNameEn" placeholder="Project name">
+                    </div>
+                    <div class="form-field">
+                        <label>Опис (UA)</label>
                         <textarea id="projDesc" rows="3" placeholder="Короткий опис"></textarea>
+                    </div>
+                    <div class="form-field">
+                        <label>Опис (EN)</label>
+                        <textarea id="projDescEn" rows="3" placeholder="Short description"></textarea>
                     </div>
                     <div class="form-field">
                         <label>Технології (через кому)</label>
@@ -154,6 +186,11 @@
                     <div class="form-field">
                         <label>Посилання (необов'язково)</label>
                         <input type="text" id="projLink" placeholder="https://...">
+                    </div>
+                    <div class="form-field">
+                        <label>Превью (зображення)</label>
+                        <input type="file" id="projImage" accept="image/*">
+                        <img id="projImagePreview" style="max-width:200px;margin-top:8px;border-radius:8px;display:none;">
                     </div>
                     <div class="form-actions">
                         <button class="btn" id="saveProject">Зберегти</button>

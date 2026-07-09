@@ -10,6 +10,7 @@ const translations = {
         nav_project: 'Проєкт',
         nav_about: 'Про мене',
         nav_process: 'Процес',
+        nav_projects: 'Роботи',
         nav_services: 'Послуги',
         nav_faq: 'FAQ',
         nav_tech: 'Технології',
@@ -39,6 +40,7 @@ const translations = {
         process_3_desc: 'Верстаю та програмую сайт. Чистий код, швидке завантаження, адаптивність.',
         process_4_title: 'Запуск',
         process_4_desc: 'Налаштовую хостинг, домен та аналітику. Сайт готовий до роботи!',
+        projects_title: 'Роботи',
         faq_title: 'Часті запитання',
         faq_1_q: 'Скільки коштує розробка сайту?',
         faq_1_a: 'Вартість залежить від складності проєкту. Зверніться до мене — зроблю безкоштовну оцінку після брифу.',
@@ -142,6 +144,7 @@ const translations = {
         nav_project: 'Project',
         nav_about: 'About',
         nav_process: 'Process',
+        nav_projects: 'Works',
         nav_services: 'Services',
         nav_faq: 'FAQ',
         nav_tech: 'Tech',
@@ -171,6 +174,7 @@ const translations = {
         process_3_desc: 'I build and code the website. Clean code, fast loading, responsive design.',
         process_4_title: 'Launch',
         process_4_desc: 'I set up hosting, domain, and analytics. The website is ready to work!',
+        projects_title: 'Works',
         faq_title: 'FAQ',
         faq_1_q: 'How much does website development cost?',
         faq_1_a: 'The cost depends on project complexity. Contact me — I provide a free estimate after the brief.',
@@ -305,6 +309,7 @@ function translatePage(lang) {
     });
 
     loadCustomTexts();
+    loadSiteProjects();
 }
 
 document.querySelectorAll('.lang-btn').forEach(btn => {
@@ -320,33 +325,81 @@ try { emailjs.init('A7LAjoCMlfBRyssBZ'); } catch (e) { console.warn('EmailJS not
 function loadCustomTexts() {
     try {
         const texts = JSON.parse(localStorage.getItem('witer_texts')) || {};
-        if (texts.hero_brand) {
+        const isEn = currentLang === 'en';
+
+        if (isEn ? texts.hero_brand_en : texts.hero_brand) {
             const el = document.querySelector('.hero__brand');
-            if (el) el.textContent = texts.hero_brand;
+            if (el) el.textContent = isEn ? texts.hero_brand_en : texts.hero_brand;
         }
-        if (texts.hero_subtitle) {
+        if (isEn ? texts.hero_subtitle_en : texts.hero_subtitle) {
             const el = document.querySelector('.hero__subtitle');
-            if (el) el.textContent = texts.hero_subtitle;
+            if (el) el.textContent = isEn ? texts.hero_subtitle_en : texts.hero_subtitle;
         }
-        if (texts.hero_desc) {
+        if (isEn ? texts.hero_desc_en : texts.hero_desc) {
             const el = document.querySelector('.hero__description');
-            if (el) el.textContent = texts.hero_desc;
+            if (el) el.textContent = isEn ? texts.hero_desc_en : texts.hero_desc;
         }
-        if (texts.about_1) {
+        if (isEn ? texts.about_1_en : texts.about_1) {
             const el = document.querySelector('[data-i18n="about_p1"]');
-            if (el) el.innerHTML = texts.about_1;
+            if (el) el.innerHTML = isEn ? texts.about_1_en : texts.about_1;
         }
-        if (texts.about_2) {
+        if (isEn ? texts.about_2_en : texts.about_2) {
             const el = document.querySelector('[data-i18n="about_p2"]');
-            if (el) el.innerHTML = texts.about_2;
+            if (el) el.innerHTML = isEn ? texts.about_2_en : texts.about_2;
         }
-        if (texts.about_3) {
+        if (isEn ? texts.about_3_en : texts.about_3) {
             const el = document.querySelector('[data-i18n="about_p3"]');
-            if (el) el.innerHTML = texts.about_3;
+            if (el) el.innerHTML = isEn ? texts.about_3_en : texts.about_3;
         }
     } catch {}
 }
 loadCustomTexts();
+
+// Load projects from admin
+function loadSiteProjects() {
+    const projects = JSON.parse(localStorage.getItem('witer_projects')) || [];
+    const section = document.getElementById('projects');
+    const grid = document.getElementById('projectsGrid');
+    const navLink = document.querySelector('.nav__link[href="#projects"]');
+
+    if (projects.length === 0) {
+        if (section) section.style.display = 'none';
+        if (navLink) navLink.parentElement.style.display = 'none';
+        return;
+    }
+
+    if (section) section.style.display = '';
+    if (navLink) navLink.parentElement.style.display = '';
+    if (!grid) return;
+
+    const isEn = currentLang === 'en';
+
+    grid.innerHTML = projects.map(p => {
+        const name = isEn ? (p.nameEn || p.name) : p.name;
+        const desc = isEn ? (p.descEn || p.desc) : p.desc;
+        const tags = p.stack ? p.stack.split(',').map(s => `<span class="project-card__tag">${s.trim()}</span>`).join('') : '';
+        const img = p.image ? `<img class="project-card__img" src="${p.image}" alt="${esc(name)}" loading="lazy">` : '';
+        const link = p.link ? `<a class="project-card__link" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">→ ${isEn ? 'View' : 'Переглянути'}</a>` : '';
+
+        return `<div class="project-card glass">
+            ${img}
+            <div class="project-card__info">
+                <h3 class="project-card__name">${esc(name)}</h3>
+                <p class="project-card__desc">${esc(desc)}</p>
+                <div class="project-card__stack">${tags}</div>
+                ${link}
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function esc(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+
+loadSiteProjects();
 
 // Mobile Menu
 const navToggle = document.querySelector('.nav__toggle');

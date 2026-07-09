@@ -143,21 +143,33 @@ function loadDashboard() {
 function loadTexts() {
     const texts = getData('witer_texts', {});
     document.getElementById('text_hero_brand').value = texts.hero_brand || '';
+    document.getElementById('text_hero_brand_en').value = texts.hero_brand_en || '';
     document.getElementById('text_hero_subtitle').value = texts.hero_subtitle || '';
+    document.getElementById('text_hero_subtitle_en').value = texts.hero_subtitle_en || '';
     document.getElementById('text_hero_desc').value = texts.hero_desc || '';
+    document.getElementById('text_hero_desc_en').value = texts.hero_desc_en || '';
     document.getElementById('text_about_1').value = texts.about_1 || '';
+    document.getElementById('text_about_1_en').value = texts.about_1_en || '';
     document.getElementById('text_about_2').value = texts.about_2 || '';
+    document.getElementById('text_about_2_en').value = texts.about_2_en || '';
     document.getElementById('text_about_3').value = texts.about_3 || '';
+    document.getElementById('text_about_3_en').value = texts.about_3_en || '';
 }
 
 document.getElementById('saveTexts').addEventListener('click', () => {
     const texts = {
         hero_brand: document.getElementById('text_hero_brand').value,
+        hero_brand_en: document.getElementById('text_hero_brand_en').value,
         hero_subtitle: document.getElementById('text_hero_subtitle').value,
+        hero_subtitle_en: document.getElementById('text_hero_subtitle_en').value,
         hero_desc: document.getElementById('text_hero_desc').value,
+        hero_desc_en: document.getElementById('text_hero_desc_en').value,
         about_1: document.getElementById('text_about_1').value,
+        about_1_en: document.getElementById('text_about_1_en').value,
         about_2: document.getElementById('text_about_2').value,
+        about_2_en: document.getElementById('text_about_2_en').value,
         about_3: document.getElementById('text_about_3').value,
+        about_3_en: document.getElementById('text_about_3_en').value,
     };
     setData('witer_texts', texts);
     showToast('Тексти збережено');
@@ -195,10 +207,14 @@ document.getElementById('addProject').addEventListener('click', () => {
     editingProjectId = null;
     document.getElementById('projectFormTitle').textContent = 'Новий проєкт';
     document.getElementById('projName').value = '';
+    document.getElementById('projNameEn').value = '';
     document.getElementById('projDesc').value = '';
+    document.getElementById('projDescEn').value = '';
     document.getElementById('projStack').value = '';
     document.getElementById('projLink').value = '';
     document.getElementById('projEditId').value = '';
+    document.getElementById('projImage').value = '';
+    document.getElementById('projImagePreview').style.display = 'none';
     document.getElementById('projectForm').style.display = 'block';
 });
 
@@ -206,20 +222,36 @@ document.getElementById('cancelProject').addEventListener('click', () => {
     document.getElementById('projectForm').style.display = 'none';
 });
 
+// Превью зображення
+document.getElementById('projImage').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+        document.getElementById('projImagePreview').src = ev.target.result;
+        document.getElementById('projImagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
+
 document.getElementById('saveProject').addEventListener('click', () => {
     const name = document.getElementById('projName').value.trim();
+    const nameEn = document.getElementById('projNameEn').value.trim();
     const desc = document.getElementById('projDesc').value.trim();
+    const descEn = document.getElementById('projDescEn').value.trim();
     const stack = document.getElementById('projStack').value.trim();
     const link = document.getElementById('projLink').value.trim();
+    const imgPreview = document.getElementById('projImagePreview');
+    const image = imgPreview.style.display !== 'none' ? imgPreview.src : '';
 
     if (!name) { showToast('Введіть назву проєкту', true); return; }
 
     let projects = getData('witer_projects', []);
 
     if (editingProjectId) {
-        projects = projects.map(p => p.id === editingProjectId ? { ...p, name, desc, stack, link } : p);
+        projects = projects.map(p => p.id === editingProjectId ? { ...p, name, nameEn, desc, descEn, stack, link, image } : p);
     } else {
-        projects.push({ id: 'proj_' + Date.now(), name, desc, stack, link });
+        projects.push({ id: 'proj_' + Date.now(), name, nameEn, desc, descEn, stack, link, image });
     }
 
     setData('witer_projects', projects);
@@ -238,9 +270,17 @@ window.editProject = function(id) {
     editingProjectId = id;
     document.getElementById('projectFormTitle').textContent = 'Редагувати проєкт';
     document.getElementById('projName').value = p.name;
+    document.getElementById('projNameEn').value = p.nameEn || '';
     document.getElementById('projDesc').value = p.desc;
+    document.getElementById('projDescEn').value = p.descEn || '';
     document.getElementById('projStack').value = p.stack;
     document.getElementById('projLink').value = p.link || '';
+    if (p.image) {
+        document.getElementById('projImagePreview').src = p.image;
+        document.getElementById('projImagePreview').style.display = 'block';
+    } else {
+        document.getElementById('projImagePreview').style.display = 'none';
+    }
     document.getElementById('projectForm').style.display = 'block';
 };
 
