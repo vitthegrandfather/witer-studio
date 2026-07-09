@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>WITER | 404 — Сторінку не знайдено</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .error-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+        }
+        .error-page__code {
+            font-size: clamp(6rem, 20vw, 12rem);
+            font-weight: 800;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            color: var(--text);
+            opacity: 0.08;
+        }
+        .error-page__title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: -20px 0 12px;
+            color: var(--text);
+        }
+        .error-page__desc {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            margin-bottom: 32px;
+            max-width: 360px;
+        }
+        .error-page__link {
+            display: inline-block;
+            padding: 12px 28px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 12px;
+            background: var(--accent-bg);
+            color: var(--accent-text);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .error-page__link:hover { opacity: 0.85; transform: translateY(-1px); }
+    </style>
+</head>
+<body>
+    <div class="error-page">
+        <div>
+            <div class="error-page__code">404</div>
+            <h1 class="error-page__title">Сторінку не знайдено</h1>
+            <p class="error-page__desc">Схоже, ця сторінка не існує або була переміщена. Поверніться на головну.</p>
+            <a href="index.html" class="error-page__link">На головну</a>
+        </div>
+    </div>
+</body>
+</html>
