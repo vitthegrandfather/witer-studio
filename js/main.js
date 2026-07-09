@@ -137,8 +137,6 @@ const translations = {
         footer_rights: 'Всі права захищені.',
         tech_title: 'Технології',
         tech_subtitle: 'Інструменти, з якими я працюю',
-        cookie_text: 'Цей сайт використовує cookie для покращення досвіду. Продовжуючи перегляд, ви погоджуєтесь з цим.',
-        cookie_accept: 'Зрозуміло'
     },
     en: {
         nav_project: 'Project',
@@ -270,9 +268,7 @@ const translations = {
         form_submit: 'Send Message',
         footer_rights: 'All rights reserved.',
         tech_title: 'Technologies',
-        tech_subtitle: 'Tools I work with',
-        cookie_text: 'This site uses cookies to improve your experience. By continuing, you agree to this.',
-        cookie_accept: 'Got it'
+        tech_subtitle: 'Tools I work with'
     }
 };
 
@@ -971,19 +967,6 @@ if (emailFab && emailDropdown) {
         });
     });
 }
-
-// ==================== COOKIE CONSENT ====================
-(function initCookie() {
-    if (!localStorage.getItem('witer_cookie')) {
-        setTimeout(() => {
-            document.getElementById('cookieBanner')?.classList.add('visible');
-        }, 2000);
-    }
-    document.getElementById('cookieAccept')?.addEventListener('click', () => {
-        localStorage.setItem('witer_cookie', '1');
-        document.getElementById('cookieBanner')?.classList.remove('visible');
-    });
-})();
 
 // ==================== TECH MODAL ====================
 (function initTechModal() {
