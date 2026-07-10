@@ -500,9 +500,19 @@ const themeToggle = document.getElementById('themeToggle');
 const savedTheme = localStorage.getItem('witer_theme') || 'dark';
 if (savedTheme === 'light') document.body.classList.add('light');
 
+function updateLogos() {
+    const isLight = document.body.classList.contains('light');
+    const logoSrc = isLight ? 'logo-light.png' : 'logo-dark.png';
+    document.getElementById('preloaderLogo')?.setAttribute('src', logoSrc);
+    document.getElementById('navLogo')?.setAttribute('src', logoSrc);
+    document.getElementById('footerLogo')?.setAttribute('src', logoSrc);
+}
+updateLogos();
+
 themeToggle.addEventListener('click', () => {
     document.body.classList.toggle('light');
     localStorage.setItem('witer_theme', document.body.classList.contains('light') ? 'light' : 'dark');
+    updateLogos();
 });
 
 // Order Modal

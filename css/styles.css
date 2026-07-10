@@ -172,15 +172,7 @@ body.light .skill-card { background: var(--surface); border-color: var(--border)
 body.light .theme-toggle { border-color: var(--border); }
 body.light .toast { background: var(--surface); border-color: var(--border); color: var(--text); }
 
-/* Logo light/dark theme */
-.preloader__logo--light,
-.logo-light { display: none; }
-
-body.light .preloader__logo--dark,
-body.light .logo-dark { display: none; }
-
-body.light .preloader__logo--light,
-body.light .logo-light { display: block; }
+/* Logo - handled by JS */
 
 
 /* ==================== PRELOADER ==================== */
@@ -275,8 +267,7 @@ body.light .logo-light { display: block; }
 }
 
 .nav__logo .logo-icon { width: 22px; height: 22px; }
-.nav__logo .logo-icon .logo-dark,
-.nav__logo .logo-icon .logo-light { width: 100%; height: 100%; }
+.nav__logo .logo-icon img { width: 100%; height: 100%; }
 
 .nav__toggle {
     display: none;
@@ -1970,8 +1961,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 
 .footer__logo { display: flex; align-items: center; gap: 8px; }
 .footer__logo .logo-icon { width: 18px; height: 18px; }
-.footer__logo .logo-icon .logo-dark,
-.footer__logo .logo-icon .logo-light { width: 100%; height: 100%; }
+.footer__logo .logo-icon img { width: 100%; height: 100%; }
 .footer__text { color: var(--text-dim); font-size: 0.72rem; }
 
 /* ==================== MOBILE ==================== */
