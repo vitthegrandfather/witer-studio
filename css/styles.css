@@ -2080,6 +2080,10 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
     cursor: pointer;
 }
 
+.cat-easter.awake {
+    top: -35px;
+}
+
 .cat-body {
     width: 65px;
     height: auto;
