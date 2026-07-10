@@ -73,7 +73,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=99">
+    <link rel="stylesheet" href="css/styles.css">
 
     <!-- Google Analytics (GA4) — замініть G-XXXXXXXXXX на реальний ID -->
     <!--
@@ -736,6 +736,19 @@
                 </div>
                 <p class="footer__text">© 2026 <span data-i18n="footer_rights">Всі права захищені.</span></p>
             </div>
+            <!-- Easter Egg Cat -->
+            <div class="cat-easter" id="catEaster">
+                <div class="cat-speech" id="catSpeech"></div>
+                <div class="cat-zzz" id="catZzz">
+                    <span class="zzz zzz--1">z</span>
+                    <span class="zzz zzz--2">z</span>
+                    <span class="zzz zzz--3">Z</span>
+                </div>
+                <div class="cat-body" id="catBody">
+                    <img class="cat-img cat-img--sleep" id="catSleep" src="images/catsleep.png" alt="Sleeping cat">
+                    <img class="cat-img cat-img--wake" id="catWake" src="images/catwokeup.png" alt="Cat woke up">
+                </div>
+            </div>
         </div>
     </footer>
 
@@ -751,20 +764,6 @@
         <button class="toast__close" id="toastClose">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         </button>
-    </div>
-
-    <!-- Easter Egg Cat -->
-    <div class="cat-easter" id="catEaster">
-        <div class="cat-speech" id="catSpeech"></div>
-        <div class="cat-zzz" id="catZzz">
-            <span class="zzz zzz--1">z</span>
-            <span class="zzz zzz--2">z</span>
-            <span class="zzz zzz--3">Z</span>
-        </div>
-        <div class="cat-body" id="catBody">
-            <img class="cat-img cat-img--sleep" id="catSleep" src="images/catsleep.png" alt="Sleeping cat">
-            <img class="cat-img cat-img--wake" id="catWake" src="images/catwokeup.png" alt="Cat woke up">
-        </div>
     </div>
 
     <audio id="meowSound" preload="auto">
@@ -833,6 +832,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="js/main.js?v=99"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
