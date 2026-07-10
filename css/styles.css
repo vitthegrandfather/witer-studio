@@ -173,7 +173,7 @@ body.light .theme-toggle { border-color: var(--border); }
 body.light .toast { background: var(--surface); border-color: var(--border); color: var(--text); }
 body.light .preloader__logo,
 body.light .nav__logo .logo-icon img,
-body.light .footer__logo .logo-icon img { filter: brightness(0); }
+body.light .footer__logo .logo-icon img { filter: brightness(0) !important; }
 
 
 /* ==================== PRELOADER ==================== */
