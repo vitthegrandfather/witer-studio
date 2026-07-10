@@ -197,8 +197,9 @@ body.light .logo-light, body.light .preloader__logo--light { display: block; }
     width: 100px;
     height: 100px;
     margin-bottom: 16px;
-    filter: brightness(0) invert(1);
+    display: block;
 }
+.preloader__logo--dark { filter: brightness(0) invert(1); }
 
 .preloader__text {
     display: block;
