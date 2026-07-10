@@ -762,32 +762,13 @@
             <span class="zzz zzz--3">Z</span>
         </div>
         <div class="cat-body" id="catBody">
-            <svg viewBox="0 0 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Ears -->
-                <path d="M15 22 L22 4 L32 18" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.15"/>
-                <path d="M65 22 L58 4 L48 18" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.15"/>
-                <!-- Head -->
-                <ellipse cx="40" cy="28" rx="24" ry="18" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.08"/>
-                <!-- Closed eyes (sleeping) -->
-                <path d="M28 26 Q32 30 36 26" stroke="currentColor" stroke-width="2" fill="none"/>
-                <path d="M44 26 Q48 30 52 26" stroke="currentColor" stroke-width="2" fill="none"/>
-                <!-- Nose -->
-                <path d="M38 32 L40 35 L42 32" stroke="currentColor" stroke-width="1.5" fill="currentColor" opacity="0.5"/>
-                <!-- Mouth -->
-                <path d="M40 35 Q36 38 34 36" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <path d="M40 35 Q44 38 46 36" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                <!-- Whiskers -->
-                <line x1="8" y1="30" x2="24" y2="32" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                <line x1="8" y1="35" x2="24" y2="35" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                <line x1="56" y1="32" x2="72" y2="30" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                <line x1="56" y1="35" x2="72" y2="35" stroke="currentColor" stroke-width="1" opacity="0.4"/>
-                <!-- Body (curled up sleeping) -->
-                <ellipse cx="40" cy="48" rx="28" ry="12" stroke="currentColor" stroke-width="2.5" fill="currentColor" opacity="0.08"/>
-                <!-- Tail curled -->
-                <path d="M68 48 Q78 42 75 52 Q72 58 65 54" stroke="currentColor" stroke-width="2.5" fill="none"/>
-            </svg>
+            <img class="cat-img cat-img--sleep" id="catSleep" src="images/catsleep.png" alt="Sleeping cat">
+            <img class="cat-img cat-img--wake" id="catWake" src="images/catwokeup.png" alt="Cat woke up">
         </div>
     </div>
+    <audio id="meowSound" preload="auto">
+        <source src="meow.mp3" type="audio/mpeg">
+    </audio>
 
     <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">

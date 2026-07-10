@@ -1259,34 +1259,49 @@ if (emailFab && emailDropdown) {
     const catEaster = document.getElementById('catEaster');
     const catBody = document.getElementById('catBody');
     const catSpeech = document.getElementById('catSpeech');
+    const meowSound = document.getElementById('meowSound');
     let speechTimeout;
     let isAwake = false;
 
-    // Show cat when scrolled to footer
+    // Show cat only when scrolled to #contact section
     function checkCatVisibility() {
-        const footer = document.getElementById('contact') || document.querySelector('footer');
-        if (!footer) return;
-        const rect = footer.getBoundingClientRect();
-        if (rect.top < window.innerHeight) {
+        const contactSection = document.getElementById('contact');
+        if (!contactSection) return;
+        const rect = contactSection.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
             catEaster.classList.add('visible');
+        } else {
+            catEaster.classList.remove('visible');
         }
     }
 
     window.addEventListener('scroll', checkCatVisibility);
     checkCatVisibility();
 
-    // Cat click - wake up and show prediction
+    // Cat click - wake up, show prediction, play meow, disable further clicks
     catBody.addEventListener('click', () => {
         if (isAwake) return;
         isAwake = true;
 
+        // Play meow sound
+        if (meowSound) {
+            meowSound.currentTime = 0;
+            meowSound.play().catch(() => {});
+        }
+
+        // Wake up cat
         catEaster.classList.add('awake');
+
+        // Show prediction
         catSpeech.textContent = currentPrediction;
         catSpeech.classList.add('active');
+
+        // Disable further clicks
+        catEaster.classList.add('disabled');
 
         clearTimeout(speechTimeout);
         speechTimeout = setTimeout(() => {
             catSpeech.classList.remove('active');
-        }, 5000);
+        }, 6000);
     });
 })();
