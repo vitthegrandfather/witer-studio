@@ -2073,8 +2073,9 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 /* ==================== CAT EASTER EGG ==================== */
 .cat-easter {
     position: absolute;
-    bottom: 10px;
-    left: 30px;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 10;
     cursor: pointer;
 }
@@ -2083,6 +2084,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
     width: 65px;
     height: auto;
     transform: scaleX(-1);
+    margin: 0 auto;
 }
 
 .cat-img {
@@ -2128,8 +2130,9 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 /* Speech bubble */
 .cat-speech {
     position: absolute;
-    bottom: 75px;
-    left: 0;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 16px;
@@ -2140,7 +2143,6 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
     width: 260px;
     opacity: 0;
     visibility: hidden;
-    transform: translateY(10px);
     transition: all 0.3s ease;
     pointer-events: none;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
@@ -2162,7 +2164,6 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 .cat-speech.active {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
 }
 
 body.light .cat-speech {
@@ -2179,7 +2180,7 @@ body.light .cat-speech::after {
 body.light .zzz { color: var(--text-dim); }
 
 @media (max-width: 768px) {
-    .cat-easter { left: 12px; bottom: 5px; }
+    .cat-easter { left: 50%; transform: translateX(-50%); top: -25px; }
     .cat-body { width: 50px; }
     .cat-speech { width: 200px; font-size: 0.75rem; padding: 10px 14px; bottom: 60px; }
 }
