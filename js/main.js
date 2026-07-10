@@ -1253,18 +1253,40 @@ if (emailFab && emailDropdown) {
         "Сьогодні все буде чудово"
     ];
 
+    // One prediction per page load
+    const currentPrediction = predictions[Math.floor(Math.random() * predictions.length)];
+
+    const catEaster = document.getElementById('catEaster');
     const catBody = document.getElementById('catBody');
     const catSpeech = document.getElementById('catSpeech');
     let speechTimeout;
+    let isAwake = false;
 
+    // Show cat when scrolled to footer
+    function checkCatVisibility() {
+        const footer = document.getElementById('contact') || document.querySelector('footer');
+        if (!footer) return;
+        const rect = footer.getBoundingClientRect();
+        if (rect.top < window.innerHeight) {
+            catEaster.classList.add('visible');
+        }
+    }
+
+    window.addEventListener('scroll', checkCatVisibility);
+    checkCatVisibility();
+
+    // Cat click - wake up and show prediction
     catBody.addEventListener('click', () => {
-        const randomIndex = Math.floor(Math.random() * predictions.length);
-        catSpeech.textContent = predictions[randomIndex];
+        if (isAwake) return;
+        isAwake = true;
+
+        catEaster.classList.add('awake');
+        catSpeech.textContent = currentPrediction;
         catSpeech.classList.add('active');
 
         clearTimeout(speechTimeout);
         speechTimeout = setTimeout(() => {
             catSpeech.classList.remove('active');
-        }, 4000);
+        }, 5000);
     });
 })();
