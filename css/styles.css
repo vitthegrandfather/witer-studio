@@ -2073,7 +2073,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 /* ==================== CAT EASTER EGG ==================== */
 .cat-easter {
     position: absolute;
-    top: -30px;
+    top: -29px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -2081,7 +2081,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 }
 
 .cat-easter.awake {
-    top: -45px;
+    top: -40px;
 }
 
 .cat-body {
