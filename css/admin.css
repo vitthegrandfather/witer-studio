@@ -58,6 +58,7 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
 }
+.login__logo img { width: 32px; height: 32px; filter: brightness(0) invert(1); }
 
 .login__logo svg { width: 28px; height: 28px; }
 
@@ -181,6 +182,7 @@ body {
 }
 
 .sidebar__logo svg { width: 24px; height: 24px; }
+.sidebar__logo img { width: 24px; height: 24px; filter: brightness(0) invert(1); }
 
 .sidebar__nav {
     display: flex;

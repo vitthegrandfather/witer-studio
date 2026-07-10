@@ -189,10 +189,10 @@ body.light .toast { background: var(--surface); border-color: var(--border); col
 .preloader__content { text-align: center; }
 
 .preloader__logo {
-    width: 40px;
-    height: 40px;
-    color: var(--text);
+    width: 100px;
+    height: 100px;
     margin-bottom: 16px;
+    filter: brightness(0) invert(1);
 }
 
 .preloader__text {
@@ -265,6 +265,7 @@ body.light .toast { background: var(--surface); border-color: var(--border); col
 }
 
 .nav__logo .logo-icon { width: 22px; height: 22px; }
+.nav__logo .logo-icon img { width: 100%; height: 100%; filter: brightness(0) invert(1); }
 
 .nav__toggle {
     display: none;
@@ -1958,6 +1959,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 
 .footer__logo { display: flex; align-items: center; gap: 8px; }
 .footer__logo .logo-icon { width: 18px; height: 18px; }
+.footer__logo .logo-icon img { width: 100%; height: 100%; filter: brightness(0) invert(1); }
 .footer__text { color: var(--text-dim); font-size: 0.72rem; }
 
 /* ==================== MOBILE ==================== */
