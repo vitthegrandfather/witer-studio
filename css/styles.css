@@ -2096,16 +2096,7 @@ body.light .tech-modal__content { background: var(--surface); border-color: var(
 .cat-body {
     width: 100px;
     height: auto;
-    transition: transform 0.3s ease;
     position: relative;
-}
-
-.cat-body:hover {
-    transform: scale(1.05);
-}
-
-.cat-body:active {
-    transform: scale(0.95);
 }
 
 .cat-img {

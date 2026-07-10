@@ -1263,15 +1263,13 @@ if (emailFab && emailDropdown) {
     let speechTimeout;
     let isAwake = false;
 
-    // Show cat only when scrolled to #contact section
+    // Show cat only when scrolled to #contact section (stays visible)
     function checkCatVisibility() {
         const contactSection = document.getElementById('contact');
-        if (!contactSection) return;
+        if (!contactSection || catEaster.classList.contains('visible')) return;
         const rect = contactSection.getBoundingClientRect();
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
+        if (rect.top < window.innerHeight) {
             catEaster.classList.add('visible');
-        } else {
-            catEaster.classList.remove('visible');
         }
     }
 
