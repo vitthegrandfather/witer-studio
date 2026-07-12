@@ -95,3 +95,4 @@ html{scrollbar-width:none;-ms-overflow-style:none}body::-webkit-scrollbar,.case-
 body.has-custom-cursor .cursor--dot{display:block}
 body.has-custom-cursor .cursor--ring{display:grid}
 @media(pointer:coarse),(hover:none){body.has-custom-cursor .cursor,body.has-custom-cursor .cursor--dot,body.has-custom-cursor .cursor--ring{display:none!important}body,body a,body button,body input,body textarea{cursor:auto!important}}
+@media(max-width:640px){.hero__line:first-child{translate:1.5vw 0}.hero__line--outline{translate:-5vw 0}}

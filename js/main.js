@@ -175,7 +175,13 @@
   }
 
   function initCursor() {
-    if (reducedMotion || !window.matchMedia('(pointer:fine)').matches) return;
+    const cursorElements = $$('.cursor');
+    const supportsCursor = window.matchMedia('(pointer:fine)').matches && window.matchMedia('(hover:hover)').matches;
+    if (reducedMotion || !supportsCursor) {
+      cursorElements.forEach(element => element.remove());
+      document.body.classList.remove('has-custom-cursor');
+      return;
+    }
     const dot = $('.cursor--dot');
     const ring = $('.cursor--ring');
     if (!dot || !ring) return;
