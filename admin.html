@@ -1,218 +1,106 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WITER | Адмін-панель</title>
-    <meta name="robots" content="noindex, nofollow">
-    <link rel="icon" href="logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/admin.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#080a0e">
+  <title>WITER Control Room</title>
+  <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css?v=200">
 </head>
 <body>
-    <!-- Login -->
-    <div class="login" id="loginScreen">
-        <div class="login__card glass">
-            <div class="login__logo">
-                <img src="logo.png" alt="WITER" width="32" height="32">
-                <span>WITER</span>
-            </div>
-            <h1>Адмін-панель</h1>
-            <p>Увійдіть для керування сайтом</p>
-            <form id="loginForm">
-                <input type="password" id="loginPassword" placeholder="Пароль" required>
-                <button type="submit" class="btn">Увійти</button>
-            </form>
+  <div class="auth" id="loginScreen">
+    <div class="auth__ambient" aria-hidden="true"></div>
+    <a class="admin-brand" href="index.html" aria-label="WITER — на сайт"><b>W</b><span>ITER</span></a>
+    <div class="auth__card">
+      <div class="eyebrow"><i></i> SECURE AREA</div>
+      <h1>Welcome<br>back.</h1>
+      <p>Увійдіть до панелі керування WITER.</p>
+      <form id="loginForm">
+        <label class="field"><span>Пароль</span><span class="password-wrap"><input type="password" id="loginPassword" autocomplete="current-password" placeholder="Введіть пароль" required><button type="button" class="password-toggle" aria-label="Показати пароль">Показати</button></span></label>
+        <button type="submit" class="primary-btn"><span>Увійти</span><i>→</i></button>
+      </form>
+      <small>Дані адмін-панелі зберігаються локально у цьому браузері.</small>
+    </div>
+  </div>
+
+  <div class="auth" id="setupScreen" hidden>
+    <div class="auth__ambient" aria-hidden="true"></div>
+    <a class="admin-brand" href="index.html"><b>W</b><span>ITER</span></a>
+    <div class="auth__card">
+      <div class="eyebrow"><i></i> FIRST LAUNCH</div>
+      <h1>Create<br>access.</h1>
+      <p>Створіть пароль для першого входу в адмін-панель.</p>
+      <form id="setupForm">
+        <label class="field"><span>Новий пароль</span><span class="password-wrap"><input type="password" id="setupPassword" autocomplete="new-password" placeholder="Мінімум 6 символів" required minlength="6"><button type="button" class="password-toggle" aria-label="Показати пароль">Показати</button></span></label>
+        <button type="submit" class="primary-btn"><span>Створити доступ</span><i>→</i></button>
+      </form>
+      <small>Не використовуйте пароль від пошти або соціальних мереж.</small>
+    </div>
+  </div>
+
+  <div class="dashboard" id="dashboard" hidden>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar__top"><a class="admin-brand" href="index.html"><b>W</b><span>ITER</span></a><button class="sidebar-close" type="button" aria-label="Закрити меню">×</button></div>
+      <div class="workspace"><span>WORKSPACE</span><strong>WITER Studio</strong><small><i></i> Site online</small></div>
+      <nav class="sidebar__nav" aria-label="Розділи адмін-панелі">
+        <button class="sidebar__link active" data-tab="overview"><span>01</span>Огляд</button>
+        <button class="sidebar__link" data-tab="texts"><span>02</span>Тексти</button>
+        <button class="sidebar__link" data-tab="projects"><span>03</span>Проєкти <em id="navProjects">0</em></button>
+        <button class="sidebar__link" data-tab="messages"><span>04</span>Повідомлення <em id="navMessages">0</em></button>
+        <button class="sidebar__link" data-tab="settings"><span>05</span>Налаштування</button>
+      </nav>
+      <div class="sidebar__footer"><a href="index.html" target="_blank">Відкрити сайт <span>↗</span></a><button id="logoutBtn">Вийти <span>→</span></button></div>
+    </aside>
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+    <main class="main">
+      <header class="topbar"><button class="menu-btn" id="menuBtn" type="button" aria-label="Відкрити меню"><span></span><span></span></button><div><span id="pageEyebrow">CONTROL ROOM / 01</span><h1 id="pageTitle">Огляд</h1></div><div class="topbar__right"><span id="currentDate"></span><a href="index.html" target="_blank">Live site ↗</a></div></header>
+
+      <section class="tab active" id="tab-overview">
+        <div class="welcome"><div><p>Добрий день, Віталію.</p><h2>Що відбувається<br>у WITER сьогодні.</h2></div><button class="quick-project" data-go="projects"><span>Новий проєкт</span><i>+</i></button></div>
+        <div class="stats-row">
+          <article class="stat-card stat-card--accent"><span class="stat-card__top">ВІДВІДУВАННЯ <i>↗</i></span><strong id="statVisits">0</strong><small>за весь час</small></article>
+          <article class="stat-card"><span class="stat-card__top">ЗАПИТИ <i>↗</i></span><strong id="statMessages">0</strong><small id="unreadLabel">нових повідомлень</small></article>
+          <article class="stat-card"><span class="stat-card__top">ПОРТФОЛІО <i>↗</i></span><strong id="statProjects">0</strong><small>активних проєктів</small></article>
         </div>
-    </div>
-
-    <!-- First-time Setup -->
-    <div class="login" id="setupScreen" style="display:none;">
-        <div class="login__card glass">
-            <div class="login__logo">
-                <img src="logo.png" alt="WITER" width="32" height="32">
-                <span>WITER</span>
-            </div>
-            <h1>Перше налаштування</h1>
-            <p>Встановіть пароль для адмін-панелі</p>
-            <form id="setupForm">
-                <input type="password" id="setupPassword" placeholder="Новий пароль (мін. 4 символи)" required minlength="4">
-                <button type="submit" class="btn">Встановити</button>
-            </form>
+        <div class="overview-grid">
+          <section class="panel recent"><div class="panel__head"><div><span>INBOX</span><h3>Останні повідомлення</h3></div><button data-go="messages">Переглянути всі →</button></div><div id="recentMessages"></div></section>
+          <aside class="panel quick-actions"><div class="panel__head"><div><span>SHORTCUTS</span><h3>Швидкі дії</h3></div></div><button data-go="texts"><span>Оновити тексти</span><i>→</i></button><button data-go="projects"><span>Керувати роботами</span><i>→</i></button><button id="backupQuick"><span>Завантажити backup</span><i>↓</i></button></aside>
         </div>
-    </div>
+      </section>
 
-    <!-- Dashboard -->
-    <div class="dashboard" id="dashboard" style="display:none;">
-        <aside class="sidebar">
-            <div class="sidebar__logo">
-                <img src="logo.png" alt="WITER" width="32" height="32">
-                <span>WITER</span>
-            </div>
-            <nav class="sidebar__nav">
-                <button class="sidebar__link active" data-tab="overview">Огляд</button>
-                <button class="sidebar__link" data-tab="texts">Тексти</button>
-                <button class="sidebar__link" data-tab="projects">Проєкти</button>
-                <button class="sidebar__link" data-tab="messages">Повідомлення</button>
-                <button class="sidebar__link" data-tab="settings">Налаштування</button>
-            </nav>
-            <div class="sidebar__footer">
-                <a href="index.html" class="sidebar__link sidebar__link--site">Перейти на сайт</a>
-                <button class="sidebar__link sidebar__link--exit" id="logoutBtn">Вийти</button>
-            </div>
-        </aside>
+      <section class="tab" id="tab-texts">
+        <div class="section-intro"><div><span>CONTENT</span><h2>Тексти сайту</h2><p>Керуйте ключовими повідомленнями українською та англійською.</p></div><button class="primary-btn compact" id="saveTexts"><span>Зберегти зміни</span><i>✓</i></button></div>
+        <div class="editor-grid">
+          <section class="panel editor-panel"><div class="panel__head"><div><span>UKRAINIAN / UA</span><h3>Українська версія</h3></div></div><div class="form-stack"><label class="field"><span>Назва у hero</span><input type="text" id="text_hero_brand" placeholder="WITER"></label><label class="field"><span>Підзаголовок</span><input type="text" id="text_hero_subtitle" placeholder="Digital Studio"></label><label class="field"><span>Головний опис</span><textarea id="text_hero_desc" rows="4"></textarea></label><label class="field"><span>Про мене — вступ</span><textarea id="text_about_1" rows="3"></textarea></label><label class="field"><span>Про мене — основний текст</span><textarea id="text_about_2" rows="4"></textarea></label><label class="field"><span>Про мене — фінал</span><textarea id="text_about_3" rows="3"></textarea></label></div></section>
+          <section class="panel editor-panel"><div class="panel__head"><div><span>ENGLISH / EN</span><h3>English version</h3></div></div><div class="form-stack"><label class="field"><span>Hero name</span><input type="text" id="text_hero_brand_en" placeholder="WITER"></label><label class="field"><span>Subtitle</span><input type="text" id="text_hero_subtitle_en" placeholder="Digital Studio"></label><label class="field"><span>Main description</span><textarea id="text_hero_desc_en" rows="4"></textarea></label><label class="field"><span>About — intro</span><textarea id="text_about_1_en" rows="3"></textarea></label><label class="field"><span>About — main copy</span><textarea id="text_about_2_en" rows="4"></textarea></label><label class="field"><span>About — closing</span><textarea id="text_about_3_en" rows="3"></textarea></label></div></section>
+        </div>
+      </section>
 
-        <main class="main">
-            <!-- Overview -->
-            <section class="tab active" id="tab-overview">
-                <h2>Огляд</h2>
-                <div class="stats-row">
-                    <div class="stat-box glass">
-                        <span class="stat-box__number" id="statVisits">0</span>
-                        <span class="stat-box__label">Відвідувань</span>
-                    </div>
-                    <div class="stat-box glass">
-                        <span class="stat-box__number" id="statMessages">0</span>
-                        <span class="stat-box__label">Повідомлень</span>
-                    </div>
-                    <div class="stat-box glass">
-                        <span class="stat-box__number" id="statProjects">0</span>
-                        <span class="stat-box__label">Проєктів</span>
-                    </div>
-                </div>
-                <div class="recent glass">
-                    <h3>Останні повідомлення</h3>
-                    <div id="recentMessages"><p class="empty">Поки немає повідомлень</p></div>
-                </div>
-            </section>
+      <section class="tab" id="tab-projects">
+        <div class="section-intro"><div><span>PORTFOLIO</span><h2>Проєкти</h2><p>Додавайте та редагуйте роботи, які формують образ студії.</p></div><button class="primary-btn compact" id="addProject"><span>Додати проєкт</span><i>+</i></button></div>
+        <div class="projects-grid" id="projectsList"></div>
+        <div class="modal-shell" id="projectForm" hidden><button class="modal-close" id="cancelProject" type="button" aria-label="Закрити">×</button><div class="modal-panel"><div class="eyebrow">PORTFOLIO ITEM</div><h3 id="projectFormTitle">Новий проєкт</h3><div class="form-grid"><label class="field"><span>Назва (UA)</span><input type="text" id="projName"></label><label class="field"><span>Назва (EN)</span><input type="text" id="projNameEn"></label><label class="field full"><span>Опис (UA)</span><textarea id="projDesc" rows="3"></textarea></label><label class="field full"><span>Опис (EN)</span><textarea id="projDescEn" rows="3"></textarea></label><label class="field"><span>Технології</span><input type="text" id="projStack" placeholder="UX/UI, JavaScript"></label><label class="field"><span>Посилання</span><input type="url" id="projLink" placeholder="https://..."></label><label class="field full upload"><span>Обкладинка</span><input type="file" id="projImage" accept="image/*"><span class="upload__area">Оберіть зображення <small>JPG, PNG або WebP</small></span><img id="projImagePreview" alt="Прев’ю обкладинки"></label></div><div class="form-actions"><button class="primary-btn compact" id="saveProject"><span>Зберегти</span><i>✓</i></button><input type="hidden" id="projEditId"></div></div></div>
+      </section>
 
-            <!-- Texts -->
-            <section class="tab" id="tab-texts">
-                <h2>Редагувати тексти</h2>
-                <div class="form-grid">
-                    <div class="form-field">
-                        <label>Заголовок героя (UA)</label>
-                        <input type="text" id="text_hero_brand" placeholder="WITER">
-                    </div>
-                    <div class="form-field">
-                        <label>Заголовок героя (EN)</label>
-                        <input type="text" id="text_hero_brand_en" placeholder="WITER">
-                    </div>
-                    <div class="form-field">
-                        <label>Підзаголовок (UA)</label>
-                        <input type="text" id="text_hero_subtitle" placeholder="Digital Studio">
-                    </div>
-                    <div class="form-field">
-                        <label>Підзаголовок (EN)</label>
-                        <input type="text" id="text_hero_subtitle_en" placeholder="Digital Studio">
-                    </div>
-                    <div class="form-field full">
-                        <label>Опис героя (UA)</label>
-                        <textarea id="text_hero_desc" rows="3" placeholder="Створюємо сучасні веб-рішення..."></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Опис героя (EN)</label>
-                        <textarea id="text_hero_desc_en" rows="3" placeholder="We create modern web solutions..."></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 1 (UA)</label>
-                        <textarea id="text_about_1" rows="2"></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 1 (EN)</label>
-                        <textarea id="text_about_1_en" rows="2"></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 2 (UA)</label>
-                        <textarea id="text_about_2" rows="3"></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 2 (EN)</label>
-                        <textarea id="text_about_2_en" rows="3"></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 3 (UA)</label>
-                        <textarea id="text_about_3" rows="2"></textarea>
-                    </div>
-                    <div class="form-field full">
-                        <label>Про мене — абзац 3 (EN)</label>
-                        <textarea id="text_about_3_en" rows="2"></textarea>
-                    </div>
-                </div>
-                <button class="btn" id="saveTexts">Зберегти тексти</button>
-            </section>
+      <section class="tab" id="tab-messages">
+        <div class="section-intro"><div><span>INBOX</span><h2>Повідомлення</h2><p>Усі звернення потенційних клієнтів в одному місці.</p></div><button class="danger-link" id="clearMessages">Очистити всі</button></div>
+        <div class="inbox-tools"><label><span>⌕</span><input type="search" id="messageSearch" placeholder="Пошук за ім’ям, email або текстом"></label><span id="messageCount">0 повідомлень</span></div>
+        <div class="messages-list" id="allMessages"></div>
+      </section>
 
-            <!-- Projects -->
-            <section class="tab" id="tab-projects">
-                <h2>Проєкти</h2>
-                <div id="projectsList"></div>
-                <button class="btn btn--outline" id="addProject">+ Додати проєкт</button>
-                <div class="project-form glass" id="projectForm" style="display:none;">
-                    <h3 id="projectFormTitle">Новий проєкт</h3>
-                    <div class="form-field">
-                        <label>Назва (UA)</label>
-                        <input type="text" id="projName" placeholder="Назва проєкту">
-                    </div>
-                    <div class="form-field">
-                        <label>Назва (EN)</label>
-                        <input type="text" id="projNameEn" placeholder="Project name">
-                    </div>
-                    <div class="form-field">
-                        <label>Опис (UA)</label>
-                        <textarea id="projDesc" rows="3" placeholder="Короткий опис"></textarea>
-                    </div>
-                    <div class="form-field">
-                        <label>Опис (EN)</label>
-                        <textarea id="projDescEn" rows="3" placeholder="Short description"></textarea>
-                    </div>
-                    <div class="form-field">
-                        <label>Технології (через кому)</label>
-                        <input type="text" id="projStack" placeholder="React, Node.js, MongoDB">
-                    </div>
-                    <div class="form-field">
-                        <label>Посилання (необов'язково)</label>
-                        <input type="text" id="projLink" placeholder="https://...">
-                    </div>
-                    <div class="form-field">
-                        <label>Превью (зображення)</label>
-                        <input type="file" id="projImage" accept="image/*">
-                        <img id="projImagePreview" style="max-width:200px;margin-top:8px;border-radius:8px;display:none;">
-                    </div>
-                    <div class="form-actions">
-                        <button class="btn" id="saveProject">Зберегти</button>
-                        <button class="btn btn--outline" id="cancelProject">Скасувати</button>
-                    </div>
-                    <input type="hidden" id="projEditId">
-                </div>
-            </section>
-
-            <!-- Messages -->
-            <section class="tab" id="tab-messages">
-                <h2>Повідомлення</h2>
-                <div id="allMessages"></div>
-                <button class="btn btn--outline" id="clearMessages" style="margin-top:16px;">Очистити все</button>
-            </section>
-
-            <!-- Settings -->
-            <section class="tab" id="tab-settings">
-                <h2>Налаштування</h2>
-                <div class="form-grid">
-                    <div class="form-field">
-                        <label>Змінити пароль</label>
-                        <input type="password" id="newPassword" placeholder="Новий пароль">
-                    </div>
-                    <div class="form-field">
-                        <label>Email для повідомлень</label>
-                        <input type="email" id="settingsEmail" placeholder="your@email.com">
-                    </div>
-                </div>
-                <button class="btn" id="saveSettings">Зберегти</button>
-            </section>
-        </main>
-    </div>
-
-    <script src="js/admin.js"></script>
+      <section class="tab" id="tab-settings">
+        <div class="section-intro"><div><span>SYSTEM</span><h2>Налаштування</h2><p>Доступ, контакти та резервна копія локальних даних.</p></div></div>
+        <div class="settings-grid"><section class="panel settings-card"><div class="panel__head"><div><span>SECURITY</span><h3>Доступ</h3></div></div><div class="form-stack"><label class="field"><span>Новий пароль</span><input type="password" id="newPassword" minlength="6" placeholder="Залиште порожнім без змін"></label><label class="field"><span>Email для повідомлень</span><input type="email" id="settingsEmail" placeholder="studio@example.com"></label><button class="primary-btn compact" id="saveSettings"><span>Зберегти</span><i>✓</i></button></div></section><section class="panel settings-card"><div class="panel__head"><div><span>DATA</span><h3>Резервна копія</h3></div></div><p>Завантажте всі проєкти, тексти, повідомлення та налаштування одним JSON-файлом.</p><div class="backup-actions"><button class="secondary-btn" id="exportData">Завантажити backup <i>↓</i></button><label class="secondary-btn">Відновити з файлу <i>↑</i><input type="file" id="importData" accept="application/json"></label></div><small>Останнє локальне оновлення: <span id="lastUpdated">—</span></small></section></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="js/admin.js?v=200"></script>
 </body>
 </html>

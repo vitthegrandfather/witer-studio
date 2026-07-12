@@ -1,837 +1,211 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="WITER — Digital Studio. Створюємо сучасні веб-сайти та лендінги для бізнесу. Web developer.">
-    <meta name="keywords" content="WITER, web developer, веб-розробка, лендінг, сайт під ключ">
-    <meta name="author" content="Vitalii">
-    <meta name="theme-color" content="#080810">
-    <!-- Canonical: замініть на ваш домен після деплою -->
-    <link rel="canonical" href="https://witerstudio.online/">
-    <title>WITER Digital Studio</title>
-
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="WITER Digital Studio">
-    <meta property="og:description" content="Створюємо сучасні веб-рішення для бізнесу. Чистий код, продуманий дизайн, реальні результати.">
-    <meta property="og:site_name" content="WITER">
-    <meta property="og:locale" content="uk_UA">
-    <meta property="og:locale:alternate" content="en_US">
-    <meta property="og:url" content="https://witerstudio.online/">
-    <meta property="og:image" content="https://witerstudio.online/og-image.svg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-
-    <!-- Hreflang -->
-    <link rel="alternate" hreflang="uk" href="https://witerstudio.online/">
-    <link rel="alternate" hreflang="en" href="https://witerstudio.online/?lang=en">
-    <link rel="alternate" hreflang="x-default" href="https://witerstudio.online/">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="WITER Digital Studio">
-    <meta name="twitter:description" content="Створюємо сучасні веб-рішення для бізнесу. Чистий код, продуманий дизайн, реальні результати.">
-    <meta name="twitter:image" content="https://witerstudio.online/og-image.svg">
-
-    <!-- Favicon -->
-    <link rel="icon" href="logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="logo.png">
-    <link rel="manifest" href="site.webmanifest">
-
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfessionalService",
-        "name": "WITER",
-        "alternateName": "WITER Digital Studio",
-        "description": "Сучасні веб-рішення для бізнесу: лендінги, корпоративні сайти, Telegram боти.",
-        "url": "https://witerstudio.online/",
-        "founder": {
-            "@type": "Person",
-            "name": "Vitalii",
-            "alternateName": "Віталій",
-            "jobTitle": "Web Developer"
-        },
-        "areaServed": {
-            "@type": "Country",
-            "name": "Ukraine"
-        },
-        "email": "studiowiter@outlook.com",
-        "knowsLanguage": ["uk", "en"],
-        "priceRange": "За запитом",
-        "sameAs": [
-            "https://www.linkedin.com/in/vitalii-chursanov/",
-            "https://www.instagram.com/vitthegrandfather"
-        ]
-    }
-    </script>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css?v=100">
-
-    <!-- Google Analytics (GA4) — замініть G-XXXXXXXXXX на реальний ID -->
-    <!--
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
-    -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090d">
+  <meta name="description" content="WITER is a digital studio in Kyiv creating premium websites, Telegram bots, API integrations and business automation.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+  <meta name="author" content="Vitalii Chursanov, WITER Digital Studio">
+  <meta property="og:title" content="WITER — Web Design &amp; Development Studio in Kyiv">
+  <meta property="og:description" content="Premium websites, Telegram bots, API integrations and business automation with clear direction.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://witerstudio.online/">
+  <meta property="og:image" content="https://witerstudio.online/og-image.svg">
+  <meta property="og:site_name" content="WITER Digital Studio">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="uk_UA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="WITER — Web Design &amp; Development Studio in Kyiv">
+  <meta name="twitter:description" content="Premium websites, Telegram bots, API integrations and business automation with clear direction.">
+  <meta name="twitter:image" content="https://witerstudio.online/og-image.svg">
+  <link rel="canonical" href="https://witerstudio.online/">
+  <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=200">
+  <title>WITER — Web Design &amp; Development Studio in Kyiv</title>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "WITER Digital Studio",
+    "url": "https://witerstudio.online/",
+    "logo": "https://witerstudio.online/favicon.svg",
+    "description": "Premium web design and development, Telegram bots, API integrations and business automation.",
+    "founder": { "@type": "Person", "name": "Vitalii Chursanov" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Kyiv", "addressCountry": "UA" },
+    "areaServed": ["Ukraine", "Europe"],
+    "sameAs": [
+      "https://www.instagram.com/vitthegrandfather",
+      "https://www.linkedin.com/in/vitalii-chursanov/"
+    ]
+  }
+  </script>
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader" id="preloader">
-        <div class="preloader__content">
-            <img class="preloader__logo" id="preloaderLogo" src="logo-dark.png" alt="WITER" width="100" height="100">
-            <span class="preloader__text">WITER</span>
-            <div class="preloader__bar"><div class="preloader__progress"></div></div>
-        </div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="cursor cursor--dot" aria-hidden="true"></div>
+  <div class="cursor cursor--ring" aria-hidden="true"></div>
+  <aside class="scroll-rail" aria-hidden="true"><span class="scroll-rail__track"><i></i></span><div><b id="railNumber">01</b><span id="railLabel">PROJECT</span></div></aside>
+
+  <header class="header" id="header">
+    <a class="brand magnetic" href="#top" aria-label="WITER — на початок сторінки"><span>W</span><span class="brand__full">ITER</span></a>
+    <nav class="nav" aria-label="Головна навігація">
+      <a href="#work" data-uk="Портфоліо" data-en="Portfolio">Портфоліо</a>
+      <a href="#services" data-uk="Послуги" data-en="Services">Послуги</a>
+      <a href="#process" data-uk="Процес" data-en="Process">Процес</a>
+      <a href="#about" data-uk="Про мене" data-en="About">Про мене</a>
+      <a href="#contact" data-uk="Контакти" data-en="Contact">Контакти</a>
+    </nav>
+    <div class="header__actions">
+      <button class="lang" type="button" aria-label="Switch language"><span class="lang__active">UA</span><span>EN</span></button>
+      <a class="header__cta magnetic" href="#contact"><span data-uk="Обговорити проєкт" data-en="Start a project">Обговорити проєкт</span><i>↗</i></a>
+      <button class="menu-toggle" type="button" aria-label="Відкрити меню" aria-expanded="false"><span></span><span></span></button>
     </div>
+  </header>
 
-    <div class="bg-gradient"></div>
-    <div class="bg-noise"></div>
-    <div class="bg-orbs">
-        <div class="orb orb--1"></div>
-        <div class="orb orb--2"></div>
-        <div class="orb orb--3"></div>
-        <div class="orb orb--4"></div>
-    </div>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wind-field" aria-hidden="true"><canvas id="windCanvas"></canvas></div>
+      <div class="hero__eyebrow reveal">
+        <span class="status"><i></i><span data-uk="Відкритий до нових проєктів" data-en="Available for new projects">Відкритий до нових проєктів</span></span>
+        <span>KYIV · 50.4501° N</span>
+      </div>
+      <h1 class="hero__title" id="hero-title" aria-label="WITER">
+        <span class="hero__line" data-speed="0.05">WI</span><span class="hero__line hero__line--outline" data-speed="-0.04">TER</span>
+      </h1>
+      <div class="hero__bottom reveal">
+        <p id="heroDescription" data-uk="Створюю виразні цифрові продукти, що перетворюють увагу на дію, а складні процеси — на простий досвід." data-en="I create expressive digital products that turn attention into action and complex processes into simple experiences.">Створюю виразні цифрові продукти, що перетворюють увагу на дію, а складні процеси — на простий досвід.</p>
+        <a class="circle-link magnetic" href="#work" aria-label="Дивитися роботи"><span data-uk="Дивитися роботи" data-en="View work">Дивитися<br>роботи</span><i>↓</i></a>
+      </div>
+      <div class="hero__meta" aria-hidden="true"><span>WEB DESIGN</span><span>DEVELOPMENT</span><span>AUTOMATION</span></div>
+    </section>
 
-    <header class="header glass">
-        <nav class="nav">
-            <a href="#" class="nav__logo">
-                <div class="logo-icon">
-                    <img class="nav-logo" id="navLogo" src="logo-dark.png" alt="WITER" width="32" height="32">
-                </div>
-                <span class="logo-text">WITER</span>
-            </a>
-            <button class="nav__toggle" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav__menu">
-                <li><a href="#project" class="nav__link" data-i18n="nav_project">Проєкт</a></li>
-                <li><a href="#about" class="nav__link" data-i18n="nav_about">Про мене</a></li>
-                <li><a href="#process" class="nav__link" data-i18n="nav_process">Процес</a></li>
-                <li><a href="#projects" class="nav__link" data-i18n="nav_projects">Роботи</a></li>
-                <li class="nav__dropdown">
-                    <a href="#service-website" class="nav__link" data-i18n="nav_services">Послуги</a>
-                    <ul class="nav__dropdown-menu">
-                        <li><a href="#service-website" data-i18n="svc_website_title">Корпоративний сайт</a></li>
-                        <li><a href="#service-landing" data-i18n="svc_landing_title">Лендінг</a></li>
-                        <li><a href="#service-bot" data-i18n="svc_bot_title">Telegram бот</a></li>
-                        <li><a href="#service-api" data-i18n="svc_api_title">Інтеграція API</a></li>
-                        <li><a href="#service-hosting" data-i18n="svc_hosting_title">Налаштування хостингу</a></li>
-                        <li><a href="#service-support" data-i18n="svc_support_title">Підтримка сайту</a></li>
-                    </ul>
-                </li>
-                <li><a href="#faq" class="nav__link" data-i18n="nav_faq">FAQ</a></li>
-                <li><a href="#tech" class="nav__link" data-i18n="nav_tech">Технології</a></li>
-                <li><a href="#contact" class="nav__link" data-i18n="nav_contact">Контакти</a></li>
-            </ul>
-            <div class="header__actions">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <svg class="theme-toggle__sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="theme-toggle__moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-                <div class="lang-switcher">
-                    <button class="lang-btn active" data-lang="uk">UA</button>
-                    <button class="lang-btn" data-lang="en">EN</button>
-                </div>
-            </div>
-        </nav>
-    </header>
+    <section class="manifesto section-pad">
+      <div class="section-tag reveal"><span>01</span><span data-uk="Підхід" data-en="Approach">Підхід</span></div>
+      <p class="manifesto__text split-text" data-uk="Не просто сайт. Цифровий простір із чітким напрямом, характером і логікою, що працює на ваш бізнес." data-en="Not just a website. A digital space with direction, character and logic that works for your business.">Не просто сайт. Цифровий простір із чітким напрямом, характером і логікою, що працює на ваш бізнес.</p>
+      <div class="manifesto__note reveal"><span>IDEAS</span><i>→</i><span>IN MOTION</span></div>
+    </section>
 
-    <main>
-        <!-- 1. Проект / Hero -->
-        <section id="project" class="hero">
-            <div class="hero__bg-number">01</div>
-            <div class="container">
-                <p class="hero__greeting" data-i18n="project_greeting">Ласкаво просимо до</p>
-                <h1 class="hero__brand" data-speed="0.8">WITER</h1>
-                <p class="hero__subtitle" data-i18n="project_subtitle">Digital Studio</p>
-                <p class="hero__description" data-i18n="project_description">Створюємо сучасні веб-рішення, які допомагають бізнесу рости в цифровому світі. Чистий код, продуманий дизайн, реальні результати.</p>
-                <div class="hero__buttons">
-                    <a href="#service-website" class="btn btn--primary" data-i18n="project_btn">Послуги</a>
-                    <a href="#contact" class="btn btn--secondary" data-i18n="project_btn_contact">Зв'язатися</a>
-                </div>
+    <section class="work section-pad" id="work">
+      <div class="section-head">
+        <div class="section-tag reveal"><span>02</span><span data-uk="Вибрані роботи" data-en="Selected work">Вибрані роботи</span></div>
+        <h2 class="section-title split-text" data-uk="Проєкти, що мають напрям." data-en="Projects with direction.">Проєкти, що<br>мають напрям.</h2>
+      </div>
+      <div class="projects" id="portfolioProjects">
+        <article class="project project--beauty reveal">
+          <a href="https://vitthegrandfather.github.io/salon/" target="_blank" rel="noopener" class="project__link" aria-label="Відкрити концепт сайту beauty-простору">
+            <div class="project__visual">
+              <img class="project__image" src="images/projects/your-salon.jpg" alt="Концепт сайту преміального beauty-простору" loading="lazy">
+              <div class="project__frame"><div class="project__frame-bar"><strong>BEAUTY / CONCEPT</strong><span>Services&nbsp;&nbsp; About&nbsp;&nbsp; Booking</span></div><div class="project__frame-copy"><small>PREMIUM BEAUTY SPACE / KYIV</small><strong>Your image.<br>Your statement.</strong></div></div>
+              <span class="project__index">01</span><span class="project__open">↗</span>
+              <span class="project__type">CONCEPT PROJECT</span>
             </div>
-            <div class="hero__scroll">
-                <span class="hero__scroll-text" data-i18n="scroll_text">Прокрутіть</span>
-                <div class="hero__scroll-line"></div>
+            <div class="project__info"><div><h3>Beauty Space / Concept</h3><p data-uk="Концепт преміального сайту для beauty-простору" data-en="Premium beauty space website concept">Концепт преміального сайту для beauty-простору</p></div><span>ART DIRECTION · UX/UI · DEVELOPMENT · 2026</span></div>
+          </a>
+        </article>
+        <article class="project project--tattoo reveal">
+          <a href="https://vitthegrandfather.github.io/tattoosalondemo/" target="_blank" rel="noopener" class="project__link" aria-label="Відкрити концепт сайту тату-студії">
+            <div class="project__visual">
+              <img class="project__image" src="images/projects/tattoo-salon.jpg" alt="Концепт сайту сучасної тату-студії" loading="lazy">
+              <div class="project__frame project__frame--dark"><div class="project__frame-bar"><strong>TATTOO / CONCEPT</strong><span>Work&nbsp;&nbsp; Artists&nbsp;&nbsp; Process</span></div><div class="project__frame-copy"><small>CONTEMPORARY TATTOO STUDIO</small><strong>Wear<br>your story.</strong></div></div>
+              <span class="project__index">02</span><span class="project__open">↗</span>
+              <span class="project__type">CONCEPT PROJECT</span>
             </div>
-        </section>
+            <div class="project__info"><div><h3>Tattoo Studio / Concept</h3><p data-uk="Концепт сайту сучасної тату-студії" data-en="Contemporary tattoo studio website concept">Концепт сайту сучасної тату-студії</p></div><span>STRATEGY · UX/UI · DEVELOPMENT · 2026</span></div>
+          </a>
+        </article>
+      </div>
+    </section>
 
-        <!-- 2. Статистика -->
-        <section id="stats" class="stats section">
-            <div class="container">
-                <div class="stats__grid">
-                    <div class="stat-card glass">
-                        <span class="stat-card__number">24/7</span>
-                        <p class="stat-card__label" data-i18n="stat_online">Працюємо</p>
-                    </div>
-                    <div class="stat-card glass">
-                        <span class="stat-card__number" data-target="4">0</span>
-                        <span class="stat-card__suffix" data-i18n-suffix="stat_stages_suffix"></span>
-                        <p class="stat-card__label" data-i18n="stat_stages">Етапи роботи</p>
-                    </div>
-                    <div class="stat-card glass">
-                        <span class="stat-card__number" data-target="1">0</span>
-                        <span class="stat-card__suffix" data-i18n-suffix="stat_support_suffix"> міс.</span>
-                        <p class="stat-card__label" data-i18n="stat_support">Безкоштовна підтримка</p>
-                    </div>
-                    <div class="stat-card glass">
-                        <span class="stat-card__number" data-target="100">0</span>
-                        <span class="stat-card__suffix">%</span>
-                        <p class="stat-card__label" data-i18n="stat_responsive">Адаптивність</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="kinetic-strip" aria-hidden="true"><div class="kinetic-strip__track"><div class="kinetic-strip__group"><span>ART DIRECTION</span><i>✦</i><span>WEB DESIGN</span><i>✦</i><span>DEVELOPMENT</span><i>✦</i><span>AUTOMATION</span><i>✦</i></div><div class="kinetic-strip__group"><span>ART DIRECTION</span><i>✦</i><span>WEB DESIGN</span><i>✦</i><span>DEVELOPMENT</span><i>✦</i><span>AUTOMATION</span><i>✦</i></div></div></div>
 
-        <!-- 3. Про мене -->
-        <section id="about" class="about section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="about_title">Про мене</h2>
-                <div class="about__content">
-                    <div class="about__image">
-                        <div class="about__carousel glass">
-                            <div class="carousel__track">
-                                <img src="images/photo.jpg" alt="Vitalii" class="carousel__slide active">
-                                <img src="images/photo2.jpg" alt="Vitalii" class="carousel__slide">
-                                <img src="images/photo3.jpg" alt="Vitalii" class="carousel__slide">
-                            </div>
-                            <button class="carousel__btn carousel__btn--prev" aria-label="Previous">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                            </button>
-                            <button class="carousel__btn carousel__btn--next" aria-label="Next">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                            </button>
-                            <div class="carousel__dots">
-                                <span class="carousel__dot active"></span>
-                                <span class="carousel__dot"></span>
-                                <span class="carousel__dot"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="about__text">
-                        <p data-i18n="about_p1">Привіт! Я <strong>Віталій</strong>, засновник WITER.</p>
-                        <p data-i18n="about_p2">Живу в Києві. Постійно навчаюсь та розвиваюсь у веб-розробці. Чистий код, елегантний дизайн та інноваційні рішення — це те, що я ціную у своїй роботі.</p>
-                        <p data-i18n="about_p3">Моя місія — допомогти бізнесу рости в цифровому світі через якісні веб-рішення.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="services section-pad" id="services">
+      <div class="section-head section-head--row">
+        <div class="section-tag reveal"><span>03</span><span data-uk="Можливості" data-en="Capabilities">Можливості</span></div>
+        <h2 class="section-title split-text" data-uk="Від ідеї до запуску." data-en="From idea to launch.">Від ідеї<br>до запуску.</h2>
+      </div>
+      <div class="services__list">
+        <article class="service-item">
+          <button class="service-item__head" type="button" aria-expanded="false"><span class="service-item__num">01</span><h3 data-uk="Сайти та вебпродукти" data-en="Websites & digital products">Сайти та вебпродукти</h3><i>+</i></button>
+          <div class="service-item__body"><p data-uk="Лендінги, портфоліо та корпоративні сайти з продуманою структурою, виразним дизайном і чистою реалізацією." data-en="Landing pages, portfolios and corporate websites with thoughtful structure, expressive design and clean implementation.">Лендінги, портфоліо та корпоративні сайти з продуманою структурою, виразним дизайном і чистою реалізацією.</p><ul><li>UX/UI & art direction</li><li>Responsive development</li><li>SEO & analytics</li></ul><a href="#contact" data-service="Сайт" data-uk="Запросити оцінку ↗" data-en="Request estimate ↗">Запросити оцінку ↗</a></div>
+        </article>
+        <article class="service-item">
+          <button class="service-item__head" type="button" aria-expanded="false"><span class="service-item__num">02</span><h3>Telegram bots</h3><i>+</i></button>
+          <div class="service-item__body"><p data-uk="Боти для замовлень, підтримки, оплат, сповіщень і внутрішніх процесів. Менше рутини — більше контролю." data-en="Bots for orders, support, payments, notifications and internal processes. Less routine, more control.">Боти для замовлень, підтримки, оплат, сповіщень і внутрішніх процесів. Менше рутини — більше контролю.</p><ul><li>Business logic</li><li>Payments & mini apps</li><li>Admin tools</li></ul><a href="#contact" data-service="Telegram bot" data-uk="Запросити оцінку ↗" data-en="Request estimate ↗">Запросити оцінку ↗</a></div>
+        </article>
+        <article class="service-item">
+          <button class="service-item__head" type="button" aria-expanded="false"><span class="service-item__num">03</span><h3>API & automation</h3><i>+</i></button>
+          <div class="service-item__body"><p data-uk="З'єдную сервіси, CRM, платежі та дані в один надійний сценарій, який економить час команді." data-en="I connect services, CRM, payments and data into one reliable flow that saves your team time.">З'єдную сервіси, CRM, платежі та дані в один надійний сценарій, який економить час команді.</p><ul><li>API integrations</li><li>CRM & data sync</li><li>Workflow automation</li></ul><a href="#contact" data-service="API integration" data-uk="Запросити оцінку ↗" data-en="Request estimate ↗">Запросити оцінку ↗</a></div>
+        </article>
+        <article class="service-item">
+          <button class="service-item__head" type="button" aria-expanded="false"><span class="service-item__num">04</span><h3 data-uk="Запуск і підтримка" data-en="Launch & support">Запуск і підтримка</h3><i>+</i></button>
+          <div class="service-item__body"><p data-uk="Домен, хостинг, аналітика, оптимізація та технічний супровід після запуску — без зайвої складності для вас." data-en="Domain, hosting, analytics, optimization and technical support after launch — without unnecessary complexity for you.">Домен, хостинг, аналітика, оптимізація та технічний супровід після запуску — без зайвої складності для вас.</p><ul><li>Deployment</li><li>Performance</li><li>Ongoing support</li></ul><a href="#contact" data-service="Підтримка" data-uk="Запросити оцінку ↗" data-en="Request estimate ↗">Запросити оцінку ↗</a></div>
+        </article>
+      </div>
+    </section>
 
-        <!-- 4. Процес -->
-        <section id="process" class="process section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="process_title">Як я працюю</h2>
-                <div class="process__grid">
-                    <div class="process-card glass">
-                        <span class="process-card__step">01</span>
-                        <h3 class="process-card__title" data-i18n="process_1_title">Бриф</h3>
-                        <p class="process-card__desc" data-i18n="process_1_desc">Аналізую ваші потреби, цілі та аудиторію. Визначаю стратегію та структуру проєкту.</p>
-                    </div>
-                    <div class="process-card glass">
-                        <span class="process-card__step">02</span>
-                        <h3 class="process-card__title" data-i18n="process_2_title">Візуалізація</h3>
-                        <p class="process-card__desc" data-i18n="process_2_desc">Створюю макет у Figma з урахуванням вашого бренду та сучасних трендів.</p>
-                    </div>
-                    <div class="process-card glass">
-                        <span class="process-card__step">03</span>
-                        <h3 class="process-card__title" data-i18n="process_3_title">Розробка</h3>
-                        <p class="process-card__desc" data-i18n="process_3_desc">Верстаю та програмую сайт. Чистий код, швидке завантаження, адаптивність.</p>
-                    </div>
-                    <div class="process-card glass">
-                        <span class="process-card__step">04</span>
-                        <h3 class="process-card__title" data-i18n="process_4_title">Запуск</h3>
-                        <p class="process-card__desc" data-i18n="process_4_desc">Налаштовую хостинг, домен та аналітику. Сайт готовий до роботи!</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section class="process section-pad" id="process">
+      <div class="process__intro">
+        <div class="section-tag reveal"><span>04</span><span data-uk="Процес" data-en="Process">Процес</span></div>
+        <h2 class="section-title split-text" data-uk="Чотири кроки. Один напрям." data-en="Four steps. One direction.">Чотири кроки.<br>Один напрям.</h2>
+        <p data-uk="Ви завжди знаєте, що відбувається з проєктом і що буде далі." data-en="You always know what is happening with the project and what comes next.">Ви завжди знаєте, що відбувається з проєктом і що буде далі.</p>
+      </div>
+      <div class="process__steps">
+        <article class="step"><span>01</span><div><small>DISCOVER</small><h3 data-uk="Знаходимо суть" data-en="Find the core">Знаходимо суть</h3><p data-uk="Цілі, аудиторія, контекст і критерії успіху." data-en="Goals, audience, context and success criteria.">Цілі, аудиторія, контекст і критерії успіху.</p></div></article>
+        <article class="step"><span>02</span><div><small>DIRECT</small><h3 data-uk="Формуємо напрям" data-en="Shape the direction">Формуємо напрям</h3><p data-uk="Структура, референси, візуальна система та прототип." data-en="Structure, references, visual system and prototype.">Структура, референси, візуальна система та прототип.</p></div></article>
+        <article class="step"><span>03</span><div><small>BUILD</small><h3 data-uk="Втілюємо точно" data-en="Build with precision">Втілюємо точно</h3><p data-uk="Розробка, анімації, інтеграції та адаптивність." data-en="Development, motion, integrations and responsiveness.">Розробка, анімації, інтеграції та адаптивність.</p></div></article>
+        <article class="step"><span>04</span><div><small>LAUNCH</small><h3 data-uk="Запускаємо впевнено" data-en="Launch confidently">Запускаємо впевнено</h3><p data-uk="Тести, оптимізація, аналітика та підтримка." data-en="Testing, optimization, analytics and support.">Тести, оптимізація, аналітика та підтримка.</p></div></article>
+      </div>
+    </section>
 
-        <!-- Роботи -->
-        <section id="projects" class="section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="projects_title">Роботи</h2>
-                <div class="projects__grid" id="projectsGrid"></div>
-            </div>
-        </section>
+    <section class="about section-pad" id="about">
+      <div class="about__photo"><div class="about__photo-reveal" aria-hidden="true"></div><img src="images/photo.jpg" alt="Віталій, засновник WITER" loading="lazy"><div class="about__photo-mark">W / 01</div></div>
+      <div class="about__content">
+        <div class="section-tag reveal"><span>05</span><span data-uk="За студією" data-en="Behind the studio">За студією</span></div>
+        <h2 class="section-title split-text" data-uk="Невелика студія. Особиста відповідальність." data-en="Small studio. Personal responsibility.">Невелика студія.<br>Особиста відповідальність.</h2>
+        <div class="about__copy reveal"><p id="aboutCopyOne" data-uk="Я Віталій — дизайнер і розробник із Києва, засновник WITER. Особисто веду проєкт від першої розмови до запуску." data-en="I'm Vitalii — a designer and developer from Kyiv, founder of WITER. I personally lead every project from the first conversation to launch.">Я Віталій — дизайнер і розробник із Києва, засновник WITER. Особисто веду проєкт від першої розмови до запуску.</p><p id="aboutCopyTwo" data-uk="Ціную ясність, сильну візуальну ідею та код, який не створює проблем після релізу." data-en="I value clarity, a strong visual idea and code that doesn't create problems after release.">Ціную ясність, сильну візуальну ідею та код, який не створює проблем після релізу.</p></div>
+        <div class="about__facts reveal"><div><strong>01</strong><span data-uk="контактна особа" data-en="point of contact">контактна особа</span></div><div><strong>24/7</strong><span data-uk="на зв'язку" data-en="online">на зв'язку</span></div><div><strong>30</strong><span data-uk="днів підтримки" data-en="days support">днів підтримки</span></div></div>
+      </div>
+    </section>
 
-        <!-- Сайт -->
-        <section id="service-website" class="service section">
-            <div class="container">
-                <div class="service__content">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_website_title">Корпоративний сайт</h2>
-                        <p class="service__desc" data-i18n="svc_website_desc">Багатосторінковий сайт з навігацією, системою керування контентом та повним функціоналом для вашого бізнесу. Ідеально для компаній, сервісів, агенцій.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_website_f1">4-6 сторінок з навігацією</li>
-                            <li data-i18n="svc_website_f2">Адаптивний дизайн</li>
-                            <li data-i18n="svc_website_f3">Система керування контентом</li>
-                            <li data-i18n="svc_website_f4">Форми зворотнього зв'язку</li>
-                            <li data-i18n="svc_website_f5">Інтеграція з Google Analytics</li>
-                            <li data-i18n="svc_website_f6">SEO-оптимізація всіх сторінок</li>
-                            <li data-i18n="svc_website_f7">Підтримка 1 місяць безкоштовно</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Корпоративний сайт" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="mockup-browser">
-                            <div class="mockup-browser__bar">
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__url"></div>
-                            </div>
-                            <div class="mockup-browser__content">
-                                <div class="mockup-browser__nav">
-                                    <div class="mockup-browser__nav-item"></div>
-                                    <div class="mockup-browser__nav-item"></div>
-                                    <div class="mockup-browser__nav-item"></div>
-                                    <div class="mockup-browser__nav-item"></div>
-                                </div>
-                                <div class="mockup-browser__hero">
-                                    <div class="mockup-browser__hero-text"></div>
-                                    <div class="mockup-browser__hero-text mockup-browser__hero-text--short"></div>
-                                    <div class="mockup-browser__btn"></div>
-                                </div>
-                                <div class="mockup-browser__grid">
-                                    <div class="mockup-browser__card"></div>
-                                    <div class="mockup-browser__card"></div>
-                                    <div class="mockup-browser__card"></div>
-                                </div>
-                                <div class="mockup-browser__footer">
-                                    <div class="mockup-browser__footer-line"></div>
-                                    <div class="mockup-browser__footer-line mockup-browser__footer-line--short"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <div class="kinetic-strip kinetic-strip--light" aria-hidden="true"><div class="kinetic-strip__track"><div class="kinetic-strip__group"><span>CLARITY</span><i>✦</i><span>CHARACTER</span><i>✦</i><span>MOTION</span><i>✦</i><span>RESULT</span><i>✦</i></div><div class="kinetic-strip__group"><span>CLARITY</span><i>✦</i><span>CHARACTER</span><i>✦</i><span>MOTION</span><i>✦</i><span>RESULT</span><i>✦</i></div></div></div>
 
-        <!-- Лендінг -->
-        <section id="service-landing" class="service service--alt section">
-            <div class="container">
-                <div class="service__content service__content--reverse">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_landing_title">Лендінг</h2>
-                        <p class="service__desc" data-i18n="svc_landing_desc">Односторінковий сайт, який ефективно представляє ваш бізнес та конвертує відвідувачів у клієнтів. Ідеально для візиток, портфоліо, презентації послуг.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_landing_f1">Адаптивний дизайн під всі пристрої</li>
-                            <li data-i18n="svc_landing_f2">Анімації та ефекти при скролі</li>
-                            <li data-i18n="svc_landing_f3">Базова SEO-оптимізація</li>
-                            <li data-i18n="svc_landing_f4">Форма зворотнього зв'язку</li>
-                            <li data-i18n="svc_landing_f5">Інтеграція з аналітикою</li>
-                            <li data-i18n="svc_landing_f6">Підтримка 1 місяць безкоштовно</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Лендінг" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="mockup-browser">
-                            <div class="mockup-browser__bar">
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__dot"></div>
-                                <div class="mockup-browser__url"></div>
-                            </div>
-                            <div class="mockup-browser__content">
-                                <div class="mockup-browser__hero mockup-browser__hero--tall">
-                                    <div class="mockup-browser__hero-text"></div>
-                                    <div class="mockup-browser__hero-text mockup-browser__hero-text--short"></div>
-                                    <div class="mockup-browser__btn"></div>
-                                </div>
-                                <div class="mockup-browser__line mockup-browser__line--long"></div>
-                                <div class="mockup-browser__line mockup-browser__line--medium"></div>
-                                <div class="mockup-browser__line mockup-browser__line--short"></div>
-                                <div class="mockup-browser__grid" style="margin-top:10px">
-                                    <div class="mockup-browser__card"></div>
-                                    <div class="mockup-browser__card"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Telegram бот -->
-        <section id="service-bot" class="service section">
-            <div class="container">
-                <div class="service__content">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_bot_title">Telegram бот</h2>
-                        <p class="service__desc" data-i18n="svc_bot_desc">Функціональний бот для автоматизації бізнес-процесів, прийому замовлень, підтримки клієнтів або особистого використання.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_bot_f1">Команди, кнопки та меню</li>
-                            <li data-i18n="svc_bot_f2">Збереження даних у базу</li>
-                            <li data-i18n="svc_bot_f3">Інтеграція з Google Таблицями</li>
-                            <li data-i18n="svc_bot_f4">Оплата всередині бота</li>
-                            <li data-i18n="svc_bot_f5">Розсилки та сповіщення</li>
-                            <li data-i18n="svc_bot_f6">Підтримка 1 місяць безкоштовно</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Telegram бот" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="mockup-chat">
-                            <div class="mockup-chat__msg mockup-chat__msg--bot"></div>
-                            <div class="mockup-chat__msg mockup-chat__msg--user"></div>
-                            <div class="mockup-chat__msg mockup-chat__msg--bot"></div>
-                            <div class="mockup-chat__msg mockup-chat__msg--bot" style="width:50%"></div>
-                            <div class="mockup-chat__btns">
-                                <div class="mockup-chat__btn"></div>
-                                <div class="mockup-chat__btn"></div>
-                                <div class="mockup-chat__btn"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Інтеграція API -->
-        <section id="service-api" class="service service--alt section">
-            <div class="container">
-                <div class="service__content service__content--reverse">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_api_title">Інтеграція API</h2>
-                        <p class="service__desc" data-i18n="svc_api_desc">З'єднання вашого сайту або додатку із зовнішніми сервісами: платіжні системи, CRM, пошта, доставка, аналітика.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_api_f1">Інтеграція з будь-яким API</li>
-                            <li data-i18n="svc_api_f2">Автоматизація процесів</li>
-                            <li data-i18n="svc_api_f3">Синхронізація даних між сервісами</li>
-                            <li data-i18n="svc_api_f4">Обробка помилок</li>
-                            <li data-i18n="svc_api_f5">Документація</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Інтеграція API" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="api-flow">
-                            <div class="api-flow__item">
-                                <div class="api-flow__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                                </div>
-                                <span class="api-flow__label" data-i18n="api_label_site">Сайт</span>
-                            </div>
-                            <div class="api-flow__arrow">
-                                <div class="api-flow__arrow-line"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                            </div>
-                            <div class="api-flow__item">
-                                <div class="api-flow__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
-                                </div>
-                                <span class="api-flow__label" data-i18n="api_label_api">API</span>
-                            </div>
-                            <div class="api-flow__arrow">
-                                <div class="api-flow__arrow-line"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                                <div class="api-flow__arrow-dot"></div>
-                            </div>
-                            <div class="api-flow__item">
-                                <div class="api-flow__icon">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                </div>
-                                <span class="api-flow__label" data-i18n="api_label_service">Сервіс</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Налаштування хостингу -->
-        <section id="service-hosting" class="service section">
-            <div class="container">
-                <div class="service__content">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_hosting_title">Налаштування хостингу</h2>
-                        <p class="service__desc" data-i18n="svc_hosting_desc">Повний цикл запуску: від реєстрації домену до робочого сайту з HTTPS та поштою.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_hosting_f1">Реєстрація та підключення домену</li>
-                            <li data-i18n="svc_hosting_f2">Налаштування хостингу</li>
-                            <li data-i18n="svc_hosting_f3">Встановлення SSL-сертифікату</li>
-                            <li data-i18n="svc_hosting_f4">Налаштування поштових скриньок</li>
-                            <li data-i18n="svc_hosting_f5">Деплой сайту на сервер</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Налаштування хостингу" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="mockup-hosting">
-                            <div class="mockup-hosting__server">
-                                <div class="mockup-hosting__led"></div>
-                                <div class="mockup-hosting__led"></div>
-                                <div class="mockup-hosting__led"></div>
-                            </div>
-                            <div class="mockup-hosting__domain"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Підтримка -->
-        <section id="service-support" class="service service--alt section">
-            <div class="container">
-                <div class="service__content service__content--reverse">
-                    <div class="service__info">
-                        <h2 class="service__title" data-i18n="svc_support_title">Підтримка сайту</h2>
-                        <p class="service__desc" data-i18n="svc_support_desc">Постійний нагляд за вашим сайтом: оновлення, виправлення, бекапи, консультації. Ви звертаєтесь — я вирішую.</p>
-                        <ul class="service__list">
-                            <li data-i18n="svc_support_f1">Оновлення контенту та текстів</li>
-                            <li data-i18n="svc_support_f2">Виправлення багів та помилок</li>
-                            <li data-i18n="svc_support_f3">Регулярні бекапи</li>
-                            <li data-i18n="svc_support_f4">Моніторинг безпеки</li>
-                            <li data-i18n="svc_support_f5">Технічні консультації</li>
-                            <li data-i18n="svc_support_f6">Оплата за фактом або пакетом</li>
-                        </ul>
-                        <button class="btn btn--primary order-btn" data-service="Підтримка сайту" data-i18n="order_btn">Замовити</button>
-                    </div>
-                    <div class="service__visual">
-                        <div class="mockup-support">
-                            <div class="mockup-support__shield"></div>
-                            <div class="mockup-support__badge">24/7</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Модальне вікно замовлення -->
-        <div class="modal" id="orderModal">
-            <div class="modal__overlay"></div>
-            <div class="modal__content">
-                <button class="modal__close" aria-label="Close">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                </button>
-                <h3 class="modal__title" data-i18n="modal_title">Замовити послугу</h3>
-                <p class="modal__service" id="modalService"></p>
-                <form class="modal__form" id="orderForm" novalidate>
-                    <div style="position:absolute;left:-9999px" aria-hidden="true">
-                        <input type="text" name="website" tabindex="-1" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="orderName" name="name" placeholder="Ваше ім'я" data-i18n-placeholder="form_name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="orderEmail" name="email" placeholder="Ваш email" data-i18n-placeholder="form_email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="orderMessage" name="message" rows="4" placeholder="Опишіть ваш проєкт" data-i18n-placeholder="form_message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn--primary btn--full" data-i18n="form_submit">Надіслати</button>
-                </form>
-            </div>
+    <section class="contact" id="contact">
+      <div class="contact__wind" aria-hidden="true">WITER</div>
+      <div class="contact__inner section-pad">
+        <div class="section-tag reveal"><span>06</span><span data-uk="Почати проєкт" data-en="Start a project">Почати проєкт</span></div>
+        <h2 class="contact__title split-text" data-uk="Є ідея? Дамо їй напрям." data-en="Have an idea? Let's give it direction.">Є ідея?<br>Дамо їй напрям.</h2>
+        <div class="contact__grid">
+          <div class="contact__direct reveal"><p data-uk="Напишіть напряму" data-en="Contact directly">Напишіть напряму</p><a href="mailto:studiowiter@outlook.com">studiowiter@outlook.com ↗</a><a href="https://t.me/vitthegrandfather" target="_blank" rel="noopener">Telegram ↗</a></div>
+          <form class="brief reveal" id="contactForm" novalidate>
+            <input type="hidden" name="service" id="selectedService" value="Новий проєкт">
+            <div class="brief__row"><label><span data-uk="Ваше ім'я" data-en="Your name">Ваше ім'я</span><input type="text" name="name" required autocomplete="name" placeholder="Ім'я"></label><label><span>Email</span><input type="email" name="email" required autocomplete="email" placeholder="hello@company.com"></label></div>
+            <fieldset><legend data-uk="Що створюємо?" data-en="What are we building?">Що створюємо?</legend><div class="chips"><button type="button" data-value="Сайт">Website</button><button type="button" data-value="Telegram bot">Telegram bot</button><button type="button" data-value="API integration">API</button><button type="button" data-value="Інше" data-uk="Інше" data-en="Other">Інше</button></div></fieldset>
+            <label><span data-uk="Коротко про задачу" data-en="Tell me about the task">Коротко про задачу</span><textarea name="message" required rows="3" data-placeholder-uk="Цілі, строки, побажання..." data-placeholder-en="Goals, timing, preferences..." placeholder="Цілі, строки, побажання..."></textarea></label>
+            <button class="brief__submit magnetic" type="submit"><span data-uk="Надіслати запит" data-en="Send inquiry">Надіслати запит</span><i>↗</i></button>
+            <p class="brief__status" role="status" aria-live="polite"></p>
+          </form>
         </div>
+      </div>
+    </section>
+  </main>
 
-        <!-- Відгуки -->
-        <section id="reviews" class="reviews section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="reviews_title">Відгуки</h2>
-                <div class="reviews__empty glass">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                    <p data-i18n="reviews_empty">Відгуки з'являться після перших замовлень. Слідкуйте за оновленнями!</p>
-                </div>
-            </div>
-        </section>
+  <footer class="footer">
+    <a class="brand" href="#top"><span>W</span><span class="brand__full">ITER</span></a>
+    <span>© 2026 WITER DIGITAL STUDIO</span>
+    <div class="footer__socials"><a href="https://www.instagram.com/vitthegrandfather" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" class="social-dot"></circle></svg><span>Instagram</span></a><a href="https://www.linkedin.com/in/vitalii-chursanov/" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 10v7M8 7v.01M12 17v-4a3 3 0 0 1 6 0v4M12 10v7"></path></svg><span>LinkedIn</span></a></div>
+  </footer>
 
-        <!-- FAQ -->
-        <section id="faq" class="faq section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="faq_title">Часті запитання</h2>
-                <div class="faq__list">
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_1_q">Що потрібно для початку?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_1_a">Опишіть ідею або задачу. Я допоможу з ТЗ, зроблю оцінку. Далі — передоплата і старт.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_2_q">Які матеріали потрібні?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_2_a">Тексти, фото, логотип, список послуг, ціни. Якщо чогось немає — допоможу або використаємо заглушки.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_3_q">Як відбувається зв'язок?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_3_a">Через Telegram або email. Надсилаю скріншоти готових етапів, ви коментуєте, ми правимо.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_4_q">Чи працюєте з готовим дизайном?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_4_a">Так. Верстаю з Figma або PSD. Якщо немає — пропоную свою концепцію.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_5_q">Чи можна внести правки?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_5_a">Так. Дрібні правки (тексти, кольори) — входять. Суттєві зміни — обговорюємо окремо.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_6_q">Скільки коштує розробка сайту?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_6_a">Вартість залежить від складності проєкту. Зверніться до мене — зроблю безкоштовну оцінку після брифу.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_7_q">Скільки часу займає розробка сайту?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_7_a">Лендінг — 3-5 днів, корпоративний сайт — 1-2 тижні.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_8_q">Що входить у SEO-оптимізацію?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_8_a">Мета-теги, заголовки, alt-теги, швидке завантаження, адаптивність, чисті URL — база для Google.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_9_q">Скільки коштує Telegram бот?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_9_a">Вартість залежить від функціоналу. Зверніться — оціню безкоштовно після опису завдання.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_10_q">Скільки займає розробка бота?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_10_a">Простий — 2-5 днів, складний з інтеграціями — 1-2 тижні.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_11_q">Що може Telegram бот?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_11_a">Замовлення, оплата, розсилки, CRM, Google Таблиці, міні-апи — майже все, що можна автоматизувати.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_12_q">Як проходить оплата?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_12_a">50% передоплата, 50% після завершення. Приймаю переказ, картку або крипту.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_13_q">Чи можна розширити функціонал?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_13_a">Так. Код чистий та масштабований. Додаємо нові фічі, сторінки, інтеграції без проблем.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_14_q">Чи надаєте підтримку?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_14_a">1 місяць безкоштовно: баги, правки, консультації. Далі — індивідуально або за фактом.</p></div>
-                    </div>
-                    <div class="faq-item glass">
-                        <button class="faq-item__question"><span data-i18n="faq_15_q">Чи є гарантія?</span><svg class="faq-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
-                        <div class="faq-item__answer"><p data-i18n="faq_15_a">Так. Місяць безкоштовної підтримки. Якщо щось не так — виправляю безкоштовно.</p></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+  <div class="mobile-menu" aria-hidden="true"><nav><a href="#work" data-uk="Портфоліо" data-en="Portfolio">Портфоліо</a><a href="#services" data-uk="Послуги" data-en="Services">Послуги</a><a href="#process" data-uk="Процес" data-en="Process">Процес</a><a href="#about" data-uk="Про мене" data-en="About">Про мене</a><a href="#contact" data-uk="Контакти" data-en="Contact">Контакти</a></nav><div><span>KYIV, UA</span><span>AVAILABLE NOW</span></div></div>
+  <div class="case-modal" id="caseModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="caseModalTitle"><button class="case-modal__close" type="button" aria-label="Закрити кейс">×</button><div class="case-modal__media"><img id="caseModalImage" src="" alt=""><span class="case-modal__media-label">CONCEPT / 2026</span></div><div class="case-modal__content"><div class="eyebrow">SELECTED CONCEPT / <span id="caseModalNumber">01</span></div><h2 id="caseModalTitle"></h2><p id="caseModalDescription"></p><div class="case-modal__story"><div><span data-uk="ЗАВДАННЯ" data-en="CHALLENGE">ЗАВДАННЯ</span><p id="caseModalBrief"></p></div><div><span data-uk="КЛЮЧОВІ РІШЕННЯ" data-en="KEY SOLUTIONS">КЛЮЧОВІ РІШЕННЯ</span><ul id="caseModalFeatures"></ul></div></div><div class="case-modal__tech"><span data-uk="ВИКОРИСТАНО" data-en="BUILT WITH">ВИКОРИСТАНО</span><div id="caseModalTech"></div></div><div class="case-modal__meta"><div><span>ROLE</span><strong>Art direction · UX/UI · Development</strong></div><div><span>YEAR</span><strong>2026</strong></div></div><a class="case-modal__link" id="caseModalLink" href="#" target="_blank" rel="noopener"><span data-uk="Переглянути концепт" data-en="View concept">Переглянути концепт</span><i>↗</i></a></div></div>
 
-        <!-- Технології -->
-        <section id="tech" class="tech section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="tech_title">Технології</h2>
-                <p class="tech__subtitle" data-i18n="tech_subtitle">Інструменти, з якими я працюю</p>
-                <div class="tech__grid">
-                    <div class="tech-card glass" data-tech="html5">
-                        <div class="tech-card__icon">
-                            <img src="images/html5.png" alt="HTML5" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">HTML5</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="css3">
-                        <div class="tech-card__icon">
-                            <img src="images/css3.png" alt="CSS3" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">CSS3</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="js">
-                        <div class="tech-card__icon">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">JS</text></svg>
-                        </div>
-                        <span class="tech-card__name">JavaScript</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="react">
-                        <div class="tech-card__icon">
-                            <img src="images/react.png" alt="React" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">React</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="node">
-                        <div class="tech-card__icon">
-                            <img src="images/nodejs.png" alt="Node.js" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">Node.js</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="telegram">
-                        <div class="tech-card__icon">
-                            <img src="images/tg.png" alt="Telegram" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">Telegram API</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="git">
-                        <div class="tech-card__icon">
-                            <img src="images/git.png" alt="Git" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">Git</span>
-                    </div>
-                    <div class="tech-card glass" data-tech="mongo">
-                        <div class="tech-card__icon">
-                            <img src="images/mongo.png" alt="MongoDB" class="tech-card__img" loading="lazy">
-                        </div>
-                        <span class="tech-card__name">MongoDB</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Контакти -->
-        <section id="contact" class="contact section">
-            <div class="container">
-                <h2 class="section__title" data-i18n="contact_title">Контакти</h2>
-                <div class="contact__content">
-                    <div class="contact__info">
-                        <p class="contact__text" data-i18n="contact_text">Маєте проект чи пропозицію? Напишіть мені!</p>
-                        <div class="contact__socials">
-                            <a href="https://www.linkedin.com/in/vitalii-chursanov/" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                            </a>
-                            <a href="https://www.instagram.com/vitthegrandfather" class="social-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                            </a>
-                            <a href="https://t.me/icedafrica" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Telegram">
-                                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                            </a>
-                            <a href="mailto:studiowiter@outlook.com" class="social-link" aria-label="Email">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            </a>
-                        </div>
-                    </div>
-                    <form class="contact__form" id="contactForm" novalidate>
-                        <div style="position:absolute;left:-9999px" aria-hidden="true">
-                            <input type="text" name="website" tabindex="-1" autocomplete="off">
-                        </div>
-                        <div class="form-group">
-                            <label for="name" data-i18n="form_name_label">Ім'я</label>
-                            <input type="text" id="name" name="name" data-i18n-placeholder="form_name" placeholder="Ваше ім'я" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" data-i18n="form_email_label">Email</label>
-                            <input type="email" id="email" name="email" data-i18n-placeholder="form_email" placeholder="Ваш email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message" data-i18n="form_message_label">Повідомлення</label>
-                            <textarea id="message" name="message" rows="5" data-i18n-placeholder="form_message" placeholder="Ваше повідомлення" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn--primary btn--full" data-i18n="form_submit">Надіслати</button>
-                    </form>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer__content">
-                <div class="footer__logo">
-                    <div class="logo-icon logo-icon--small">
-                        <img class="footer-logo" id="footerLogo" src="logo-dark.png" alt="WITER" width="24" height="24">
-                    </div>
-                    <span class="logo-text">WITER</span>
-                </div>
-                <p class="footer__text">© 2026 <span data-i18n="footer_rights">Всі права захищені.</span></p>
-            </div>
-            <!-- Easter Egg Cat -->
-            <div class="cat-easter" id="catEaster">
-                <div class="cat-speech" id="catSpeech"></div>
-                <div class="cat-zzz" id="catZzz">
-                    <span class="zzz zzz--1">z</span>
-                    <span class="zzz zzz--2">z</span>
-                    <span class="zzz zzz--3">Z</span>
-                </div>
-                <div class="cat-body" id="catBody">
-                    <img class="cat-img cat-img--sleep" id="catSleep" src="images/catsleep.png" alt="Sleeping cat">
-                    <img class="cat-img cat-img--wake" id="catWake" src="images/catwokeup.png" alt="Cat woke up">
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Toast notification -->
-    <div class="toast" id="toast">
-        <div class="toast__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        </div>
-        <div class="toast__content">
-            <p class="toast__title" id="toastTitle">Дякую!</p>
-            <p class="toast__text" id="toastText">Ваше повідомлення надіслано.</p>
-        </div>
-        <button class="toast__close" id="toastClose">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        </button>
-    </div>
-
-    <audio id="meowSound" preload="auto">
-        <source src="meow.mp3" type="audio/mpeg">
-    </audio>
-
-    <button class="scroll-top" id="scrollTop" aria-label="Scroll to top">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <polyline points="18 15 12 9 6 15"></polyline>
-        </svg>
-    </button>
-
-    <!-- Email floating button + fullscreen form -->
-    <div class="email-fab-wrap" id="emailFabWrap">
-        <div class="email-dropdown" id="emailDropdown">
-            <div class="email-dropdown__card">
-                <div class="email-dropdown__header">
-                    <h4 data-i18n="contact_title">Контакти</h4>
-                    <button class="email-dropdown__close" id="emailDropdownClose" aria-label="Close">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-                <form class="email-dropdown__form" id="emailDropdownForm" novalidate>
-                    <div style="position:absolute;left:-9999px" aria-hidden="true">
-                        <input type="text" name="website" tabindex="-1" autocomplete="off">
-                    </div>
-                    <div class="form-group">
-                        <input type="text" id="edName" name="name" placeholder="Ваше ім'я" data-i18n-placeholder="form_name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" id="edEmail" name="email" placeholder="Ваш email" data-i18n-placeholder="form_email" required>
-                    </div>
-                    <div class="form-group">
-                        <textarea id="edMessage" name="message" rows="4" placeholder="Ваше повідомлення" data-i18n-placeholder="form_message" required></textarea>
-                    </div>
-                    <button type="submit" class="btn btn--primary btn--full" data-i18n="form_submit">Надіслати</button>
-                </form>
-            </div>
-        </div>
-        <a href="mailto:studiowiter@outlook.com" class="email-btn visible" id="emailFab" aria-label="Email">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-        </a>
-    </div>
-
-    <!-- Telegram floating button -->
-    <a href="https://t.me/icedafrica" target="_blank" rel="noopener noreferrer" class="chat-btn visible" aria-label="Telegram">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-    </a>
-
-    <!-- Tech Modal -->
-    <div class="tech-modal" id="techModal">
-        <div class="tech-modal__overlay"></div>
-        <div class="tech-modal__content">
-            <button class="tech-modal__close" aria-label="Close">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="tech-modal__icon" id="techModalIcon"></div>
-            <h3 class="tech-modal__title" id="techModalTitle"></h3>
-            <p class="tech-modal__desc" id="techModalDesc"></p>
-            <ul class="tech-modal__list" id="techModalList"></ul>
-        </div>
-    </div>
-
-    <!-- GSAP + ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="js/main.js?v=300"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="js/main.js?v=200"></script>
 </body>
 </html>

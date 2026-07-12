@@ -1,65 +1,47 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>WITER | 404 — Сторінку не знайдено</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        .error-page {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 24px;
-        }
-        .error-page__code {
-            font-size: clamp(6rem, 20vw, 12rem);
-            font-weight: 800;
-            letter-spacing: -0.05em;
-            line-height: 1;
-            color: var(--text);
-            opacity: 0.08;
-        }
-        .error-page__title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin: -20px 0 12px;
-            color: var(--text);
-        }
-        .error-page__desc {
-            font-size: 0.95rem;
-            color: var(--text-dim);
-            margin-bottom: 32px;
-            max-width: 360px;
-        }
-        .error-page__link {
-            display: inline-block;
-            padding: 12px 28px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            border-radius: 12px;
-            background: var(--accent-bg);
-            color: var(--accent-text);
-            text-decoration: none;
-            transition: 0.2s;
-        }
-        .error-page__link:hover { opacity: 0.85; transform: translateY(-1px); }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#07090d">
+  <title>404 — Page not found | WITER</title>
+  <link rel="icon" href="favicon.svg?v=3" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#07090d;--ink:#f2f0e9;--muted:#858c99;--line:rgba(242,240,233,.16);--blue:#345cff;--lime:#c8ff45;--pad:clamp(20px,4vw,64px);--display:"Space Grotesk",sans-serif;--sans:"Manrope",sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}html{background:var(--bg);scrollbar-width:none}body{min-height:100svh;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}body::-webkit-scrollbar{display:none}a{color:inherit;text-decoration:none}::selection{background:var(--blue);color:white}
+    .noise{position:fixed;inset:0;z-index:10;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
+    .wind{position:fixed;inset:0;opacity:.62;pointer-events:none}.wind:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 68% 47%,transparent,rgba(7,9,13,.2) 46%,var(--bg) 94%)}#windCanvas{width:100%;height:100%}
+    .page{position:relative;z-index:2;min-height:100svh;padding:28px var(--pad);display:flex;flex-direction:column}.header,.footer{display:flex;align-items:center;justify-content:space-between;font:600 8px var(--display);letter-spacing:.15em;color:var(--muted)}
+    .brand{display:flex;align-items:center;font:600 21px/1 var(--display);letter-spacing:-.06em;color:var(--ink)}.brand b{display:grid;place-items:center;width:31px;height:31px;margin-right:3px;border-radius:50%;background:var(--ink);color:var(--bg)}.status{display:flex;align-items:center;gap:10px}.status i{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 5px rgba(200,255,69,.08)}
+    .error-code{position:absolute;right:-2vw;top:50%;transform:translateY(-54%);font:500 min(42vw,620px)/.75 var(--display);letter-spacing:-.1em;color:transparent;-webkit-text-stroke:1px rgba(91,122,255,.14);pointer-events:none}
+    .content{margin:auto 0;max-width:1100px;position:relative}.eyebrow{font:600 9px var(--display);letter-spacing:.18em;color:var(--blue);margin-bottom:30px}.title{font:500 clamp(68px,12vw,190px)/.82 var(--display);letter-spacing:-.08em}.title span{display:block;color:transparent;-webkit-text-stroke:1.3px var(--ink)}.content__bottom{display:grid;grid-template-columns:minmax(260px,520px) auto;align-items:end;gap:60px;margin-top:55px;margin-left:38%}.copy p{color:#a1a7b0;font-size:clamp(14px,1.2vw,18px);line-height:1.6}.copy small{display:block;margin-top:13px;font:500 9px var(--display);letter-spacing:.13em;color:#59606c}.back{width:128px;height:128px;border-radius:50%;border:1px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;font:600 9px var(--display);letter-spacing:.1em;text-transform:uppercase;text-align:center;transition:.35s}.back i{font-style:normal;font-size:17px}.back:hover{background:var(--blue);border-color:var(--blue);transform:rotate(-4deg)}
+    .footer{padding-top:22px;border-top:1px solid var(--line)}.footer a{color:var(--ink)}
+    @media(max-width:700px){.page{padding:22px 20px}.header>span{display:none}.error-code{top:43%;font-size:62vw}.title{font-size:24vw}.content__bottom{grid-template-columns:1fr;margin:38px 0 0;gap:28px}.copy{max-width:90%}.back{width:98px;height:98px;justify-self:end;font-size:8px}.footer span:last-child{display:none}}
+    @media(prefers-reduced-motion:reduce){.wind{display:none}.back{transition:none}}
+  </style>
 </head>
 <body>
-    <div class="error-page">
-        <div>
-            <div class="error-page__code">404</div>
-            <h1 class="error-page__title">Сторінку не знайдено</h1>
-            <p class="error-page__desc">Схоже, ця сторінка не існує або була переміщена. Поверніться на головну.</p>
-            <a href="index.html" class="error-page__link">На головну</a>
-        </div>
-    </div>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="wind" aria-hidden="true"><canvas id="windCanvas"></canvas></div>
+  <div class="page">
+    <header class="header"><a class="brand" href="/"><b>W</b><span>ITER</span></a><span>ERROR / 404</span><span class="status"><i></i>STUDIO ONLINE</span></header>
+    <div class="error-code" aria-hidden="true">404</div>
+    <main class="content">
+      <div class="eyebrow">LOST IN THE FLOW / 404</div>
+      <h1 class="title">Wrong<span>direction.</span></h1>
+      <div class="content__bottom">
+        <div class="copy"><p>Схоже, ця сторінка змінила напрям або ніколи не існувала. Повернімося туди, де все починається.</p><small>THE PAGE COULD NOT BE FOUND</small></div>
+        <a class="back" href="/"><span>На головну</span><i>↗</i></a>
+      </div>
+    </main>
+    <footer class="footer"><span>© 2026 WITER DIGITAL STUDIO</span><a href="mailto:studiowiter@outlook.com">STUDIOWITER@OUTLOOK.COM</a><span>KYIV · UA</span></footer>
+  </div>
+  <script>
+    (()=>{if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const c=document.getElementById('windCanvas'),x=c.getContext('2d');let w,h,p=[];function size(){const d=Math.min(devicePixelRatio,2);w=c.clientWidth;h=c.clientHeight;c.width=w*d;c.height=h*d;x.setTransform(d,0,0,d,0,0);p=Array.from({length:Math.min(100,Math.floor(w/11))},()=>({x:Math.random()*w,y:Math.random()*h,s:.35+Math.random(),l:45+Math.random()*120,a:Math.random()*6.28}))}function draw(t){x.clearRect(0,0,w,h);p.forEach(o=>{o.x+=o.s;if(o.x>w+o.l)o.x=-o.l;const d=Math.sin(o.a+t*.0006)*24;x.beginPath();x.moveTo(o.x,o.y);x.bezierCurveTo(o.x+o.l*.35,o.y+d,o.x+o.l*.7,o.y-d,o.x+o.l,o.y);x.strokeStyle=`rgba(91,122,255,${.07+o.s*.05})`;x.lineWidth=.7;x.stroke()});requestAnimationFrame(draw)}addEventListener('resize',size);size();requestAnimationFrame(draw)})();
+  </script>
 </body>
 </html>

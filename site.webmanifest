@@ -1,14 +1,14 @@
 {
   "name": "WITER — Digital Studio",
   "short_name": "WITER",
-  "description": "Сучасні веб-рішення від Vitalii Chursanov",
+  "description": "Преміальні сайти, Telegram-боти, API-інтеграції та автоматизація для бізнесу",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#080810",
-  "theme_color": "#080810",
+  "background_color": "#07090d",
+  "theme_color": "#07090d",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/favicon.svg?v=3",
       "sizes": "any",
       "type": "image/svg+xml"
     }
