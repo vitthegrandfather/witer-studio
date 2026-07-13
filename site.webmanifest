@@ -1,14 +1,14 @@
 {
   "name": "WITER — Digital Studio",
   "short_name": "WITER",
-  "description": "Premium web design and development, Telegram bots, API integrations, and business automation",
+  "description": "Premium websites, digital products, Telegram bots and business automation by WITER Digital Studio",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#07090d",
   "theme_color": "#07090d",
   "icons": [
     {
-      "src": "/favicon.svg",
+      "src": "/witer-favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml"
     }

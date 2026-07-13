@@ -8,6 +8,7 @@
 
   function applyAdminContent() {
     let texts = {}, projects = null;
+    const isEnglishPage = location.pathname === '/en' || location.pathname.startsWith('/en/');
     try {
       texts = JSON.parse(localStorage.getItem('witer_texts')) || {};
       projects = JSON.parse(localStorage.getItem('witer_projects'));
@@ -32,11 +33,13 @@
       const nameEn = escapeHTML(project.nameEn || project.name || 'WITER Project');
       const desc = escapeHTML(project.desc || 'Digital product by WITER Studio');
       const descEn = escapeHTML(project.descEn || project.desc || 'Digital product by WITER Studio');
+      const visibleName = isEnglishPage ? nameEn : name;
+      const visibleDesc = isEnglishPage ? descEn : desc;
       const image = escapeHTML(project.image || 'og-image.svg');
       const link = /^https?:\/\//i.test(project.link || '') ? escapeHTML(project.link) : '#contact';
       const stack = escapeHTML(project.stack || 'DESIGN · DEVELOPMENT');
-      const displayName = name.replace(/\s*\/\s*/, '<br>');
-      return `<article class="project ${index % 2 ? 'project--tattoo' : 'project--beauty'} reveal"><a href="${link}" ${link !== '#contact' ? 'target="_blank" rel="noopener"' : ''} class="project__link" aria-label="${name}"><div class="project__visual"><img class="project__image" src="${image}" alt="${name}" loading="lazy"><div class="project__frame ${index % 2 ? 'project__frame--dark' : ''}"><div class="project__frame-bar"><strong>WITER / ${String(index + 1).padStart(2, '0')}</strong><span>Selected concept&nbsp;&nbsp; 2026</span></div><div class="project__frame-copy"><small>${stack}</small><strong>${displayName}</strong></div></div><span class="project__index">${String(index + 1).padStart(2, '0')}</span><span class="project__open">↗︎</span><span class="project__type">CONCEPT PROJECT</span></div><div class="project__info"><div><h3 data-uk="${name}" data-en="${nameEn}">${name}</h3><p data-uk="${desc}" data-en="${descEn}">${desc}</p></div><span>${stack}</span></div></a></article>`;
+      const displayName = visibleName.replace(/\s*\/\s*/, '<br>');
+      return `<article class="project ${index % 2 ? 'project--tattoo' : 'project--beauty'} reveal"><a href="${link}" ${link !== '#contact' ? 'target="_blank" rel="noopener"' : ''} class="project__link" aria-label="${visibleName}"><div class="project__visual"><img class="project__image" src="${image}" alt="${visibleName}" loading="lazy"><div class="project__frame ${index % 2 ? 'project__frame--dark' : ''}"><div class="project__frame-bar"><strong>WITER / ${String(index + 1).padStart(2, '0')}</strong><span>Selected concept&nbsp;&nbsp; 2026</span></div><div class="project__frame-copy"><small>${stack}</small><strong>${displayName}</strong></div></div><span class="project__index">${String(index + 1).padStart(2, '0')}</span><span class="project__open">↗︎</span><span class="project__type">CONCEPT PROJECT</span></div><div class="project__info"><div><h3 data-uk="${name}" data-en="${nameEn}">${visibleName}</h3><p data-uk="${desc}" data-en="${descEn}">${visibleDesc}</p></div><span>${stack}</span></div></a></article>`;
     }).join('');
   }
 
@@ -50,21 +53,18 @@
     const supporting = $$('.hero .reveal');
     const meta = $$('.hero__meta span');
     gsap.set(header, { y: -12, autoAlpha: 0 });
-    gsap.set(titleLines, { y: 28, autoAlpha: 0 });
+    // Keep the LCP title visible on the first paint; motion no longer delays content.
+    gsap.set(titleLines, { y: 18 });
     gsap.set(supporting, { y: 18, autoAlpha: 0 });
     gsap.set(meta, { x: -8, autoAlpha: 0 });
 
     const play = () => gsap.timeline({ defaults: { ease: 'power3.out' } })
       .to(header, { y: 0, autoAlpha: 1, duration: .62 })
-      .to(titleLines, { y: 0, autoAlpha: 1, stagger: .09, duration: .92, ease: 'expo.out' }, '-=.34')
+      .to(titleLines, { y: 0, stagger: .09, duration: .78, ease: 'expo.out' }, '-=.44')
       .to(supporting, { y: 0, autoAlpha: 1, stagger: .08, duration: .72 }, '-=.62')
       .to(meta, { x: 0, autoAlpha: 1, stagger: .05, duration: .5 }, '-=.48');
 
-    if (document.fonts?.ready) {
-      Promise.race([document.fonts.ready, new Promise(resolve => setTimeout(resolve, 650))]).then(play);
-    } else {
-      play();
-    }
+    play();
   }
 
   function initHeader() {
@@ -92,22 +92,13 @@
 
   function initLanguage() {
     const button = $('.lang');
-    let lang = localStorage.getItem('witer-language') || 'uk';
-    const apply = value => {
-      lang = value;
-      document.documentElement.lang = value;
-      $$('[data-uk][data-en]').forEach(element => {
-        const text = element.dataset[value];
-        if (text) element.innerHTML = text;
-      });
-      $$('[data-placeholder-uk]').forEach(element => {
-        element.placeholder = element.dataset[`placeholder${value === 'uk' ? 'Uk' : 'En'}`];
-      });
-      if (button) button.innerHTML = value === 'uk' ? '<span class="lang__active">UA</span><span>EN</span>' : '<span>UA</span><span class="lang__active">EN</span>';
-      localStorage.setItem('witer-language', value);
-    };
-    button?.addEventListener('click', () => apply(lang === 'uk' ? 'en' : 'uk'));
-    apply(lang);
+    const lang = location.pathname === '/en' || location.pathname.startsWith('/en/') ? 'en' : 'uk';
+    document.documentElement.lang = lang;
+    if (button) button.innerHTML = lang === 'uk' ? '<span class="lang__active">UA</span><span>EN</span>' : '<span>UA</span><span class="lang__active">EN</span>';
+    button?.addEventListener('click', () => {
+      localStorage.setItem('witer-language', lang === 'uk' ? 'en' : 'uk');
+      location.href = lang === 'uk' ? '/en/' : '/';
+    });
   }
 
   function splitWords() {
@@ -300,7 +291,7 @@
       $('#caseModalBrief').textContent = caseData.brief;
       $('#caseModalFeatures').innerHTML = caseData.features.map(feature => `<li>${escapeHTML(feature)}</li>`).join('');
       $('#caseModalTech').innerHTML = caseData.tech.map(item => `<b>${escapeHTML(item)}</b>`).join('');
-      const finalLink = $('#caseModalLink'); finalLink.href = href && href !== '#contact' ? href : '#contact'; finalLink.target = href && href !== '#contact' ? '_blank' : '_self';
+      const finalLink = $('#caseModalLink'); finalLink.href = href && href !== '#contact' ? href : '#contact'; finalLink.target = /^https?:\/\//i.test(href || '') ? '_blank' : '_self';
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
       setTimeout(() => $('.case-modal__close').focus(), 120);
     });
@@ -319,7 +310,24 @@
       chip.classList.add('is-active');
       $('#selectedService').value = chip.dataset.value;
     }));
-    try { if (window.emailjs) emailjs.init('A7LAjoCMlfBRyssBZ'); } catch (_) {}
+    let emailClientPromise;
+    const loadEmailClient = () => {
+      if (window.emailjs) return Promise.resolve(window.emailjs);
+      if (emailClientPromise) return emailClientPromise;
+      emailClientPromise = new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js';
+        script.async = true;
+        script.onload = () => {
+          try { window.emailjs.init('A7LAjoCMlfBRyssBZ'); resolve(window.emailjs); }
+          catch (error) { reject(error); }
+        };
+        script.onerror = () => reject(new Error('Email service unavailable'));
+        document.head.appendChild(script);
+      });
+      return emailClientPromise;
+    };
+    form.addEventListener('focusin', () => { loadEmailClient().catch(() => {}); }, { once: true });
     form.addEventListener('submit', async event => {
       event.preventDefault();
       const lang = document.documentElement.lang;
@@ -335,8 +343,8 @@
       status.textContent = lang === 'uk' ? 'Надсилаємо…' : 'Sending…';
       const data = new FormData(form);
       try {
-        if (!window.emailjs) throw new Error('Email service unavailable');
-        await emailjs.send('service_d7tqqgk', 'template_28d99r7', {
+        const emailClient = await loadEmailClient();
+        await emailClient.send('service_d7tqqgk', 'template_28d99r7', {
           from_name: data.get('name'),
           from_email: data.get('email'),
           service: data.get('service'),
@@ -403,5 +411,6 @@
   initCaseModal();
   initServices();
   initForm();
-  initWind();
+  if ('requestIdleCallback' in window) requestIdleCallback(initWind, { timeout: 700 });
+  else setTimeout(initWind, 220);
 })();

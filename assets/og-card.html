@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1200, initial-scale=1">
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#07090d}body{font-family:"Segoe UI",Arial,sans-serif;color:#f2f0e9;position:relative;background:radial-gradient(circle at 78% 48%,#111f43 0,#0a1020 35%,#07090d 72%)}
+    body:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,rgba(255,255,255,.025),transparent 22%,rgba(52,92,255,.05) 50%,transparent 75%);pointer-events:none}
+    .line{position:absolute;height:1px;border-top:1px solid rgba(91,122,255,.22);border-radius:50%;transform:rotate(var(--r));width:var(--w);left:var(--x);top:var(--y)}
+    .frame{position:absolute;inset:32px;border:1px solid rgba(242,240,233,.13);padding:42px 46px;display:flex;flex-direction:column;justify-content:space-between}
+    .top,.bottom{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:2}.brand{display:flex;align-items:center;font-size:24px;font-weight:700;letter-spacing:-1.5px}.mark{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;margin-right:5px;background:#f2f0e9;color:#071126;font-weight:800}.top span:last-child,.bottom{font-size:12px;font-weight:600;letter-spacing:3px;color:#9aa3b3}.status{display:flex;gap:12px;align-items:center}.status i{width:8px;height:8px;border-radius:50%;background:#c8ff45;box-shadow:0 0 0 6px rgba(200,255,69,.08)}
+    .main{position:relative;z-index:2;margin-top:16px}.name{font-size:184px;line-height:.72;font-weight:600;letter-spacing:-17px}.name .outline{color:transparent;-webkit-text-stroke:2px #f2f0e9}.descriptor{margin-top:54px;display:flex;align-items:center;gap:22px;font-size:17px;font-weight:600;letter-spacing:5px}.descriptor:before{content:"";width:82px;height:1px;background:#345cff}.url{color:#f2f0e9!important;letter-spacing:1px!important}
+  </style>
+</head>
+<body>
+  <i class="line" style="--w:500px;--x:610px;--y:150px;--r:-4deg"></i><i class="line" style="--w:620px;--x:520px;--y:250px;--r:3deg"></i><i class="line" style="--w:440px;--x:690px;--y:370px;--r:-2deg"></i><i class="line" style="--w:720px;--x:410px;--y:485px;--r:4deg"></i>
+  <main class="frame">
+    <div class="top"><div class="brand"><span class="mark">W</span>ITER</div><div class="status"><i></i><span>INDEPENDENT DIGITAL STUDIO</span></div></div>
+    <div class="main"><div class="name">WI<span class="outline">TER</span></div><div class="descriptor">WEB DESIGN &amp; DEVELOPMENT</div></div>
+    <div class="bottom"><span>PREMIUM DIGITAL PRODUCTS · KYIV</span><span class="url">witerstudio.online</span></div>
+  </main>
+</body>
+</html>
