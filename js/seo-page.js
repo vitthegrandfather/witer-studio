@@ -29,7 +29,7 @@
     hero.addEventListener('pointermove', event => {
       const x = event.clientX / innerWidth;
       const y = event.clientY / innerHeight;
-      hero.style.background = `radial-gradient(circle at ${58 + x * 28}% ${34 + y * 25}%, #132550 0, #090e19 35%, #07090d 72%)`;
+      hero.style.background = `radial-gradient(circle at ${58 + x * 28}% ${34 + y * 25}%, #3a190f 0, #140c09 35%, #07090d 72%)`;
     }, { passive: true });
   }
 

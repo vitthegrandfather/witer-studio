@@ -44,27 +44,46 @@
   }
 
   function initHeroIntro() {
+    const hero = $('.hero');
+    const heroArt = $('.hero-art');
     if (reducedMotion || typeof gsap === 'undefined') {
       $$('.hero .reveal').forEach(element => { element.style.opacity = '1'; element.style.transform = 'none'; });
+      if (heroArt) { heroArt.style.opacity = '1'; heroArt.style.visibility = 'visible'; }
+      if (hero) hero.dataset.introComplete = 'true';
       return;
     }
     const header = $('.header');
     const titleLines = $$('.hero__line');
     const supporting = $$('.hero .reveal');
     const meta = $$('.hero__meta span');
+    const heroArtClip = $('.hero-art__clip');
     gsap.set(header, { y: -12, autoAlpha: 0 });
     // Keep the LCP title visible on the first paint; motion no longer delays content.
     gsap.set(titleLines, { y: 18 });
     gsap.set(supporting, { y: 18, autoAlpha: 0 });
     gsap.set(meta, { x: -8, autoAlpha: 0 });
+    if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
+    if (heroArtClip) gsap.set(heroArtClip, { autoAlpha: 0, scale: 1.035, filter: 'blur(15px) saturate(.62) brightness(.72)' });
+    gsap.set(titleLines, { yPercent: 72, clipPath: 'inset(0 -12% 100% -12%)', rotate: index => index ? 1.2 : -1.2 });
 
-    const play = () => gsap.timeline({ defaults: { ease: 'power3.out' } })
-      .to(header, { y: 0, autoAlpha: 1, duration: .62 })
-      .to(titleLines, { y: 0, stagger: .09, duration: .78, ease: 'expo.out' }, '-=.44')
-      .to(supporting, { y: 0, autoAlpha: 1, stagger: .08, duration: .72 }, '-=.62')
-      .to(meta, { x: 0, autoAlpha: 1, stagger: .05, duration: .5 }, '-=.48');
+    const finalize = () => {
+      if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
+      if (heroArtClip) gsap.set(heroArtClip, { autoAlpha: 1, scale: 1, filter: 'blur(0px) saturate(1) brightness(1)' });
+      gsap.set(titleLines, { yPercent: 0, clipPath: 'inset(-8% -12% -8% -12%)', rotate: 0 });
+      gsap.set(header, { y: 0, autoAlpha: 1 });
+      gsap.set(supporting, { y: 0, autoAlpha: 1 });
+      gsap.set(meta, { x: 0, autoAlpha: 1 });
+      if (hero) hero.dataset.introComplete = 'true';
+    };
+    const play = () => gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: finalize })
+      .to(heroArtClip, { autoAlpha: 1, scale: 1, filter: 'blur(0px) saturate(1) brightness(1)', duration: 1.25, ease: 'power3.out' })
+      .to(titleLines, { yPercent: 0, clipPath: 'inset(-8% -12% -8% -12%)', rotate: 0, stagger: .1, duration: .9, ease: 'expo.out' }, '-=.98')
+      .to(header, { y: 0, autoAlpha: 1, duration: .58 }, '-=.62')
+      .to(supporting, { y: 0, autoAlpha: 1, stagger: .075, duration: .62 }, '-=.54')
+      .to(meta, { x: 0, autoAlpha: 1, stagger: .045, duration: .45 }, '-=.42');
 
     play();
+    setTimeout(finalize, 2400);
   }
 
   function initHeader() {
@@ -118,7 +137,7 @@
     }
     gsap.registerPlugin(ScrollTrigger);
     $$('.reveal').forEach(element => {
-      if (element.closest('.hero')) return;
+      if (element.closest('.hero') || element.matches('.project')) return;
       gsap.to(element, { opacity: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true }});
     });
     $$('.split-text:not(.manifesto__text):not(.contact__title)').forEach(element => {
@@ -131,16 +150,42 @@
     $$('.step').forEach((step, index) => {
       gsap.from(step, { y: 70, opacity: 0, duration: .8, delay: index * .04, scrollTrigger: { trigger: step, start: 'top 88%', once: true }});
     });
-    $$('.project').forEach(project => {
+    $$('.project').forEach((project, index) => {
       const visual = $('.project__visual', project);
       const frame = $('.project__frame', project);
       const image = $('.project__image', project);
       const info = $('.project__info', project);
-      const timeline = gsap.timeline({ scrollTrigger: { trigger: project, start: 'top 82%', once: true }});
-      timeline.fromTo(visual, { clipPath: 'inset(0 0 100% 0)', y: 60 }, { clipPath: 'inset(0 0 0% 0)', y: 0, duration: 1.15, ease: 'power4.inOut' })
-        .from(frame, { yPercent: 18, rotate: project.matches('.project--beauty') ? -3 : 3, scale: .92, opacity: 0, duration: 1.05, ease: 'expo.out' }, '-=.65')
-        .from(info.children, { y: 24, opacity: 0, stagger: .08, duration: .6, ease: 'power3.out' }, '-=.35');
-      gsap.to(image, { yPercent: 10, scale: 1.08, ease: 'none', scrollTrigger: { trigger: visual, start: 'top bottom', end: 'bottom top', scrub: .8 }});
+      if (!visual || !frame || !image || !info) return;
+      if (!$('.project__reveal-panels', visual)) {
+        visual.insertAdjacentHTML('beforeend', '<div class="project__reveal-panels" aria-hidden="true"><i></i><i></i><i></i><i></i></div><span class="project__reveal-flash" aria-hidden="true"></span>');
+      }
+      const panels = $$('.project__reveal-panels i', visual);
+      const flash = $('.project__reveal-flash', visual);
+      const chrome = $$('.project__index, .project__open, .project__type', visual);
+      const direction = index % 2 ? 1 : -1;
+      const finalFilter = project.matches('.project--tattoo') ? 'blur(0px) grayscale(1) saturate(1) contrast(1.15)' : 'blur(0px) grayscale(0) saturate(.72) contrast(1.07)';
+
+      gsap.set(project, { autoAlpha: 1, y: 0 });
+      gsap.set(visual, { clipPath: 'inset(7% 5% 9% 5% round 54px)', y: 88, rotate: direction * 1.4, scale: .965, transformOrigin: '50% 65%' });
+      gsap.set(image, { scale: 1.2, yPercent: direction * 2.5, filter: 'blur(15px) grayscale(.65) saturate(.35) contrast(1.12)' });
+      gsap.set(frame, { clipPath: direction < 0 ? 'inset(0 100% 0 0)' : 'inset(0 0 0 100%)', yPercent: 10, scale: .955, autoAlpha: 0 });
+      gsap.set(panels, { yPercent: 0 });
+      gsap.set(chrome, { y: 14, autoAlpha: 0 });
+      gsap.set(info.children, { y: 28, autoAlpha: 0 });
+      gsap.set(flash, { xPercent: 0, autoAlpha: 0 });
+
+      gsap.timeline({
+        scrollTrigger: { trigger: project, start: 'top 92%', once: true, invalidateOnRefresh: true },
+        defaults: { overwrite: 'auto' }
+      })
+        .to(visual, { clipPath: 'inset(0% 0% 0% 0% round 18px)', y: 0, rotate: 0, scale: 1, duration: 1.25, ease: 'expo.out' }, 0)
+        .to(image, { scale: 1, yPercent: 0, filter: finalFilter, duration: 1.65, ease: 'power3.out', onComplete: () => gsap.set(image, { clearProps: 'filter' }) }, .08)
+        .to(panels, { yPercent: panelIndex => panelIndex % 2 ? 108 : -108, duration: 1.08, stagger: .065, ease: 'power4.inOut' }, .16)
+        .to(flash, { xPercent: 380, autoAlpha: 1, duration: .72, ease: 'power2.inOut' }, .38)
+        .to(flash, { autoAlpha: 0, duration: .18 }, .96)
+        .to(frame, { clipPath: 'inset(0 0% 0 0%)', yPercent: 0, scale: 1, autoAlpha: 1, duration: 1.02, ease: 'expo.out' }, .68)
+        .to(chrome, { y: 0, autoAlpha: 1, stagger: .07, duration: .58, ease: 'back.out(1.7)' }, .9)
+        .to(info.children, { y: 0, autoAlpha: 1, stagger: .09, duration: .7, ease: 'power3.out' }, 1.06);
     });
     $$('.service-item').forEach((item, index) => {
       gsap.from(item, { x: index % 2 ? 34 : -34, opacity: 0, duration: .75, ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 92%', once: true }});
@@ -149,19 +194,27 @@
     if (aboutPhoto) {
       const aboutImage = $('img', aboutPhoto);
       const colourWipe = $('.about__photo-reveal', aboutPhoto);
-      gsap.set(aboutPhoto, { clipPath: 'inset(0 0 100% 0)' });
-      gsap.set(aboutImage, { scale: 1.12, filter: 'grayscale(1) saturate(.45) contrast(1.08)' });
-      gsap.timeline({ scrollTrigger: { trigger: aboutPhoto, start: 'top 82%', once: true }})
-        .to(aboutPhoto, { clipPath: 'inset(0 0 0% 0)', duration: 1.05, ease: 'power4.inOut' })
-        .to(colourWipe, { scaleY: 0, transformOrigin: 'top', duration: .85, ease: 'power4.inOut' }, '-=.35')
-        .to(aboutImage, { scale: 1, filter: 'grayscale(0) saturate(.92) contrast(1.03)', duration: 1.2, ease: 'power3.out' }, '-=.72')
-        .from('.about__photo-mark', { xPercent: 100, duration: .55, ease: 'power3.out' }, '-=.45');
+      const shutters = $$('.about__photo-slices i', aboutPhoto);
+      const photoMark = $('.about__photo-mark', aboutPhoto);
+      gsap.set(aboutPhoto, { clipPath: 'polygon(0% 0%,18% 0%,0% 100%,0% 100%)', rotate: -1.8, y: 68, scale: .955, transformOrigin: '50% 60%' });
+      gsap.set(aboutImage, { scale: 1.15, xPercent: 4, yPercent: 3, filter: 'grayscale(.82) saturate(.34) contrast(1.12) brightness(.84)' });
+      gsap.set(colourWipe, { xPercent: -125, autoAlpha: 0 });
+      gsap.set(shutters, { xPercent: -135, autoAlpha: 0 });
+      gsap.set(photoMark, { xPercent: 115, autoAlpha: 0 });
+      gsap.timeline({
+        scrollTrigger: { trigger: aboutPhoto, start: 'top 88%', once: true },
+        defaults: { overwrite: 'auto' }
+      })
+        .to(aboutPhoto, { clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)', rotate: 0, y: 0, scale: 1, duration: .9, ease: 'expo.inOut' }, 0)
+        .to(aboutImage, { scale: 1, xPercent: 0, yPercent: 0, filter: 'grayscale(0) saturate(.96) contrast(1.03) brightness(1)', duration: 1.02, ease: 'power3.out', onComplete: () => gsap.set(aboutImage, { clearProps: 'transform,filter' }) }, .08)
+        .to(colourWipe, { xPercent: 365, autoAlpha: 1, duration: .72, ease: 'power2.inOut' }, .08)
+        .to(colourWipe, { autoAlpha: 0, duration: .16 }, .7)
+        .to(shutters, { xPercent: 285, autoAlpha: 1, stagger: .07, duration: .64, ease: 'power3.inOut' }, .14)
+        .to(shutters, { autoAlpha: 0, duration: .16 }, .72)
+        .to(photoMark, { xPercent: 0, autoAlpha: 1, duration: .42, ease: 'back.out(1.6)' }, .68);
     }
-    gsap.to('.hero__title', { yPercent: 16, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true }});
-    gsap.to('.hero__line:first-child', { xPercent: -7, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .8 }});
-    gsap.to('.hero__line:last-child', { xPercent: 7, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: .8 }});
     gsap.to('.contact__wind', { xPercent: -12, ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top bottom', end: 'bottom top', scrub: true }});
-    gsap.fromTo('.contact', { backgroundColor: '#07090d' }, { backgroundColor: '#345cff', ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top 92%', end: 'top 24%', scrub: .8 }});
+    gsap.fromTo('.contact', { backgroundColor: '#07090d' }, { backgroundColor: '#ef4e1b', ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top 92%', end: 'top 24%', scrub: .8 }});
     gsap.from('.contact__title .word', { xPercent: index => index % 2 ? 55 : -55, opacity: 0, rotate: index => index % 2 ? 2 : -2, stagger: .055, duration: 1, ease: 'power4.out', scrollTrigger: { trigger: '.contact__title', start: 'top 84%', once: true }});
   }
 
@@ -177,6 +230,23 @@
     const ring = $('.cursor--ring');
     if (!dot || !ring) return;
     document.body.classList.add('has-custom-cursor');
+    const cursorCopy = document.documentElement.lang === 'en'
+      ? { view: 'VIEW', write: 'WRITE', type: 'TYPE', select: 'SELECT', send: 'SEND', about: 'PROFILE' }
+      : { view: 'ДИВ.', write: 'НАПИС.', type: 'ТЕКСТ', select: 'ОБРАТИ', send: 'НАДІСЛ.', about: 'ПРО МЕНЕ' };
+    const contextualStates = ['is-viewing', 'is-talking', 'is-typing', 'is-choosing', 'is-sending', 'is-about'];
+    const bindCursorState = (items, state, label) => {
+      items.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+          contextualStates.forEach(className => ring.classList.remove(className));
+          ring.classList.add(state);
+          ring.dataset.label = label;
+        });
+        item.addEventListener('mouseleave', () => {
+          ring.classList.remove(state);
+          delete ring.dataset.label;
+        });
+      });
+    };
     let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
     window.addEventListener('mousemove', event => { mouseX = event.clientX; mouseY = event.clientY; dot.style.transform = `translate(${mouseX - 2}px,${mouseY - 2}px)`; });
     const tick = () => { ringX += (mouseX - ringX) * .14; ringY += (mouseY - ringY) * .14; ring.style.transform = `translate(${ringX - ring.offsetWidth / 2}px,${ringY - ring.offsetHeight / 2}px)`; requestAnimationFrame(tick); };
@@ -185,16 +255,13 @@
       item.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
       item.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
     });
-    $$('.project__visual').forEach(item => {
-      item.addEventListener('mouseenter', () => ring.classList.add('is-viewing'));
-      item.addEventListener('mouseleave', () => ring.classList.remove('is-viewing'));
-    });
-    $$('.contact a, .contact button, .brief input, .brief textarea').forEach(item => {
-      item.addEventListener('mouseenter', () => ring.classList.add('is-talking'));
-      item.addEventListener('mouseleave', () => ring.classList.remove('is-talking'));
-    });
-    $('.about__photo')?.addEventListener('mouseenter', () => ring.classList.add('is-about'));
-    $('.about__photo')?.addEventListener('mouseleave', () => ring.classList.remove('is-about'));
+    bindCursorState($$('.project__visual'), 'is-viewing', cursorCopy.view);
+    bindCursorState($$('.contact__direct a'), 'is-talking', cursorCopy.write);
+    bindCursorState($$('.brief input:not([type="hidden"]), .brief textarea'), 'is-typing', cursorCopy.type);
+    bindCursorState($$('.chips button'), 'is-choosing', cursorCopy.select);
+    bindCursorState($$('.brief__submit'), 'is-sending', cursorCopy.send);
+    const aboutPhoto = $('.about__photo');
+    if (aboutPhoto) bindCursorState([aboutPhoto], 'is-about', cursorCopy.about);
     $$('.magnetic').forEach(item => {
       item.addEventListener('mousemove', event => {
         const rect = item.getBoundingClientRect();
@@ -229,15 +296,74 @@
   }
 
   function initSectionTransitions() {
-    if (reducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     const chapters = [
       ['.hero', '01', 'PROJECT'], ['#work', '02', 'WORK'], ['#services', '03', 'SERVICES'],
       ['#process', '04', 'PROCESS'], ['#about', '05', 'ABOUT'], ['#contact', '06', 'CONTACT']
-    ];
-    const setChapter = chapter => { $('#railNumber').textContent = chapter[1]; $('#railLabel').textContent = chapter[2]; };
-    chapters.forEach(chapter => ScrollTrigger.create({ trigger: chapter[0], start: 'top center', end: 'bottom center', onEnter: () => setChapter(chapter), onEnterBack: () => setChapter(chapter) }));
+    ].map(chapter => [$(chapter[0]), chapter[1], chapter[2]]).filter(chapter => chapter[0]);
+    const railNumber = $('#railNumber');
+    const railLabel = $('#railLabel');
     const progress = $('.scroll-rail__track i');
-    ScrollTrigger.create({ start: 0, end: 'max', onUpdate: self => { progress.style.transform = `scaleY(${self.progress})`; }});
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const marker = innerHeight * .46;
+      let active = chapters[0];
+      chapters.forEach(chapter => {
+        if (chapter[0].getBoundingClientRect().top <= marker) active = chapter;
+      });
+      if (railNumber) railNumber.textContent = active[1];
+      if (railLabel) railLabel.textContent = active[2];
+      if (progress) {
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+        progress.style.transform = `scaleY(${Math.min(1, Math.max(0, scrollY / maxScroll))})`;
+      }
+    };
+    const requestUpdate = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+    addEventListener('scroll', requestUpdate, { passive: true });
+    addEventListener('resize', requestUpdate, { passive: true });
+    addEventListener('hashchange', requestUpdate);
+    addEventListener('pageshow', requestUpdate);
+    update();
+  }
+
+  function initHeroStateGuard() {
+    const hero = $('.hero');
+    const heroArt = $('.hero-art');
+    const title = $('.hero__title');
+    const titleLines = $$('.hero__line');
+    if (!hero) return;
+    let ticking = false;
+    const restore = () => {
+      ticking = false;
+      if (hero.dataset.introComplete !== 'true') return;
+      const bounds = hero.getBoundingClientRect();
+      const heroIsHome = bounds.top > -Math.min(80, innerHeight * .08) && bounds.bottom > innerHeight * .72;
+      if (!heroIsHome) return;
+      if (typeof gsap !== 'undefined') {
+        if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
+        if (title) gsap.set(title, { autoAlpha: 1, yPercent: 0 });
+        if (titleLines.length) gsap.set(titleLines, { xPercent: 0 });
+      } else {
+        if (heroArt) { heroArt.style.opacity = '1'; heroArt.style.visibility = 'visible'; }
+        if (title) { title.style.opacity = '1'; title.style.visibility = 'visible'; }
+      }
+    };
+    const requestRestore = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(restore);
+    };
+    addEventListener('scroll', requestRestore, { passive: true });
+    addEventListener('pageshow', () => {
+      requestRestore();
+      if (typeof ScrollTrigger !== 'undefined') requestAnimationFrame(() => ScrollTrigger.refresh());
+    });
+    addEventListener('hashchange', requestRestore);
+    requestRestore();
   }
 
   function initProjectDepth() {
@@ -305,6 +431,13 @@
     if (!form) return;
     const status = $('.brief__status', form);
     const chips = $$('.chips button', form);
+    const fields = $$('input:not([type="hidden"]), textarea', form);
+    const syncFieldState = field => field.closest('label')?.classList.toggle('is-filled', Boolean(field.value.trim()));
+    fields.forEach(field => {
+      syncFieldState(field);
+      field.addEventListener('input', () => syncFieldState(field));
+      field.addEventListener('change', () => syncFieldState(field));
+    });
     chips.forEach(chip => chip.addEventListener('click', () => {
       chips.forEach(item => item.classList.remove('is-active'));
       chip.classList.add('is-active');
@@ -356,7 +489,8 @@
           messages.push({ name: data.get('name'), email: data.get('email'), message: `[${data.get('service')}] ${data.get('message')}`, date: new Intl.DateTimeFormat('uk-UA', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date()) });
           localStorage.setItem('witer_messages', JSON.stringify(messages));
         } catch (_) {}
-        form.reset();
+          form.reset();
+          fields.forEach(syncFieldState);
         chips.forEach(item => item.classList.remove('is-active'));
         status.textContent = lang === 'uk' ? 'Дякую! Запит надіслано. Відповім найближчим часом.' : 'Thank you! Your inquiry has been sent.';
       } catch (error) {
@@ -388,7 +522,7 @@
         context.beginPath();
         context.moveTo(p.x, p.y);
         context.bezierCurveTo(p.x + p.length * .35, p.y + drift, p.x + p.length * .7, p.y - drift, p.x + p.length, p.y);
-        context.strokeStyle = p.tint > .86 ? `rgba(200,255,69,${.045 + p.speed * .025})` : `rgba(91,122,255,${.095 + p.speed * .052})`;
+        context.strokeStyle = p.tint > .86 ? `rgba(246,232,213,${.035 + p.speed * .02})` : `rgba(72,22,12,${.075 + p.speed * .042})`;
         context.lineWidth = p.width;
         context.stroke();
       });
@@ -399,6 +533,7 @@
     resize(); requestAnimationFrame(draw);
   }
 
+
   applyAdminContent();
   initHeader();
   initLanguage();
@@ -406,6 +541,7 @@
   initHeroIntro();
   initScrollAnimations();
   initSectionTransitions();
+  initHeroStateGuard();
   initCursor();
   initProjectDepth();
   initCaseModal();
