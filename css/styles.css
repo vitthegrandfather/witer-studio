@@ -190,3 +190,11 @@ body.has-custom-cursor .cursor--ring:after{display:none}
 .service-item.is-open .service-item__body{padding-top:5px;padding-right:clamp(24px,2.4vw,42px);padding-bottom:42px;padding-left:calc(80px + clamp(18px,1.8vw,30px))}
 .service-item__body a{margin-right:6px}
 @media(max-width:640px){.service-item__head{padding:26px 18px}.service-item__body{margin-left:0;padding-left:60px;padding-right:22px}.service-item.is-open .service-item__body{padding:4px 22px 34px 60px}.service-item__body a{margin:8px 0 0}}
+
+/* Higher-contrast service selector */
+.brief legend{color:rgba(8,11,16,.72);font-weight:650}
+.chips{gap:10px;margin-top:15px}
+.chips button{padding:11px 17px;border-color:rgba(8,11,16,.58);background:rgba(8,11,16,.075);color:var(--navy);font-weight:650;box-shadow:inset 0 0 0 1px rgba(242,240,233,.08),0 4px 14px rgba(8,11,16,.035);transition:background .24s,color .24s,border-color .24s,transform .24s cubic-bezier(.2,.8,.2,1),box-shadow .24s}
+.chips button:hover,.chips button.is-active{background:var(--navy);color:var(--paper);border-color:var(--navy);transform:translateY(-2px);box-shadow:0 9px 24px rgba(8,11,16,.17)}
+.chips button:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+@media(max-width:640px){.chips{gap:9px}.chips button{padding:10px 15px}}
