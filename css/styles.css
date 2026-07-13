@@ -198,3 +198,6 @@ body.has-custom-cursor .cursor--ring:after{display:none}
 .chips button:hover,.chips button.is-active{background:var(--navy);color:var(--paper);border-color:var(--navy);transform:translateY(-2px);box-shadow:0 9px 24px rgba(8,11,16,.17)}
 .chips button:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
 @media(max-width:640px){.chips{gap:9px}.chips button{padding:10px 15px}}
+
+/* Fully static hero */
+.hero .status i{animation:none}

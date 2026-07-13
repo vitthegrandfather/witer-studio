@@ -45,45 +45,15 @@
 
   function initHeroIntro() {
     const hero = $('.hero');
-    const heroArt = $('.hero-art');
-    if (reducedMotion || typeof gsap === 'undefined') {
-      $$('.hero .reveal').forEach(element => { element.style.opacity = '1'; element.style.transform = 'none'; });
-      if (heroArt) { heroArt.style.opacity = '1'; heroArt.style.visibility = 'visible'; }
-      if (hero) hero.dataset.introComplete = 'true';
-      return;
-    }
-    const header = $('.header');
-    const titleLines = $$('.hero__line');
-    const supporting = $$('.hero .reveal');
-    const meta = $$('.hero__meta span');
-    const heroArtClip = $('.hero-art__clip');
-    gsap.set(header, { y: -12, autoAlpha: 0 });
-    // Keep the LCP title visible on the first paint; motion no longer delays content.
-    gsap.set(titleLines, { y: 18 });
-    gsap.set(supporting, { y: 18, autoAlpha: 0 });
-    gsap.set(meta, { x: -8, autoAlpha: 0 });
-    if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
-    if (heroArtClip) gsap.set(heroArtClip, { autoAlpha: 0, scale: 1.035, filter: 'blur(15px) saturate(.62) brightness(.72)' });
-    gsap.set(titleLines, { yPercent: 72, clipPath: 'inset(0 -12% 100% -12%)', rotate: index => index ? 1.2 : -1.2 });
-
-    const finalize = () => {
-      if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
-      if (heroArtClip) gsap.set(heroArtClip, { autoAlpha: 1, scale: 1, filter: 'blur(0px) saturate(1) brightness(1)' });
-      gsap.set(titleLines, { yPercent: 0, clipPath: 'inset(-8% -12% -8% -12%)', rotate: 0 });
-      gsap.set(header, { y: 0, autoAlpha: 1 });
-      gsap.set(supporting, { y: 0, autoAlpha: 1 });
-      gsap.set(meta, { x: 0, autoAlpha: 1 });
-      if (hero) hero.dataset.introComplete = 'true';
-    };
-    const play = () => gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: finalize })
-      .to(heroArtClip, { autoAlpha: 1, scale: 1, filter: 'blur(0px) saturate(1) brightness(1)', duration: 1.25, ease: 'power3.out' })
-      .to(titleLines, { yPercent: 0, clipPath: 'inset(-8% -12% -8% -12%)', rotate: 0, stagger: .1, duration: .9, ease: 'expo.out' }, '-=.98')
-      .to(header, { y: 0, autoAlpha: 1, duration: .58 }, '-=.62')
-      .to(supporting, { y: 0, autoAlpha: 1, stagger: .075, duration: .62 }, '-=.54')
-      .to(meta, { x: 0, autoAlpha: 1, stagger: .045, duration: .45 }, '-=.42');
-
-    play();
-    setTimeout(finalize, 2400);
+    $$('.hero .reveal').forEach(element => {
+      element.style.opacity = '1';
+      element.style.transform = 'none';
+    });
+    $$('.hero__line').forEach(element => {
+      element.style.clipPath = 'none';
+      element.style.transform = 'none';
+    });
+    if (hero) hero.dataset.introComplete = 'true';
   }
 
   function initHeader() {
@@ -332,7 +302,6 @@
 
   function initHeroStateGuard() {
     const hero = $('.hero');
-    const heroArt = $('.hero-art');
     const title = $('.hero__title');
     const titleLines = $$('.hero__line');
     if (!hero) return;
@@ -344,11 +313,9 @@
       const heroIsHome = bounds.top > -Math.min(80, innerHeight * .08) && bounds.bottom > innerHeight * .72;
       if (!heroIsHome) return;
       if (typeof gsap !== 'undefined') {
-        if (heroArt) gsap.set(heroArt, { autoAlpha: 1, y: 0 });
         if (title) gsap.set(title, { autoAlpha: 1, yPercent: 0 });
         if (titleLines.length) gsap.set(titleLines, { xPercent: 0 });
       } else {
-        if (heroArt) { heroArt.style.opacity = '1'; heroArt.style.visibility = 'visible'; }
         if (title) { title.style.opacity = '1'; title.style.visibility = 'visible'; }
       }
     };
@@ -502,35 +469,43 @@
 
   function initWind() {
     const canvas = $('#windCanvas');
-    if (!canvas || reducedMotion) return;
+    if (!canvas) return;
     const context = canvas.getContext('2d');
-    let width, height, particles = [], mouse = { x: .72, y: .5 };
-    const resize = () => {
+    let resizeFrame;
+    const render = () => {
       const dpr = Math.min(devicePixelRatio, 2);
-      width = canvas.clientWidth; height = canvas.clientHeight;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
       canvas.width = width * dpr; canvas.height = height * dpr;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      particles = Array.from({ length: Math.min(175, Math.floor(width / 7)) }, () => ({ x: Math.random() * width, y: Math.random() * height, speed: .55 + Math.random() * 1.45, length: 55 + Math.random() * 155, phase: Math.random() * Math.PI * 2, width: .65 + Math.random() * .85, tint: Math.random() }));
-    };
-    const draw = time => {
       context.clearRect(0, 0, width, height);
-      particles.forEach(p => {
-        const drift = Math.sin(p.phase + time * .00075) * 32;
-        const influence = 1 + Math.max(0, 1 - Math.hypot(p.x / width - mouse.x, p.y / height - mouse.y) * 2.1) * 2.8;
-        p.x += p.speed * influence;
-        if (p.x > width + p.length) { p.x = -p.length; p.y = Math.random() * height; }
+      let seed = 417;
+      const random = () => {
+        seed = (seed * 16807) % 2147483647;
+        return (seed - 1) / 2147483646;
+      };
+      const count = Math.min(130, Math.max(54, Math.floor(width / 9)));
+      for (let index = 0; index < count; index += 1) {
+        const x = random() * width;
+        const y = random() * height;
+        const length = 55 + random() * 155;
+        const phase = random() * Math.PI * 2;
+        const lineWidth = .65 + random() * .85;
+        const tint = random();
+        const drift = Math.sin(phase) * 30;
         context.beginPath();
-        context.moveTo(p.x, p.y);
-        context.bezierCurveTo(p.x + p.length * .35, p.y + drift, p.x + p.length * .7, p.y - drift, p.x + p.length, p.y);
-        context.strokeStyle = p.tint > .86 ? `rgba(246,232,213,${.035 + p.speed * .02})` : `rgba(72,22,12,${.075 + p.speed * .042})`;
-        context.lineWidth = p.width;
+        context.moveTo(x, y);
+        context.bezierCurveTo(x + length * .32, y + drift, x + length * .68, y - drift, x + length, y);
+        context.strokeStyle = tint > .86 ? 'rgba(246,232,213,.065)' : 'rgba(72,22,12,.115)';
+        context.lineWidth = lineWidth;
         context.stroke();
-      });
-      requestAnimationFrame(draw);
+      }
     };
-    $('.hero')?.addEventListener('pointermove', event => { mouse.x = event.clientX / width; mouse.y = event.clientY / height; });
-    window.addEventListener('resize', resize);
-    resize(); requestAnimationFrame(draw);
+    window.addEventListener('resize', () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(render);
+    });
+    render();
   }
 
 
