@@ -50,4 +50,45 @@
       });
     });
   }
+
+  const faqItems = [...document.querySelectorAll('.faq-item')];
+  const setFaqState = (item, open) => {
+    const answer = item.querySelector('.faq-answer');
+    if (!answer || item.dataset.animating === 'true') return;
+    if (reducedMotion) {
+      item.open = open;
+      return;
+    }
+
+    item.dataset.animating = 'true';
+    if (open) item.open = true;
+    const startHeight = open ? 0 : answer.offsetHeight;
+    const endHeight = open ? answer.scrollHeight : 0;
+    const animation = answer.animate([
+      { height: `${startHeight}px`, opacity: open ? 0 : 1 },
+      { height: `${endHeight}px`, opacity: open ? 1 : 0 }
+    ], { duration: 480, easing: 'cubic-bezier(.2,.8,.2,1)' });
+
+    animation.onfinish = () => {
+      if (!open) item.open = false;
+      delete item.dataset.animating;
+      answer.style.height = '';
+      answer.style.opacity = '';
+    };
+    animation.oncancel = animation.onfinish;
+  };
+
+  faqItems.forEach(item => {
+    const summary = item.querySelector('summary');
+    if (!summary) return;
+    item.open = false;
+    summary.addEventListener('click', event => {
+      event.preventDefault();
+      const willOpen = !item.open;
+      if (willOpen) faqItems.forEach(other => {
+        if (other !== item && other.open) setFaqState(other, false);
+      });
+      setFaqState(item, willOpen);
+    });
+  });
 })();
