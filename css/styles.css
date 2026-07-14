@@ -201,3 +201,29 @@ body.has-custom-cursor .cursor--ring:after{display:none}
 
 /* Fully static hero */
 .hero .status i{animation:none}
+
+/* Mobile hero wordmark: true geometric centering without affecting desktop */
+@media(max-width:640px){
+  .hero__title{
+    left:50%;
+    right:auto;
+    width:calc(100% - 40px);
+    transform:translateX(-50%);
+    display:flex;
+    flex-wrap:nowrap;
+    align-items:baseline;
+    justify-content:center;
+    text-align:center;
+    letter-spacing:-.075em;
+  }
+  .hero__line,
+  .hero__line:first-child,
+  .hero__line--outline{
+    display:inline-block;
+    width:auto;
+    margin:0;
+    padding:0;
+    translate:0 0;
+    text-align:left;
+  }
+}
