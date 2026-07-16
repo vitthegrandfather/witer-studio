@@ -39,7 +39,8 @@
       const link = /^https?:\/\//i.test(project.link || '') ? escapeHTML(project.link) : '#contact';
       const stack = escapeHTML(project.stack || 'DESIGN · DEVELOPMENT');
       const displayName = visibleName.replace(/\s*\/\s*/, '<br>');
-      return `<article class="project ${index % 2 ? 'project--tattoo' : 'project--beauty'} reveal"><a href="${link}" ${link !== '#contact' ? 'target="_blank" rel="noopener"' : ''} class="project__link" aria-label="${visibleName}"><div class="project__visual"><img class="project__image" src="${image}" alt="${visibleName}" loading="lazy"><div class="project__frame ${index % 2 ? 'project__frame--dark' : ''}"><div class="project__frame-bar"><strong>WITER / ${String(index + 1).padStart(2, '0')}</strong><span>Selected concept&nbsp;&nbsp; 2026</span></div><div class="project__frame-copy"><small>${stack}</small><strong>${displayName}</strong></div></div><span class="project__index">${String(index + 1).padStart(2, '0')}</span><span class="project__open">↗︎</span><span class="project__type">CONCEPT PROJECT</span></div><div class="project__info"><div><h3 data-uk="${name}" data-en="${nameEn}">${visibleName}</h3><p data-uk="${desc}" data-en="${descEn}">${visibleDesc}</p></div><span>${stack}</span></div></a></article>`;
+      const projectId = escapeHTML(project.id || '');
+      return `<article class="project ${index % 2 ? 'project--tattoo' : 'project--beauty'} reveal"><a href="${link}" data-project-id="${projectId}" ${link !== '#contact' ? 'target="_blank" rel="noopener"' : ''} class="project__link" aria-label="${visibleName}"><div class="project__visual"><img class="project__image" src="${image}" alt="${visibleName}" loading="lazy"><div class="project__frame ${index % 2 ? 'project__frame--dark' : ''}"><div class="project__frame-bar"><strong>WITER / ${String(index + 1).padStart(2, '0')}</strong><span>Selected concept&nbsp;&nbsp; ${escapeHTML(project.year || '2026')}</span></div><div class="project__frame-copy"><small>${stack}</small><strong>${displayName}</strong></div></div><span class="project__index">${String(index + 1).padStart(2, '0')}</span><span class="project__open">↗︎</span><span class="project__type">CONCEPT PROJECT</span></div><div class="project__info"><div><h3 data-uk="${name}" data-en="${nameEn}">${visibleName}</h3><p data-uk="${desc}" data-en="${descEn}">${visibleDesc}</p></div><span>${stack}</span></div></a></article>`;
     }).join('');
   }
 
@@ -376,14 +377,35 @@
         tattoo: {
           uk: { brief: 'Концепт сайту незалежної contemporary tattoo studio у Берліні. Акцент — на роботах майстрів, виборі власної візуальної мови та детальному брифі перед консультацією.', features: ['Editorial-галерея робіт без важких фільтрів', 'Напрями, профілі resident artists, процес і FAQ', 'Бриф зі стилем, майстром, розміщенням, розміром і датою', 'Перевірка слотів, серверна валідація та унікальний booking ID'], tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Availability API', 'JSON storage', 'Form validation'] },
           en: { brief: 'A website concept for an independent contemporary tattoo studio in Berlin, focused on artist work, visual language and a detailed pre-consultation brief.', features: ['Editorial work gallery without heavy filtering', 'Styles, resident artists, process and FAQ', 'Brief covering style, artist, placement, size and date', 'Slot availability, server validation and unique booking IDs'], tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Availability API', 'JSON storage', 'Form validation'] }
+        },
+        forma17: {
+          uk: { brief: 'Авторський концепт цифрового портфоліо для вигаданої незалежної креативної студії FORMA/17. Проєкт створено без реального клієнта чи комерційного брифу, щоб дослідити, як монохромна айдентика, редакційна композиція та motion можуть сформувати переконливий образ студії.', features: ['Радикальна чорно-біла система без акцентних кольорів', 'Модульна editorial-композиція з різними ритмами та масштабами типографіки', 'Повноекранні фото й відео як частина візуального наративу', 'Плавні появи, marquee-рух і мікровзаємодії, адаптовані для різних екранів'], tech: ['Next.js 16', 'React 19', 'TypeScript', 'Responsive CSS', 'HTML5 Video', 'GitHub Pages'] },
+          en: { brief: 'A self-initiated digital portfolio concept for the fictional independent creative studio FORMA/17. Created without a real client or commercial brief, the project explores how monochrome identity, editorial composition and motion can build a convincing studio presence.', features: ['A strict black-and-white system without accent colours', 'A modular editorial composition with varied typographic rhythm and scale', 'Full-screen photography and video used as part of the visual narrative', 'Smooth reveals, marquee motion and responsive micro-interactions'], tech: ['Next.js 16', 'React 19', 'TypeScript', 'Responsive CSS', 'HTML5 Video', 'GitHub Pages'] }
+        },
+        generic: {
+          uk: { brief: description, features: [], tech: [] },
+          en: { brief: description, features: [], tech: [] }
         }
       };
-      const caseData = cases[/tattoo/i.test(title) ? 'tattoo' : 'beauty'][language];
+      let storedProjects = [];
+      try { storedProjects = JSON.parse(localStorage.getItem('witer_projects')) || []; } catch (_) {}
+      const storedProject = storedProjects.find(project => String(project.id) === link.dataset.projectId);
+      const presetKey = /tattoo/i.test(title) ? 'tattoo' : /forma\s*\/?17/i.test(title) ? 'forma17' : /beauty|salon/i.test(title) ? 'beauty' : 'generic';
+      const fallback = cases[presetKey][language];
+      const languageFeatures = language === 'en' ? (storedProject?.featuresEn?.length ? storedProject.featuresEn : storedProject?.features) : storedProject?.features;
+      const caseData = {
+        brief: (language === 'en' ? storedProject?.briefEn || storedProject?.brief : storedProject?.brief) || fallback.brief,
+        features: Array.isArray(languageFeatures) && languageFeatures.length ? languageFeatures : fallback.features,
+        tech: Array.isArray(storedProject?.tech) && storedProject.tech.length ? storedProject.tech : fallback.tech.length ? fallback.tech : String(storedProject?.stack || '').split(/[,·]/).map(item => item.trim()).filter(Boolean),
+        role: storedProject?.role || (presetKey === 'forma17' ? 'Concept · Art direction · UX/UI · Development · Motion' : presetKey === 'tattoo' ? 'Strategy · UX/UI · Development' : storedProject?.stack || 'Art direction · UX/UI · Development'),
+        year: storedProject?.year || '2026'
+      };
       $('#caseModalTitle').textContent = title; $('#caseModalDescription').textContent = description; $('#caseModalNumber').textContent = index;
       $('#caseModalImage').src = image; $('#caseModalImage').alt = title;
       $('#caseModalBrief').textContent = caseData.brief;
       $('#caseModalFeatures').innerHTML = caseData.features.map(feature => `<li>${escapeHTML(feature)}</li>`).join('');
       $('#caseModalTech').innerHTML = caseData.tech.map(item => `<b>${escapeHTML(item)}</b>`).join('');
+      $('#caseModalRole').textContent = caseData.role; $('#caseModalYear').textContent = caseData.year;
       const finalLink = $('#caseModalLink'); finalLink.href = href && href !== '#contact' ? href : '#contact'; finalLink.target = /^https?:\/\//i.test(href || '') ? '_blank' : '_self';
       modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden';
       setTimeout(() => $('.case-modal__close').focus(), 120);

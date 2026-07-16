@@ -9,9 +9,55 @@
   function setData(key, value, track = true) { localStorage.setItem(key, JSON.stringify(value)); if (track && key !== 'witer_last_updated') localStorage.setItem('witer_last_updated', JSON.stringify(new Date().toISOString())); }
   function esc(value = '') { const div = document.createElement('div'); div.textContent = String(value); return div.innerHTML; }
 
+  const projectPresets = {
+    beauty: {
+      brief: 'Концепт цифрової платформи для мережі з п’яти beauty-просторів у Києві. Завдання — поєднати fashion-подачу, зрозумілу структуру послуг і швидкий онлайн-запис.',
+      briefEn: 'A digital platform concept for a network of five beauty spaces in Kyiv, combining fashion-led art direction with a clear service structure and quick online booking.',
+      features: ['Каталог чотирьох beauty-напрямів і signature-блок', 'П’ять локацій із графіком та переходами до карт', 'Динамічні вільні слоти для вибраної дати й салону', 'Валідація, захист від подвійного запису та номер підтвердження'],
+      featuresEn: ['Four service directions and a signature colour story', 'Five locations with hours and map links', 'Dynamic available slots by date and location', 'Validation, duplicate-booking protection and confirmation IDs'],
+      tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Native HTTP API', 'JSON storage', 'Crypto booking ID'],
+      role: 'Art direction · UX/UI · Development', year: '2026'
+    },
+    tattoo: {
+      brief: 'Концепт сайту незалежної contemporary tattoo studio у Берліні. Акцент — на роботах майстрів, виборі власної візуальної мови та детальному брифі перед консультацією.',
+      briefEn: 'A website concept for an independent contemporary tattoo studio in Berlin, focused on artist work, visual language and a detailed pre-consultation brief.',
+      features: ['Editorial-галерея робіт без важких фільтрів', 'Напрями, профілі resident artists, процес і FAQ', 'Бриф зі стилем, майстром, розміщенням, розміром і датою', 'Перевірка слотів, серверна валідація та унікальний booking ID'],
+      featuresEn: ['Editorial work gallery without heavy filtering', 'Styles, resident artists, process and FAQ', 'Brief covering style, artist, placement, size and date', 'Slot availability, server validation and unique booking IDs'],
+      tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Availability API', 'JSON storage', 'Form validation'],
+      role: 'Strategy · UX/UI · Development', year: '2026'
+    },
+    forma17: {
+      brief: 'Авторський концепт цифрового портфоліо для вигаданої незалежної креативної студії FORMA/17. Проєкт створено без реального клієнта чи комерційного брифу, щоб дослідити, як монохромна айдентика, редакційна композиція та motion можуть сформувати переконливий образ студії.',
+      briefEn: 'A self-initiated digital portfolio concept for the fictional independent creative studio FORMA/17. Created without a real client or commercial brief, the project explores how monochrome identity, editorial composition and motion can build a convincing studio presence.',
+      features: ['Радикальна чорно-біла система без акцентних кольорів', 'Модульна editorial-композиція з різними ритмами та масштабами типографіки', 'Повноекранні фото й відео як частина візуального наративу', 'Плавні появи, marquee-рух і мікровзаємодії, адаптовані для різних екранів'],
+      featuresEn: ['A strict black-and-white system without accent colours', 'A modular editorial composition with varied typographic rhythm and scale', 'Full-screen photography and video used as part of the visual narrative', 'Smooth reveals, marquee motion and responsive micro-interactions'],
+      tech: ['Next.js 16', 'React 19', 'TypeScript', 'Responsive CSS', 'HTML5 Video', 'GitHub Pages'],
+      role: 'Concept · Art direction · UX/UI · Development · Motion', year: '2026'
+    }
+  };
+  const getProjectPreset = project => {
+    const signature = `${project.id || ''} ${project.name || ''} ${project.nameEn || ''} ${project.link || ''}`;
+    if (/tattoo/i.test(signature)) return projectPresets.tattoo;
+    if (/forma\s*\/?17/i.test(signature)) return projectPresets.forma17;
+    if (/beauty|salon/i.test(signature)) return projectPresets.beauty;
+    return { brief: project.desc || '', briefEn: project.descEn || project.desc || '', features: [], featuresEn: [], tech: String(project.stack || '').split(/[,·]/).map(item => item.trim()).filter(Boolean), role: project.stack || 'Design · Development', year: '2026' };
+  };
+  const withProjectDetails = project => {
+    const preset = getProjectPreset(project);
+    return {
+      ...project,
+      brief: project.brief || preset.brief,
+      briefEn: project.briefEn || preset.briefEn,
+      features: Array.isArray(project.features) && project.features.length ? project.features : preset.features,
+      featuresEn: Array.isArray(project.featuresEn) && project.featuresEn.length ? project.featuresEn : preset.featuresEn,
+      tech: Array.isArray(project.tech) && project.tech.length ? project.tech : preset.tech,
+      role: project.role || preset.role,
+      year: project.year || preset.year
+    };
+  };
   const defaultProjects = [
-    { id: 'salon_beauty', name: 'Beauty Space / Concept', nameEn: 'Beauty Space / Concept', desc: 'Концепт преміального сайту для beauty-простору.', descEn: 'Premium beauty space website concept.', stack: 'Art direction, UX/UI, Development', link: 'https://vitthegrandfather.github.io/salon/', image: 'images/projects/your-salon.jpg' },
-    { id: 'salon_tattoo', name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept', desc: 'Концепт сайту сучасної тату-студії.', descEn: 'Contemporary tattoo studio website concept.', stack: 'Strategy, UX/UI, Development', link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: 'images/projects/tattoo-salon.jpg' }
+    withProjectDetails({ id: 'salon_beauty', name: 'Beauty Space / Concept', nameEn: 'Beauty Space / Concept', desc: 'Концепт преміального сайту для beauty-простору.', descEn: 'Premium beauty space website concept.', stack: 'Art direction, UX/UI, Development', link: 'https://vitthegrandfather.github.io/salon/', image: 'images/projects/your-salon.jpg' }),
+    withProjectDetails({ id: 'salon_tattoo', name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept', desc: 'Концепт сайту сучасної тату-студії.', descEn: 'Contemporary tattoo studio website concept.', stack: 'Strategy, UX/UI, Development', link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: 'images/projects/tattoo-salon.jpg' })
   ];
   if (!getData('witer_seeded_projects', false)) {
     if (!getData('witer_projects', []).length) setData('witer_projects', defaultProjects);
@@ -23,6 +69,9 @@
     setData('witer_projects', migrated);
     setData('witer_concept_names_migrated', true, false);
   }
+  const projectsBeforeDetailsMigration = getData('witer_projects', []);
+  const projectsWithDetails = projectsBeforeDetailsMigration.map(withProjectDetails);
+  if (JSON.stringify(projectsWithDetails) !== JSON.stringify(projectsBeforeDetailsMigration)) setData('witer_projects', projectsWithDetails);
   if (!getData('witer_messages', null)) setData('witer_messages', []);
   if (!getData('witer_texts', null)) setData('witer_texts', {});
   if (!getData('witer_settings', null)) setData('witer_settings', { email: 'studiowiter@outlook.com' });
@@ -105,7 +154,10 @@
     $$('[data-edit-project]', list).forEach(button => button.addEventListener('click', () => editProject(button.dataset.editProject)));
     $$('[data-delete-project]', list).forEach(button => button.addEventListener('click', () => deleteProject(button.dataset.deleteProject)));
   }
-  function resetProjectForm() { editingProjectId = null; $('#projectFormTitle').textContent = 'Новий проєкт'; ['projName','projNameEn','projDesc','projDescEn','projStack','projLink','projEditId'].forEach(id => $(`#${id}`).value = ''); $('#projImage').value = ''; $('#projImagePreview').src = ''; $('#projImagePreview').classList.remove('has-image'); }
+  const projectTextFields = ['projName','projNameEn','projDesc','projDescEn','projBrief','projBriefEn','projFeatures','projFeaturesEn','projTech','projStack','projLink','projRole','projYear','projEditId'];
+  const splitProjectLines = value => value.split(/\r?\n/).map(item => item.trim()).filter(Boolean);
+  const splitProjectTech = value => value.split(/\r?\n|,/).map(item => item.trim()).filter(Boolean);
+  function resetProjectForm() { editingProjectId = null; $('#projectFormTitle').textContent = 'Новий проєкт'; projectTextFields.forEach(id => $(`#${id}`).value = ''); $('#projYear').value = String(new Date().getFullYear()); $('#projImage').value = ''; $('#projImagePreview').src = ''; $('#projImagePreview').classList.remove('has-image'); }
   function openProjectForm() { $('#projectForm').hidden = false; document.body.style.overflow = 'hidden'; setTimeout(() => $('#projName').focus(), 50); }
   function closeProjectForm() { $('#projectForm').hidden = true; document.body.style.overflow = ''; }
   $('#addProject').addEventListener('click', () => { resetProjectForm(); openProjectForm(); }); $('#cancelProject').addEventListener('click', closeProjectForm);
@@ -115,10 +167,10 @@
   $('#saveProject').addEventListener('click', () => {
     const name = $('#projName').value.trim(); if (!name) return showToast('Додайте назву проєкту.', true);
     let projects = getData('witer_projects', []); const existing = projects.find(project => project.id === editingProjectId);
-    const project = { id: editingProjectId || `project_${Date.now()}`, name, nameEn: $('#projNameEn').value.trim(), desc: $('#projDesc').value.trim(), descEn: $('#projDescEn').value.trim(), stack: $('#projStack').value.trim(), link: $('#projLink').value.trim(), image: $('#projImagePreview').classList.contains('has-image') ? $('#projImagePreview').src : (existing?.image || '') };
+    const project = { id: editingProjectId || `project_${Date.now()}`, name, nameEn: $('#projNameEn').value.trim(), desc: $('#projDesc').value.trim(), descEn: $('#projDescEn').value.trim(), brief: $('#projBrief').value.trim(), briefEn: $('#projBriefEn').value.trim(), features: splitProjectLines($('#projFeatures').value), featuresEn: splitProjectLines($('#projFeaturesEn').value), tech: splitProjectTech($('#projTech').value), stack: $('#projStack').value.trim(), link: $('#projLink').value.trim(), role: $('#projRole').value.trim(), year: $('#projYear').value.trim(), image: $('#projImagePreview').classList.contains('has-image') ? $('#projImagePreview').src : (existing?.image || '') };
     projects = editingProjectId ? projects.map(item => item.id === editingProjectId ? project : item) : [...projects, project]; setData('witer_projects', projects); closeProjectForm(); loadProjects(); loadDashboard(); showToast(editingProjectId ? 'Проєкт оновлено.' : 'Проєкт додано.');
   });
-  function editProject(id) { const project = getData('witer_projects', []).find(item => item.id === id); if (!project) return; editingProjectId = id; $('#projectFormTitle').textContent = 'Редагувати проєкт'; $('#projName').value = project.name || ''; $('#projNameEn').value = project.nameEn || ''; $('#projDesc').value = project.desc || ''; $('#projDescEn').value = project.descEn || ''; $('#projStack').value = project.stack || ''; $('#projLink').value = project.link || ''; $('#projEditId').value = id; const preview = $('#projImagePreview'); preview.src = project.image || ''; preview.classList.toggle('has-image', Boolean(project.image)); openProjectForm(); }
+  function editProject(id) { const project = withProjectDetails(getData('witer_projects', []).find(item => item.id === id) || {}); if (!project.id) return; editingProjectId = id; $('#projectFormTitle').textContent = 'Редагувати проєкт'; $('#projName').value = project.name || ''; $('#projNameEn').value = project.nameEn || ''; $('#projDesc').value = project.desc || ''; $('#projDescEn').value = project.descEn || ''; $('#projBrief').value = project.brief || ''; $('#projBriefEn').value = project.briefEn || ''; $('#projFeatures').value = (project.features || []).join('\n'); $('#projFeaturesEn').value = (project.featuresEn || []).join('\n'); $('#projTech').value = (project.tech || []).join('\n'); $('#projStack').value = project.stack || ''; $('#projLink').value = project.link || ''; $('#projRole').value = project.role || ''; $('#projYear').value = project.year || ''; $('#projEditId').value = id; const preview = $('#projImagePreview'); preview.src = project.image || ''; preview.classList.toggle('has-image', Boolean(project.image)); openProjectForm(); }
   function deleteProject(id) { if (!confirm('Видалити цей проєкт?')) return; setData('witer_projects', getData('witer_projects', []).filter(item => item.id !== id)); loadDashboard(); showToast('Проєкт видалено.'); }
 
   function messageTemplate(message, index = '') { const name = esc(message.name || 'Без імені'); const initials = name.split(/\s+/).slice(0,2).map(part => part[0]).join('').toUpperCase(); return `<article class="message-card"><span class="message-card__avatar">${initials || 'W'}</span><div><p class="message-card__name">${name}</p><p class="message-card__email">${esc(message.email || '')}</p><p class="message-card__text">${esc(message.message || '')}</p></div><div class="message-card__side"><span class="message-card__date">${esc(message.date || '')}</span>${index !== '' ? `<button class="message-card__delete" type="button" data-delete-message="${index}" aria-label="Видалити">×</button>` : ''}</div></article>`; }

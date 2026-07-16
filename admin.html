@@ -85,7 +85,30 @@
       <section class="tab" id="tab-projects">
         <div class="section-intro"><div><span>PORTFOLIO</span><h2>Проєкти</h2><p>Додавайте та редагуйте роботи, які формують образ студії.</p></div><button class="primary-btn compact" id="addProject"><span>Додати проєкт</span><i>+</i></button></div>
         <div class="projects-grid" id="projectsList"></div>
-        <div class="modal-shell" id="projectForm" hidden><button class="modal-close" id="cancelProject" type="button" aria-label="Закрити">×</button><div class="modal-panel"><div class="eyebrow">PORTFOLIO ITEM</div><h3 id="projectFormTitle">Новий проєкт</h3><div class="form-grid"><label class="field"><span>Назва (UA)</span><input type="text" id="projName"></label><label class="field"><span>Назва (EN)</span><input type="text" id="projNameEn"></label><label class="field full"><span>Опис (UA)</span><textarea id="projDesc" rows="3"></textarea></label><label class="field full"><span>Опис (EN)</span><textarea id="projDescEn" rows="3"></textarea></label><label class="field"><span>Технології</span><input type="text" id="projStack" placeholder="UX/UI, JavaScript"></label><label class="field"><span>Посилання</span><input type="url" id="projLink" placeholder="https://..."></label><label class="field full upload"><span>Обкладинка</span><input type="file" id="projImage" accept="image/*"><span class="upload__area">Оберіть зображення <small>JPG, PNG або WebP</small></span><img id="projImagePreview" alt="Прев’ю обкладинки"></label></div><div class="form-actions"><button class="primary-btn compact" id="saveProject"><span>Зберегти</span><i>✓</i></button><input type="hidden" id="projEditId"></div></div></div>
+        <div class="modal-shell" id="projectForm" hidden>
+          <button class="modal-close" id="cancelProject" type="button" aria-label="Закрити">×</button>
+          <div class="modal-panel">
+            <div class="eyebrow">PORTFOLIO ITEM</div>
+            <h3 id="projectFormTitle">Новий проєкт</h3>
+            <div class="form-grid">
+              <label class="field"><span>Назва (UA)</span><input type="text" id="projName"></label>
+              <label class="field"><span>Назва (EN)</span><input type="text" id="projNameEn"></label>
+              <label class="field full"><span>Короткий опис (UA)</span><textarea id="projDesc" rows="3"></textarea></label>
+              <label class="field full"><span>Короткий опис (EN)</span><textarea id="projDescEn" rows="3"></textarea></label>
+              <label class="field full"><span>Завдання (UA)</span><textarea id="projBrief" rows="4"></textarea></label>
+              <label class="field full"><span>Завдання (EN)</span><textarea id="projBriefEn" rows="4"></textarea></label>
+              <label class="field"><span>Ключові рішення (UA)</span><textarea id="projFeatures" rows="7" placeholder="Один пункт з нового рядка"></textarea></label>
+              <label class="field"><span>Ключові рішення (EN)</span><textarea id="projFeaturesEn" rows="7" placeholder="One item per line"></textarea></label>
+              <label class="field full"><span>Використано</span><textarea id="projTech" rows="3" placeholder="Next.js, React, TypeScript"></textarea></label>
+              <label class="field"><span>Теги картки</span><input type="text" id="projStack" placeholder="Art direction, UX/UI, Development"></label>
+              <label class="field"><span>Посилання</span><input type="url" id="projLink" placeholder="https://..."></label>
+              <label class="field"><span>Роль</span><input type="text" id="projRole" placeholder="Art direction · UX/UI · Development"></label>
+              <label class="field"><span>Рік</span><input type="text" id="projYear" inputmode="numeric" placeholder="2026"></label>
+              <label class="field full upload"><span>Обкладинка</span><input type="file" id="projImage" accept="image/*"><span class="upload__area">Оберіть зображення <small>JPG, PNG або WebP</small></span><img id="projImagePreview" alt="Прев’ю обкладинки"></label>
+            </div>
+            <div class="form-actions"><button class="primary-btn compact" id="saveProject"><span>Зберегти</span><i>✓</i></button><input type="hidden" id="projEditId"></div>
+          </div>
+        </div>
       </section>
 
       <section class="tab" id="tab-messages">
