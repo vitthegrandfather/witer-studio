@@ -29,7 +29,9 @@
     hero.addEventListener('pointermove', event => {
       const x = event.clientX / innerWidth;
       const y = event.clientY / innerHeight;
-      hero.style.background = `radial-gradient(circle at ${58 + x * 28}% ${34 + y * 25}%, #3a190f 0, #140c09 35%, #07090d 72%)`;
+      hero.style.backgroundColor = '#050505';
+      hero.style.backgroundImage = `radial-gradient(circle at ${58 + x * 28}% ${34 + y * 25}%, #292929 0, #101010 32%, #050505 70%), linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px)`;
+      hero.style.backgroundSize = 'auto, 25vw 100%, 25vw 100%';
     }, { passive: true });
   }
 
