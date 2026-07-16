@@ -189,6 +189,34 @@
     });
   }
 
+  function initHeroIdentity() {
+    const title = $('#heroTitle'); const letters = $$('[data-letter]', title); if (!title || !letters.length || reducedMotion || matchMedia('(pointer: coarse)').matches) return;
+    let frame = 0;
+    const reset = () => {
+      title.classList.remove('is-active');
+      letters.forEach(letter => ['--tx', '--ty', '--rz', '--skew'].forEach(property => letter.style.removeProperty(property)));
+    };
+    title.addEventListener('pointermove', event => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        title.classList.add('is-active');
+        const titleRect = title.getBoundingClientRect();
+        const y = (event.clientY - titleRect.top) / titleRect.height - .5;
+        letters.forEach((letter, index) => {
+          const rect = letter.getBoundingClientRect();
+          const distance = Math.abs(event.clientX - (rect.left + rect.width / 2));
+          const influence = Math.max(0, 1 - distance / Math.max(180, titleRect.width * .2));
+          const direction = event.clientX < rect.left + rect.width / 2 ? 1 : -1;
+          letter.style.setProperty('--tx', `${direction * influence * (9 + index * 1.2)}px`);
+          letter.style.setProperty('--ty', `${y * influence * (28 + index * 2)}px`);
+          letter.style.setProperty('--rz', `${direction * influence * 2.4}deg`);
+          letter.style.setProperty('--skew', `${direction * influence * 5}deg`);
+        });
+      });
+    });
+    title.addEventListener('pointerleave', reset);
+  }
+
   function initCaseModal() {
     const modal = $('#caseModal'); if (!modal) return;
     let returnFocus = null;
@@ -221,8 +249,9 @@
     form.addEventListener('submit', event => {
       event.preventDefault();
       const name = $('[name="name"]', form).value.trim(); const email = $('[name="email"]', form).value.trim(); const message = $('[name="message"]', form).value.trim();
-      const subject = encodeURIComponent(`WITER project inquiry — ${name}`);
-      const body = encodeURIComponent(`${message}\n\n—\n${name}\n${email}`);
+      const category = $('[name="category"]:checked', form)?.value || 'Other'; const timeline = $('[name="timeline"]', form)?.value || 'Not decided';
+      const subject = encodeURIComponent(`WITER / ${category} — ${name}`);
+      const body = encodeURIComponent(`${copy('Категорія', 'Category')}: ${category}\n${copy('Бажаний старт', 'Preferred start')}: ${timeline}\n\n${message}\n\n—\n${name}\n${email}`);
       if (status) status.textContent = copy('Відкриваю ваш поштовий застосунок…', 'Opening your email app…');
       location.href = `mailto:studiowiter@outlook.com?subject=${subject}&body=${body}`;
     });
@@ -235,6 +264,7 @@
   initMenu();
   initReveal();
   initMotion();
+  initHeroIdentity();
   initCaseModal();
   initContact();
 })();
