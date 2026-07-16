@@ -65,7 +65,7 @@
   }
   if (!getData('witer_concept_names_migrated', false)) {
     const conceptMap = Object.fromEntries(defaultProjects.map(project => [project.id, project]));
-    const migrated = getData('witer_projects', []).map(project => conceptMap[project.id] ? { ...project, ...conceptMap[project.id] } : project);
+    const migrated = getData('witer_projects', []).map(project => conceptMap[project.id] ? { ...conceptMap[project.id], ...project } : project);
     setData('witer_projects', migrated);
     setData('witer_concept_names_migrated', true, false);
   }

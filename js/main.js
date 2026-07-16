@@ -28,7 +28,7 @@
         salon_beauty: { name: 'Beauty Space / Concept', nameEn: 'Beauty Space / Concept', desc: 'Концепт преміального сайту для beauty-простору.', descEn: 'Premium beauty space website concept.' },
         salon_tattoo: { name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept', desc: 'Концепт сайту сучасної тату-студії.', descEn: 'Contemporary tattoo studio website concept.' }
       };
-      if (conceptNames[project.id]) project = { ...project, ...conceptNames[project.id] };
+      if (conceptNames[project.id]) project = { ...conceptNames[project.id], ...project };
       const name = escapeHTML(project.name || 'WITER Project');
       const nameEn = escapeHTML(project.nameEn || project.name || 'WITER Project');
       const desc = escapeHTML(project.desc || 'Digital product by WITER Studio');
