@@ -20,7 +20,7 @@
     : fallback;
   const normalizeImage = value => {
     const source = String(value || '').trim();
-    if (!source) return '/og-image-2026.png';
+    if (!source) return '/og-image-witer-2026.png';
     return /^(data:|https?:\/\/|\/)/i.test(source) ? source : `/${source.replace(/^\.\//, '')}`;
   };
 
@@ -217,6 +217,21 @@
     title.addEventListener('pointerleave', reset);
   }
 
+  function initTicker() {
+    const track = $('.ticker__track'); const groups = $$('.ticker__group', track); if (!track || groups.length < 2) return;
+    const seed = groups[0].innerHTML;
+    let resizeTimer = 0;
+    const rebuild = () => {
+      groups[0].innerHTML = seed;
+      while (groups[0].scrollWidth < innerWidth * 1.2) groups[0].insertAdjacentHTML('beforeend', seed);
+      groups[1].innerHTML = groups[0].innerHTML;
+      track.style.setProperty('--ticker-duration', `${Math.max(18, groups[0].scrollWidth / 54)}s`);
+    };
+    rebuild();
+    document.fonts?.ready.then(rebuild);
+    addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(rebuild, 180); }, { passive: true });
+  }
+
   function initCaseModal() {
     const modal = $('#caseModal'); if (!modal) return;
     let returnFocus = null;
@@ -265,6 +280,7 @@
   initReveal();
   initMotion();
   initHeroIdentity();
+  initTicker();
   initCaseModal();
   initContact();
 })();

@@ -4,13 +4,24 @@
   "description": "Premium websites, digital products, Telegram bots and business automation by WITER Digital Studio",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#07090d",
-  "theme_color": "#ef4e1b",
+  "background_color": "#050505",
+  "theme_color": "#050505",
   "icons": [
     {
-      "src": "/witer-favicon-2026.svg",
+      "src": "/witer-favicon-v2.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/witer-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/witer-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
