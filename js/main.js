@@ -185,27 +185,44 @@
     setTimeout(reveal, 1900);
   }
 
-  function initHeroSystem() {
+  function initHeroFilm() {
     const hero = $('.hero');
     if (!hero) return;
     const identity = $('.hero-identity', hero);
-    if (!identity || $('.hero-system', hero)) return;
+    if (!identity || $('.hero-film', hero)) return;
 
-    const system = document.createElement('aside');
-    system.className = 'hero-system';
-    system.setAttribute('aria-hidden', 'true');
-    system.innerHTML = `
-      <div class="hero-system__head">
-        <span>WITER / SYSTEM_01</span>
-        <span class="hero-system__state"><i></i>ONLINE</span>
-      </div>
-      <div class="hero-system__signal"><i></i></div>
-      <dl>
-        <div><dt>STATUS</dt><dd>AVAILABLE</dd></div>
-        <div><dt>LOCATION</dt><dd>KYIV / UA</dd></div>
-        <div><dt>SCOPE</dt><dd>WORLDWIDE</dd></div>
-      </dl>`;
-    hero.insertBefore(system, identity);
+    const film = document.createElement('div');
+    film.className = 'hero-film';
+    film.setAttribute('aria-hidden', 'true');
+
+    const poster = document.createElement('img');
+    poster.className = 'hero-film__poster';
+    poster.src = '/assets/video/hero-city-bw.webp';
+    poster.alt = '';
+    poster.decoding = 'async';
+    poster.fetchPriority = 'high';
+    film.appendChild(poster);
+    hero.insertBefore(film, identity);
+
+    const mobile = matchMedia('(max-width: 760px)').matches;
+    const saveData = navigator.connection?.saveData;
+    if (mobile || reducedMotion || saveData) return;
+
+    const video = document.createElement('video');
+    video.className = 'hero-film__video';
+    video.src = '/assets/video/hero-city-bw.mp4';
+    video.poster = '/assets/video/hero-city-bw.webp';
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.preload = 'metadata';
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.addEventListener('playing', () => film.classList.add('is-playing'), { once: true });
+    film.appendChild(video);
+    video.playbackRate = .78;
+    video.play().catch(() => {});
   }
 
   function initHeroWordmark() {
@@ -549,7 +566,7 @@
   renderProjects();
   initLoader();
   initHeroWordmark();
-  initHeroSystem();
+  initHeroFilm();
   initHeroEntrance();
   initHeaderAndProgress();
   initMenu();
