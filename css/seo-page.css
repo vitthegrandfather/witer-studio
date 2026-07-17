@@ -72,3 +72,52 @@
 .page-transition.is-covering.is-entering{transform:translateY(-101%)}
 @media(max-width:760px){.page-transition small{left:14px;bottom:14px}.page-transition:after{left:14px;right:14px;top:14px}}
 @media(prefers-reduced-motion:reduce){.page-transition{display:none}}
+
+/* 506 / dedicated case-study composition */
+.work-page,.work-page main{max-width:100%;overflow-x:clip}
+.work-page .header{position:sticky;top:0}
+.work-page .hero{min-height:calc(100svh - 74px);padding:clamp(48px,5vw,76px) var(--pad) 28px;display:grid;grid-template-rows:1fr auto;gap:55px;background-size:25vw 100%,25vw 100%;overflow:hidden}
+.work-page .hero>div:first-child{min-width:0;align-self:center}
+.work-page .hero .eyebrow{margin-bottom:clamp(34px,5vh,68px)}
+.work-page .hero h1{max-width:100%;font:500 clamp(76px,12.2vw,196px)/.76 var(--display);letter-spacing:-.09em;text-transform:uppercase;overflow-wrap:normal}
+.work-page .hero h1>span{display:grid;grid-template-columns:minmax(90px,.34fr) minmax(0,520px);gap:24px;align-items:start;width:100%;max-width:920px;margin:clamp(28px,4vw,52px) 0 0 auto;font:500 clamp(18px,2.1vw,31px)/1.08 var(--display);letter-spacing:-.04em;text-transform:none;color:var(--grey)}
+.work-page .hero h1>span:before{content:"PROJECT / 2026";padding-top:4px;font:600 8px/1.35 var(--mono);letter-spacing:.08em;color:var(--white)}
+.work-page .hero__bottom{display:grid;grid-template-columns:minmax(0,570px) auto;align-items:end;gap:35px;padding-top:22px;border-top:1px solid var(--line)}
+.work-page .hero__bottom p{font-size:clamp(15px,1.4vw,20px);line-height:1.48;color:#c8c8c3}
+.work-page .round-link{width:124px;height:124px;transition:background .35s,color .35s,transform .35s}
+.work-page .round-link:hover{background:var(--white);color:var(--black);transform:rotate(-7deg)}
+.work-page .section--light{padding-top:clamp(90px,10vw,150px);padding-bottom:clamp(90px,10vw,150px)}
+.work-page .section__head{grid-template-columns:minmax(0,1.2fr) minmax(280px,.58fr);gap:8vw;align-items:end;padding-top:24px;border-top:1px solid #b8b8b3}
+.work-page .section__head h2{max-width:880px;font-size:clamp(52px,6.6vw,108px);line-height:.87}
+.work-page .section__head p{max-width:610px;font-size:clamp(16px,1.3vw,20px);line-height:1.62;color:#444}
+.work-page .case-media{position:relative;margin-top:clamp(65px,8vw,120px);aspect-ratio:16/9;max-height:none;border:1px solid #aaa;background:#111}
+.work-page .case-media:before{content:"WITER / SELECTED CONCEPT";position:absolute;z-index:2;left:14px;top:14px;padding:8px 10px;background:var(--white);color:var(--black);font:600 7px var(--mono);letter-spacing:.07em}
+.work-page .case-media img{width:100%;height:100%;max-height:none;object-fit:cover;filter:grayscale(1) contrast(1.08)}
+.work-page .case-meta{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:0;border:0}
+.work-page .case-meta .card{min-height:175px;padding:26px 24px;border-top:0;border-right:0;border-color:#aaa;display:flex;flex-direction:column;justify-content:space-between}
+.work-page .case-meta .card:last-child{border-right:1px solid #aaa}
+.work-page .case-meta span{font-size:8px;letter-spacing:.08em}
+.work-page .case-meta h3{max-width:330px;font:500 clamp(18px,1.7vw,27px)/1.2 var(--display);letter-spacing:-.035em}
+.work-page .cta{min-height:62svh}
+.work-page .footer{border-top:1px solid var(--line)}
+@media(max-width:760px){
+  .work-page .header{height:62px}
+  .work-page .hero{min-height:calc(100svh - 62px);padding:70px 14px 18px;gap:45px;background-size:50vw 100%,50vw 100%}
+  .work-page .hero .eyebrow{margin-bottom:40px}
+  .work-page .hero h1{font-size:clamp(64px,20vw,104px);line-height:.78;overflow-wrap:anywhere}
+  .work-page .hero h1>span{display:block;margin-top:28px;font-size:22px;line-height:1.05;max-width:310px}
+  .work-page .hero h1>span:before{display:block;margin-bottom:12px}
+  .work-page .hero__bottom{display:grid;grid-template-columns:1fr auto;gap:18px;padding-top:16px}
+  .work-page .hero__bottom p{font-size:14px;line-height:1.45}
+  .work-page .round-link{width:86px;height:86px;margin:0;font-size:7px}
+  .work-page .section--light{padding:78px 14px 88px}
+  .work-page .section__head{display:block;padding-top:17px}
+  .work-page .section__head h2{margin-top:0;font-size:13.5vw}
+  .work-page .section__head p{margin-top:32px;font-size:15px;line-height:1.55}
+  .work-page .case-media{margin-top:55px;aspect-ratio:4/5}
+  .work-page .case-meta{grid-template-columns:1fr}
+  .work-page .case-meta .card{min-height:125px;border-top:0;border-right:1px solid #aaa}
+  .work-page .case-meta .card:last-child{border-bottom:1px solid #aaa}
+  .work-page .case-meta h3{font-size:21px}
+  .work-page .cta{min-height:58svh}
+}
