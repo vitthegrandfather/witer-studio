@@ -423,6 +423,40 @@
 
   function initContact() {
     const form = $('#contactForm'); const status = $('#formStatus'); if (!form) return;
+    const widget = $('.cf-turnstile', form);
+    if (widget && !widget.closest('.security-check')) {
+      const security = document.createElement('div');
+      security.className = 'security-check full';
+      security.innerHTML = `<div class="security-check__info"><span>SECURITY / 01</span><strong>${copy('ЗАХИЩЕНИЙ КАНАЛ', 'PROTECTED CHANNEL')}</strong><small>BOT PROTECTION / <b>SCANNING</b></small></div><div class="security-check__widget"></div>`;
+      widget.parentNode.insertBefore(security, widget);
+      widget.classList.remove('full');
+      $('.security-check__widget', security).appendChild(widget);
+      const renderTurnstile = () => {
+        if (!window.turnstile) { setTimeout(renderTurnstile, 80); return; }
+        if (widget.dataset.witerRendered) return;
+        widget.dataset.witerRendered = 'true';
+        window.turnstile.render(widget, {
+          sitekey: widget.dataset.sitekey,
+          theme: 'light',
+          size: 'flexible',
+          language: 'en',
+          action: 'contact',
+          callback: () => {
+            security.classList.add('is-verified');
+            const state = $('small b', security); if (state) state.textContent = 'VERIFIED';
+          },
+          'expired-callback': () => {
+            security.classList.remove('is-verified');
+            const state = $('small b', security); if (state) state.textContent = 'REFRESHING';
+          },
+          'error-callback': () => {
+            security.classList.remove('is-verified');
+            const state = $('small b', security); if (state) state.textContent = 'RETRY';
+          }
+        });
+      };
+      renderTurnstile();
+    }
     form.addEventListener('submit', async event => {
       event.preventDefault();
       const submit = $('button[type="submit"]', form);
