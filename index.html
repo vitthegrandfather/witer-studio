@@ -25,7 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>try{if(localStorage.getItem('witer_loader_seen_v1'))document.documentElement.classList.add('loader-seen')}catch(e){}</script>
-  <link rel="stylesheet" href="css/styles.css?v=514">
+  <link rel="stylesheet" href="css/styles.css?v=515">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["ProfessionalService","Organization"],"@id":"https://witerstudio.online/#studio","name":"WITER Digital Studio","url":"https://witerstudio.online/","logo":"https://witerstudio.online/witer-favicon-v2.svg","description":"Digital-студія з Києва: вебдизайн, розробка сайтів, Telegram-боти, API-інтеграції та автоматизація.","founder":{"@id":"https://witerstudio.online/#founder"},"areaServed":"Worldwide","serviceType":["Web design","Website development","Telegram bot development","API integrations","Business automation"],"sameAs":["https://t.me/abstractually","https://www.instagram.com/vitthegrandfather","https://www.linkedin.com/in/vitalii-chursanov/"]},{"@type":"Person","@id":"https://witerstudio.online/#founder","name":"Віталій Чурсанов","url":"https://witerstudio.online/#about","jobTitle":"Designer and developer","worksFor":{"@id":"https://witerstudio.online/#studio"}},{"@type":"WebSite","@id":"https://witerstudio.online/#website","url":"https://witerstudio.online/","name":"WITER","inLanguage":["uk","en"],"publisher":{"@id":"https://witerstudio.online/#studio"}}]}</script>
 </head>
 <body>
@@ -139,7 +139,19 @@
           <fieldset class="project-type full"><legend>ОБЕРІТЬ КАТЕГОРІЮ</legend><div><label><input type="radio" name="category" value="Website" checked><span>01 / WEBSITE</span></label><label><input type="radio" name="category" value="Telegram bot"><span>02 / TELEGRAM BOT</span></label><label><input type="radio" name="category" value="Automation"><span>03 / AUTOMATION</span></label><label><input type="radio" name="category" value="Art direction"><span>04 / ART DIRECTION</span></label><label><input type="radio" name="category" value="Other"><span>05 / OTHER</span></label></div></fieldset>
           <label><span>ІМ'Я / КОМПАНІЯ</span><input name="name" autocomplete="name" required placeholder="Як до вас звертатись?"></label>
           <label><span>EMAIL</span><input type="email" name="email" autocomplete="email" required placeholder="hello@company.com"></label>
-          <label class="full form-select"><span>БАЖАНИЙ СТАРТ</span><select name="timeline"><option value="As soon as possible">Якомога швидше</option><option value="Within 1–2 months">Протягом 1–2 місяців</option><option value="Within 3+ months">Через 3+ місяці</option><option value="Not decided">Ще не визначено</option></select></label>
+          <div class="full form-select">
+            <span id="timelineLabel">БАЖАНИЙ СТАРТ</span>
+            <div class="custom-select" data-custom-select>
+              <button class="custom-select__trigger" type="button" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="timelineLabel timelineValue"><strong id="timelineValue" data-select-value>Якомога швидше</strong><i>⌄</i></button>
+              <div class="custom-select__panel" id="timelineOptions" role="listbox" aria-labelledby="timelineLabel" hidden>
+                <button type="button" role="option" aria-selected="true" data-value="As soon as possible"><small>01</small><span>Якомога швидше</span><i>●</i></button>
+                <button type="button" role="option" aria-selected="false" data-value="Within 1–2 months"><small>02</small><span>Протягом 1–2 місяців</span><i>○</i></button>
+                <button type="button" role="option" aria-selected="false" data-value="Within 3+ months"><small>03</small><span>Через 3+ місяці</span><i>○</i></button>
+                <button type="button" role="option" aria-selected="false" data-value="Not decided"><small>04</small><span>Ще не визначено</span><i>○</i></button>
+              </div>
+              <select class="custom-select__native" name="timeline" tabindex="-1" aria-hidden="true" hidden><option value="As soon as possible">Якомога швидше</option><option value="Within 1–2 months">Протягом 1–2 місяців</option><option value="Within 3+ months">Через 3+ місяці</option><option value="Not decided">Ще не визначено</option></select>
+            </div>
+          </div>
           <label class="full"><span>ПРО ЩО ПРОЄКТ?</span><textarea name="message" rows="3" required placeholder="Контекст, цілі, строки..."></textarea></label>
           <label class="form-trap" aria-hidden="true"><span>WEBSITE</span><input name="website" tabindex="-1" autocomplete="off"></label>
           <button class="submit magnetic" type="submit"><span>НАДІСЛАТИ ЗАПИТ</span><i>↗</i></button>
@@ -155,6 +167,6 @@
     <nav><a href="https://www.instagram.com/vitthegrandfather" target="_blank" rel="noopener">INSTAGRAM</a><a href="https://www.linkedin.com/in/vitalii-chursanov/" target="_blank" rel="noopener">LINKEDIN</a></nav>
   </footer>
 
-  <script defer src="js/main.js?v=511"></script>
+  <script defer src="js/main.js?v=512"></script>
 </body>
 </html>

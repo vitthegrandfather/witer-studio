@@ -74,13 +74,78 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 .brief-form label span,.project-type legend{font:600 8px var(--mono);letter-spacing:.06em}
 .brief-form input,.brief-form textarea,.brief-form select{font-family:var(--sans);font-size:16px}
 .brief-form select{display:block;width:100%;border:0;outline:0;background:transparent;color:var(--black);appearance:none;cursor:pointer}
-.form-select{position:relative}.form-select:after{content:"⌄";position:absolute;right:19px;bottom:18px;font-size:18px;pointer-events:none}
+.form-select{position:relative}.form-select:after{display:none}
 .project-type{grid-column:1/-1;border:0;border-right:1px solid rgba(0,0,0,.5);border-bottom:1px solid rgba(0,0,0,.5);padding:19px}
 .project-type legend{float:left;width:100%;margin-bottom:14px}.project-type>div{clear:both;display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
 .project-type label{display:block;padding:0;border:0;cursor:pointer}.project-type input{position:absolute;opacity:0;pointer-events:none}.project-type label span{display:block;margin:0;padding:13px 9px;border:1px solid rgba(0,0,0,.35);text-align:center;transition:.25s}
 .project-type input:checked+span,.project-type label:hover span{background:var(--black);color:var(--white)}
 .submit{margin-top:14px;border:1px solid var(--black)}
 .form-status{padding-top:12px}
+
+/* 515 / custom project timeline selector + form feedback */
+.brief-form>.form-select{
+  grid-column:1/-1;
+  min-height:94px;
+  padding:19px;
+  border-right:1px solid rgba(0,0,0,.5);
+  border-bottom:1px solid rgba(0,0,0,.5);
+}
+.form-select>span{display:block;font:600 8px var(--mono);letter-spacing:.06em;margin-bottom:11px}
+.custom-select{position:relative}
+.custom-select__trigger{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  width:100%;
+  min-height:34px;
+  text-align:left;
+  color:var(--black);
+}
+.custom-select__trigger strong{font:400 16px var(--sans);letter-spacing:-.015em}
+.custom-select__trigger>i{font:400 21px/1 var(--sans);transition:transform .3s var(--ease)}
+.custom-select__trigger:focus-visible{outline:2px solid var(--black);outline-offset:3px}
+.custom-select.is-open{z-index:40}
+.custom-select.is-open .custom-select__trigger>i{transform:rotate(180deg)}
+.custom-select__panel{
+  position:absolute;
+  z-index:40;
+  left:-20px;
+  right:-20px;
+  top:calc(100% + 8px);
+  border:1px solid var(--black);
+  background:var(--white);
+  color:var(--black);
+  box-shadow:10px 10px 0 rgba(5,5,5,.18);
+}
+.custom-select__panel[hidden]{display:none}
+.custom-select__panel>button{
+  display:grid;
+  grid-template-columns:42px 1fr auto;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  min-height:54px;
+  padding:0 15px;
+  border-bottom:1px solid rgba(0,0,0,.28);
+  color:var(--black);
+  text-align:left;
+  transition:background .18s,color .18s,padding .18s;
+}
+.custom-select__panel>button:last-child{border-bottom:0}
+.custom-select__panel>button small{font:600 8px var(--mono)}
+.custom-select__panel>button span{font:500 15px var(--sans);letter-spacing:-.02em}
+.custom-select__panel>button i{font:400 10px var(--mono)}
+.custom-select__panel>button:hover,.custom-select__panel>button:focus-visible,.custom-select__panel>button[aria-selected="true"]{background:var(--black);color:var(--white);outline:0;padding-left:20px}
+.custom-select__native{display:none!important}
+.form-status{min-height:0;padding:0}
+.form-status:not(:empty){min-height:44px;margin-top:12px;padding:14px 16px;border:1px solid rgba(0,0,0,.5);font:600 9px/1.45 var(--mono)}
+.form-status[data-state="sending"]{background:rgba(0,0,0,.06)}
+.form-status[data-state="success"]{background:var(--black);color:var(--white)}
+.form-status[data-state="error"]{border-left:8px solid var(--black)}
+@media(max-width:760px){
+  .custom-select__panel{left:-20px;right:-20px;box-shadow:6px 6px 0 rgba(5,5,5,.18)}
+  .custom-select__panel>button{min-height:50px;grid-template-columns:32px 1fr auto;padding:0 12px}
+}
 
 /* 505 / first-visit loader, section state and case transitions */
 .loader-seen .loader{display:none!important}

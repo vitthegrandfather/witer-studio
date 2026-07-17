@@ -1,3 +1,5 @@
+import { EmailMessage } from 'cloudflare:email';
+
 const json = (payload, status, origin) => new Response(JSON.stringify(payload), {
   status,
   headers: {
@@ -13,6 +15,38 @@ const json = (payload, status, origin) => new Response(JSON.stringify(payload), 
 
 const text = (value, max) => String(value || '').trim().slice(0, max);
 const escapeHtml = value => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' })[char]);
+const singleLine = value => String(value).replace(/[\r\n]+/g, ' ').trim();
+const base64 = value => {
+  const bytes = new TextEncoder().encode(String(value));
+  let binary = '';
+  for (let index = 0; index < bytes.length; index += 0x8000) binary += String.fromCharCode(...bytes.subarray(index, index + 0x8000));
+  return btoa(binary).match(/.{1,76}/g)?.join('\r\n') || '';
+};
+const encodedHeader = value => `=?UTF-8?B?${base64(singleLine(value)).replace(/\r\n/g, '')}?=`;
+const buildEmail = ({ from, to, replyTo, subject, plain, html }) => {
+  const boundary = `witer-${crypto.randomUUID()}`;
+  return [
+    `From: WITER <${from}>`,
+    `To: ${to}`,
+    `Reply-To: ${replyTo}`,
+    `Subject: ${encodedHeader(subject)}`,
+    'MIME-Version: 1.0',
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    '',
+    `--${boundary}`,
+    'Content-Type: text/plain; charset="UTF-8"',
+    'Content-Transfer-Encoding: base64',
+    '',
+    base64(plain),
+    `--${boundary}`,
+    'Content-Type: text/html; charset="UTF-8"',
+    'Content-Transfer-Encoding: base64',
+    '',
+    base64(html),
+    `--${boundary}--`,
+    ''
+  ].join('\r\n');
+};
 
 export default {
   async fetch(request, env) {
@@ -29,20 +63,21 @@ export default {
 
     const name = text(body.name, 100);
     const email = text(body.email, 180).toLowerCase();
-    const category = text(body.category, 60) || 'Other';
-    const timeline = text(body.timeline, 80) || 'Not decided';
+    const category = singleLine(text(body.category, 60)) || 'Other';
+    const timeline = singleLine(text(body.timeline, 80)) || 'Not decided';
     const message = text(body.message, 4000);
     if (name.length < 2 || message.length < 10 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return json({ error: 'Please check the required fields' }, 422, origin);
     const safe = { name: escapeHtml(name), email: escapeHtml(email), category: escapeHtml(category), timeline: escapeHtml(timeline), message: escapeHtml(message).replace(/\n/g, '<br>') };
     try {
-      await env.EMAIL.send({
-        from: { email: env.CONTACT_FROM, name: 'WITER' },
+      const raw = buildEmail({
+        from: env.CONTACT_FROM,
         to: env.CONTACT_TO,
         replyTo: email,
-        subject: `WITER / ${category} — ${name}`,
-        text: `NEW WITER REQUEST\n\n${name}\n${email}\n${category}\n${timeline}\n\n${message}`,
+        subject: `WITER / ${category} — ${singleLine(name)}`,
+        plain: `NEW WITER REQUEST\n\n${name}\n${email}\n${category}\n${timeline}\n\n${message}`,
         html: `<div style="font-family:Arial,sans-serif;max-width:680px;margin:auto"><p style="font:12px monospace">NEW WITER REQUEST</p><h1 style="font-size:38px">${safe.name}</h1><table style="width:100%;border-collapse:collapse"><tr><td style="padding:12px 0;border-top:1px solid #bbb">EMAIL</td><td style="padding:12px 0;border-top:1px solid #bbb">${safe.email}</td></tr><tr><td style="padding:12px 0;border-top:1px solid #bbb">CATEGORY</td><td style="padding:12px 0;border-top:1px solid #bbb">${safe.category}</td></tr><tr><td style="padding:12px 0;border-top:1px solid #bbb">START</td><td style="padding:12px 0;border-top:1px solid #bbb">${safe.timeline}</td></tr></table><p style="font-size:18px;line-height:1.55;border-top:1px solid #bbb;padding-top:24px">${safe.message}</p></div>`
       });
+      await env.EMAIL.send(new EmailMessage(env.CONTACT_FROM, env.CONTACT_TO, raw));
     } catch (error) {
       console.error('Cloudflare Email error', error?.code, error?.message);
       return json({ error: 'Could not deliver the message' }, 502, origin);

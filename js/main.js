@@ -302,6 +302,70 @@
     });
   }
 
+  function initCustomSelects() {
+    $$('[data-custom-select]').forEach(root => {
+      const trigger = $('.custom-select__trigger', root);
+      const panel = $('.custom-select__panel', root);
+      const native = $('.custom-select__native', root);
+      const value = $('[data-select-value]', root);
+      const options = $$('[role="option"]', panel);
+      if (!trigger || !panel || !native || !value || !options.length) return;
+      const selectedOption = () => options.find(option => option.dataset.value === native.value) || options[0];
+      const sync = option => {
+        native.value = option.dataset.value;
+        value.textContent = $('span', option)?.textContent || option.textContent.trim();
+        options.forEach(item => {
+          const active = item === option;
+          item.setAttribute('aria-selected', String(active));
+          const marker = $('i', item);
+          if (marker) marker.textContent = active ? '●' : '○';
+        });
+        native.dispatchEvent(new Event('change', { bubbles: true }));
+      };
+      const close = (focusTrigger = false) => {
+        root.classList.remove('is-open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.hidden = true;
+        if (focusTrigger) trigger.focus();
+      };
+      const open = (focusOption = false) => {
+        $$('.custom-select.is-open').forEach(item => { if (item !== root) { item.classList.remove('is-open'); $('.custom-select__trigger', item)?.setAttribute('aria-expanded', 'false'); const otherPanel = $('.custom-select__panel', item); if (otherPanel) otherPanel.hidden = true; } });
+        root.classList.add('is-open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.hidden = false;
+        if (focusOption) selectedOption().focus();
+      };
+      trigger.addEventListener('click', () => root.classList.contains('is-open') ? close() : open());
+      trigger.addEventListener('keydown', event => {
+        if (['ArrowDown', 'ArrowUp', 'Enter', ' '].includes(event.key)) { event.preventDefault(); open(true); }
+        if (event.key === 'Escape') close();
+      });
+      options.forEach((option, index) => {
+        option.addEventListener('click', () => { sync(option); close(true); });
+        option.addEventListener('keydown', event => {
+          if (event.key === 'Escape') { event.preventDefault(); close(true); return; }
+          if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); sync(option); close(true); return; }
+          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+            event.preventDefault();
+            const direction = event.key === 'ArrowDown' ? 1 : -1;
+            options[(index + direction + options.length) % options.length].focus();
+          }
+        });
+      });
+      native.form?.addEventListener('reset', () => setTimeout(() => sync(selectedOption()), 0));
+      sync(selectedOption());
+    });
+    document.addEventListener('click', event => {
+      $$('.custom-select.is-open').forEach(root => {
+        if (root.contains(event.target)) return;
+        root.classList.remove('is-open');
+        $('.custom-select__trigger', root)?.setAttribute('aria-expanded', 'false');
+        const panel = $('.custom-select__panel', root);
+        if (panel) panel.hidden = true;
+      });
+    });
+  }
+
   function initContact() {
     const form = $('#contactForm'); const status = $('#formStatus'); if (!form) return;
     form.addEventListener('submit', async event => {
@@ -310,16 +374,28 @@
       const payload = Object.fromEntries(new FormData(form).entries());
       if (submit) submit.disabled = true;
       form.classList.add('is-sending');
+      if (status) status.dataset.state = 'sending';
       if (status) status.textContent = copy('Надсилаю запит…', 'Sending your request…');
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000);
       try {
-        const response = await fetch(form.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const response = await fetch(form.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload), signal: controller.signal });
         const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(result.error || 'Request failed');
         form.reset();
+        if (status) status.dataset.state = 'success';
         if (status) status.textContent = copy('Готово. Запит уже у WITER — відповім протягом одного робочого дня.', 'Done. WITER has your request — expect a reply within one business day.');
-      } catch (_) {
-        if (status) status.textContent = copy('Не вдалося надіслати. Напишіть напряму: studiowiter@outlook.com', 'Could not send. Email directly: studiowiter@outlook.com');
+      } catch (error) {
+        if (status) status.dataset.state = 'error';
+        const deliveryFailed = error.message === 'Could not deliver the message';
+        const invalidFields = error.message === 'Please check the required fields';
+        if (status) status.textContent = invalidFields
+          ? copy('Перевірте ім’я, email і опис проєкту.', 'Please check your name, email and project description.')
+          : deliveryFailed
+            ? copy('Сервіс листів тимчасово недоступний. Напишіть: studiowiter@outlook.com', 'Email delivery is temporarily unavailable. Write to: studiowiter@outlook.com')
+            : copy('Не вдалося надіслати. Спробуйте ще раз або напишіть: studiowiter@outlook.com', 'Could not send. Try again or email: studiowiter@outlook.com');
       } finally {
+        clearTimeout(timeout);
         if (submit) submit.disabled = false;
         form.classList.remove('is-sending');
       }
@@ -336,5 +412,6 @@
   initMotion();
   initTicker();
   initPageTransitions();
+  initCustomSelects();
   initContact();
 })();
