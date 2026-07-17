@@ -189,7 +189,16 @@
     const hero = $('.hero');
     if (!hero) return;
     const identity = $('.hero-identity', hero);
-    if (!identity || $('.hero-film', hero)) return;
+    if (!identity) return;
+
+    if (!$('.hero-identity__meta', identity)) {
+      const meta = document.createElement('div');
+      meta.className = 'hero-identity__meta';
+      meta.innerHTML = '<strong>DESIGN &amp; DEVELOPMENT STUDIO</strong><span>WEB / SYSTEMS / AUTOMATION — KYIV / WORLDWIDE</span>';
+      identity.appendChild(meta);
+    }
+
+    if ($('.hero-film', hero)) return;
 
     const film = document.createElement('div');
     film.className = 'hero-film';
