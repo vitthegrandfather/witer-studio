@@ -142,6 +142,8 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 .form-status[data-state="sending"]{background:rgba(0,0,0,.06)}
 .form-status[data-state="success"]{background:var(--black);color:var(--white)}
 .form-status[data-state="error"]{border-left:8px solid var(--black)}
+.cf-turnstile{min-height:65px;display:flex;align-items:center;overflow:hidden}
+.cf-turnstile iframe{max-width:100%}
 @media(max-width:760px){
   .custom-select__panel{left:-20px;right:-20px;box-shadow:6px 6px 0 rgba(5,5,5,.18)}
   .custom-select__panel>button{min-height:50px;grid-template-columns:32px 1fr auto;padding:0 12px}

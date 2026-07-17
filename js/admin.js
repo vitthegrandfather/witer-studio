@@ -4,18 +4,16 @@
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const KEYS = ['witer_projects', 'witer_messages', 'witer_texts', 'witer_settings'];
   const API_URL = 'https://contact.witerstudio.online';
-  let adminToken = sessionStorage.getItem('witer_admin_token') || '';
   let messagesCache = [];
+  localStorage.removeItem('witer_password');
+  sessionStorage.removeItem('witer_admin_token');
 
   async function api(path, options = {}) {
     const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
-    if (adminToken) headers.Authorization = `Bearer ${adminToken}`;
-    const response = await fetch(`${API_URL}${path}`, { ...options, headers });
+    const response = await fetch(`${API_URL}${path}`, { ...options, headers, credentials: 'include', cache: 'no-store' });
     const payload = await response.json().catch(() => ({}));
     if (response.status === 401 && path !== '/admin/login') {
       sessionStorage.removeItem('witer_logged_in');
-      sessionStorage.removeItem('witer_admin_token');
-      adminToken = '';
       throw new Error('Сесія завершилась. Увійдіть повторно.');
     }
     if (!response.ok) throw new Error(payload.error || 'Помилка сервера');
@@ -23,13 +21,10 @@
   }
 
   async function remoteLogin(password) {
-    const payload = await api('/admin/login', { method: 'POST', body: JSON.stringify({ password }) });
-    adminToken = payload.token;
-    sessionStorage.setItem('witer_admin_token', adminToken);
+    await api('/admin/login', { method: 'POST', body: JSON.stringify({ password }) });
     sessionStorage.setItem('witer_logged_in', 'true');
   }
 
-  function hashStr(value) { let hash = 0; for (let i = 0; i < value.length; i++) hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0; return `h_${Math.abs(hash).toString(36)}`; }
   function getData(key, fallback) { try { const value = localStorage.getItem(key); return value === null ? fallback : JSON.parse(value); } catch { return fallback; } }
   function setData(key, value, track = true) { localStorage.setItem(key, JSON.stringify(value)); if (track && key !== 'witer_last_updated') localStorage.setItem('witer_last_updated', JSON.stringify(new Date().toISOString())); }
   function esc(value = '') { const div = document.createElement('div'); div.textContent = String(value); return div.innerHTML; }
@@ -118,8 +113,10 @@
     loginScreen.hidden = true; setupScreen.hidden = true; dashboard.hidden = false;
     loadDashboard(); updateDate();
   }
-  function initAuth() {
-    if (sessionStorage.getItem('witer_logged_in') === 'true' && adminToken) return showDashboard();
+  async function initAuth() {
+    if (sessionStorage.getItem('witer_logged_in') === 'true') {
+      try { await api('/admin/session'); return showDashboard(); } catch (_) {}
+    }
     loginScreen.hidden = false;
     setupScreen.hidden = true;
     dashboard.hidden = true;
@@ -130,23 +127,26 @@
     const password = $('#loginPassword').value;
     try {
       await remoteLogin(password);
-      setData('witer_password', hashStr(password), false);
       loginAttempts = { count: 0, ts: 0 }; setData('witer_login_attempts', loginAttempts, false);
       showDashboard();
     } catch (error) {
       loginAttempts = { count: loginAttempts.count + 1, ts: Date.now() }; setData('witer_login_attempts', loginAttempts, false);
-      showToast(error.message === 'Invalid password' ? 'Пароль не підходить.' : error.message, true);
+      showToast(error.message === 'Invalid credentials' ? 'Дані входу не підходять.' : error.message, true);
     }
   });
   $('#setupForm').addEventListener('submit', async event => {
     event.preventDefault(); const password = $('#setupPassword').value;
     if (password.length < 6) return showToast('Пароль має містити щонайменше 6 символів.', true);
-    try { await remoteLogin(password); setData('witer_password', hashStr(password), false); showDashboard(); } catch (error) { showToast(error.message, true); }
+    try { await remoteLogin(password); showDashboard(); } catch (error) { showToast(error.message, true); }
   });
   $$('.password-toggle').forEach(button => button.addEventListener('click', () => {
     const input = $('input', button.parentElement); const visible = input.type === 'text'; input.type = visible ? 'password' : 'text'; button.textContent = visible ? 'Показати' : 'Сховати';
   }));
-  $('#logoutBtn').addEventListener('click', () => { sessionStorage.removeItem('witer_logged_in'); sessionStorage.removeItem('witer_admin_token'); location.reload(); });
+  $('#logoutBtn').addEventListener('click', async () => {
+    try { await api('/admin/logout', { method: 'POST', body: '{}' }); } catch (_) {}
+    sessionStorage.removeItem('witer_logged_in');
+    location.reload();
+  });
 
   const tabMeta = { overview: ['Огляд', 'CONTROL ROOM / 01'], texts: ['Тексти', 'CONTENT / 02'], projects: ['Проєкти', 'PORTFOLIO / 03'], messages: ['Повідомлення', 'INBOX / 04'], settings: ['Налаштування', 'SYSTEM / 05'] };
   function goToTab(name) {
@@ -234,7 +234,7 @@
       $('#allMessages').innerHTML = `<div class="empty">${esc(error.message)}</div>`;
       $('#recentMessages').innerHTML = `<div class="empty">${esc(error.message)}</div>`;
       showToast(error.message, true);
-      if (!adminToken) setTimeout(() => location.reload(), 800);
+      if (sessionStorage.getItem('witer_logged_in') !== 'true') setTimeout(() => location.reload(), 800);
     }
   }
   $('#messageSearch').addEventListener('input', event => renderMessages(event.target.value.trim()));

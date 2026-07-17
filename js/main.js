@@ -427,6 +427,11 @@
       event.preventDefault();
       const submit = $('button[type="submit"]', form);
       const payload = Object.fromEntries(new FormData(form).entries());
+      if (!payload['cf-turnstile-response']) {
+        if (status) status.dataset.state = 'error';
+        if (status) status.textContent = copy('Підтвердьте, що ви не бот.', 'Please complete the security check.');
+        return;
+      }
       if (submit) submit.disabled = true;
       form.classList.add('is-sending');
       if (status) status.dataset.state = 'sending';
@@ -438,13 +443,21 @@
         const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(result.error || 'Request failed');
         form.reset();
+        window.turnstile?.reset();
         if (status) status.dataset.state = 'success';
         if (status) status.textContent = copy('Готово. Запит уже у WITER — відповім протягом одного робочого дня.', 'Done. WITER has your request — expect a reply within one business day.');
       } catch (error) {
+        window.turnstile?.reset();
         if (status) status.dataset.state = 'error';
         const deliveryFailed = error.message === 'Could not deliver the message';
         const invalidFields = error.message === 'Please check the required fields';
-        if (status) status.textContent = invalidFields
+        const securityFailed = error.message === 'Security check failed';
+        const throttled = error.message === 'Too many requests. Try again later.';
+        if (status) status.textContent = securityFailed
+          ? copy('Перевірка безпеки не пройшла. Спробуйте ще раз.', 'Security check failed. Please try again.')
+          : throttled
+            ? copy('Забагато запитів. Спробуйте через 15 хвилин.', 'Too many requests. Please try again in 15 minutes.')
+          : invalidFields
           ? copy('Перевірте ім’я, email і опис проєкту.', 'Please check your name, email and project description.')
           : deliveryFailed
             ? copy('Сервіс листів тимчасово недоступний. Напишіть: studiowiter@outlook.com', 'Email delivery is temporarily unavailable. Write to: studiowiter@outlook.com')
