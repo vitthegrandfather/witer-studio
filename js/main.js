@@ -185,6 +185,29 @@
     setTimeout(reveal, 1900);
   }
 
+  function initHeroSystem() {
+    const hero = $('.hero');
+    if (!hero) return;
+    const identity = $('.hero-identity', hero);
+    if (!identity || $('.hero-system', hero)) return;
+
+    const system = document.createElement('aside');
+    system.className = 'hero-system';
+    system.setAttribute('aria-hidden', 'true');
+    system.innerHTML = `
+      <div class="hero-system__head">
+        <span>WITER / SYSTEM_01</span>
+        <span class="hero-system__state"><i></i>ONLINE</span>
+      </div>
+      <div class="hero-system__signal"><i></i></div>
+      <dl>
+        <div><dt>STATUS</dt><dd>AVAILABLE</dd></div>
+        <div><dt>LOCATION</dt><dd>KYIV / UA</dd></div>
+        <div><dt>SCOPE</dt><dd>WORLDWIDE</dd></div>
+      </dl>`;
+    hero.insertBefore(system, identity);
+  }
+
   function initHeroWordmark() {
     const svg = $('.hero-wordmark__svg');
     if (!svg) return;
@@ -526,6 +549,7 @@
   renderProjects();
   initLoader();
   initHeroWordmark();
+  initHeroSystem();
   initHeroEntrance();
   initHeaderAndProgress();
   initMenu();
