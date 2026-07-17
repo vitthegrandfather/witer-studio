@@ -210,6 +210,25 @@
     items.forEach(item => observer.observe(item));
   }
 
+  function initHeroEntrance() {
+    const hero = $('.hero');
+    if (!hero) return;
+    hero.classList.add('hero-motion');
+    const reveal = () => requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-ready')));
+    if (reducedMotion) return reveal();
+    if (!document.body.classList.contains('loading')) return reveal();
+    const observer = new MutationObserver(() => {
+      if (document.body.classList.contains('loading')) return;
+      observer.disconnect();
+      setTimeout(reveal, 30);
+    });
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    setTimeout(() => {
+      observer.disconnect();
+      reveal();
+    }, 2300);
+  }
+
   function initMotion() {
     if (reducedMotion || matchMedia('(pointer: coarse)').matches) return;
     $$('.project-card').forEach(card => {
@@ -408,6 +427,7 @@
   initHeaderAndProgress();
   initMenu();
   initActiveNavigation();
+  initHeroEntrance();
   initReveal();
   initMotion();
   initTicker();
