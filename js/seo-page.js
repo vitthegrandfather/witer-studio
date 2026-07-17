@@ -1,6 +1,36 @@
 (() => {
   'use strict';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isEnglish = document.documentElement.lang === 'en';
+
+  const createTransition = () => {
+    const layer = document.createElement('div');
+    layer.className = 'page-transition';
+    layer.setAttribute('aria-hidden', 'true');
+    layer.innerHTML = `<span>WITER</span><small>${isEnglish ? 'CASE STUDY' : 'КЕЙС'} / ${location.pathname.includes('forma17') ? '03' : location.pathname.includes('tattoo') ? '02' : '01'}</small>`;
+    document.body.append(layer);
+    return layer;
+  };
+  try {
+    if (sessionStorage.getItem('witer_case_transition')) {
+      sessionStorage.removeItem('witer_case_transition');
+      const layer = createTransition();
+      layer.classList.add('is-covering');
+      requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('is-entering')));
+      setTimeout(() => layer.remove(), reducedMotion ? 0 : 900);
+    }
+  } catch (_) {}
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reducedMotion || link.target === '_blank' || link.hasAttribute('download')) return;
+    const destination = new URL(link.href, location.href);
+    if (destination.origin !== location.origin || (destination.pathname === location.pathname && destination.hash)) return;
+    event.preventDefault();
+    const layer = createTransition();
+    requestAnimationFrame(() => layer.classList.add('is-leaving'));
+    try { sessionStorage.setItem('witer_case_transition', '1'); } catch (_) {}
+    setTimeout(() => { location.href = destination.href; }, 620);
+  });
   const progress = document.querySelector('.page-progress i');
   const updateProgress = () => {
     if (!progress) return;

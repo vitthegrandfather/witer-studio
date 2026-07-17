@@ -61,3 +61,14 @@
   .service-demo__stage{min-height:580px}.service-demo__stage .service-interface--large{width:86%!important;right:7%;top:29%}.service-demo__stage .service-interface--large:after{display:none}
   .service-process{background:var(--black)}.service-step:hover{padding-right:55px}.service-step:after{right:12px}
 }
+
+/* 505 / animated navigation between portfolio and case studies */
+.page-transition{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#f3f3ee;color:#050505;transform:translateY(101%);transition:transform .72s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.page-transition span{font:700 clamp(82px,22vw,360px)/.7 "Space Grotesk",sans-serif;letter-spacing:-.1em}
+.page-transition small{position:absolute;left:24px;bottom:22px;font:600 9px "Space Grotesk",sans-serif;letter-spacing:.1em}
+.page-transition:after{content:"";position:absolute;left:24px;right:24px;top:23px;height:1px;background:#050505;transform:scaleX(0);transform-origin:left;transition:transform .52s .12s cubic-bezier(.2,.8,.2,1)}
+.page-transition.is-leaving,.page-transition.is-covering{transform:translateY(0)}
+.page-transition.is-leaving:after,.page-transition.is-covering:after{transform:scaleX(1)}
+.page-transition.is-covering.is-entering{transform:translateY(-101%)}
+@media(max-width:760px){.page-transition small{left:14px;bottom:14px}.page-transition:after{left:14px;right:14px;top:14px}}
+@media(prefers-reduced-motion:reduce){.page-transition{display:none}}

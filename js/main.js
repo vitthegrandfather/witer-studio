@@ -125,13 +125,26 @@
       const name = language === 'en' ? project.nameEn : project.name;
       const desc = language === 'en' ? project.descEn : project.desc;
       const classes = `project-card project-card--${escapeHTML(project.slug)} reveal`;
-      return `<article class="${classes}"><button class="project-card__button" type="button" data-project-id="${escapeHTML(project.id)}" aria-label="${escapeHTML(copy('Відкрити кейс ', 'Open case '))}${escapeHTML(name)}"><img class="project-card__image" src="${escapeHTML(normalizeImage(project.image))}" alt="" loading="lazy"><span class="project-card__veil"></span><span class="project-card__chrome"><b>WITER / ${String(index + 1).padStart(2, '0')}</b><b>CONCEPT — ${escapeHTML(project.year)}</b></span><span class="project-card__index">${String(index + 1).padStart(2, '0')}</span><div class="project-card__body"><small class="project-card__type">${escapeHTML(project.stack)}</small><h3>${escapeHTML(name).replace(/\s*\/\s*/, '<br>/ ')}</h3><div class="project-card__foot"><p>${escapeHTML(desc)}</p><i>↗</i></div></div></button></article>`;
+      const caseSlugs = { beauty: 'beauty-space-concept', tattoo: 'tattoo-studio-concept', forma: 'forma17-concept' };
+      const caseSlug = caseSlugs[project.slug];
+      const href = caseSlug ? `${language === 'en' ? '/en' : ''}/work/${caseSlug}/` : project.link;
+      const transition = caseSlug ? ' data-page-transition' : ' target="_blank" rel="noopener"';
+      return `<article class="${classes}"><a class="project-card__button" href="${escapeHTML(href)}"${transition} aria-label="${escapeHTML(copy('Відкрити кейс ', 'Open case '))}${escapeHTML(name)}"><img class="project-card__image" src="${escapeHTML(normalizeImage(project.image))}" alt="" loading="lazy"><span class="project-card__veil"></span><span class="project-card__chrome"><b>WITER / ${String(index + 1).padStart(2, '0')}</b><b>CONCEPT — ${escapeHTML(project.year)}</b></span><span class="project-card__index">${String(index + 1).padStart(2, '0')}</span><div class="project-card__body"><small class="project-card__type">${escapeHTML(project.stack)}</small><h3>${escapeHTML(name).replace(/\s*\/\s*/, '<br>/ ')}</h3><div class="project-card__foot"><p>${escapeHTML(desc)}</p><i>↗</i></div></div></a></article>`;
     }).join('');
   }
 
   function initLoader() {
     const loader = $('#loader');
     if (!loader) return;
+    const key = 'witer_loader_seen_v1';
+    try {
+      if (localStorage.getItem(key)) {
+        loader.classList.add('is-done');
+        document.body.classList.remove('loading');
+        return;
+      }
+      localStorage.setItem(key, '1');
+    } catch (_) {}
     document.body.classList.add('loading');
     const counter = $('#loaderCount');
     let value = 0;
@@ -164,6 +177,27 @@
     toggle.addEventListener('click', () => { const open = !menu.classList.contains('is-open'); toggle.classList.toggle('is-open', open); toggle.setAttribute('aria-expanded', String(open)); menu.classList.toggle('is-open', open); menu.setAttribute('aria-hidden', String(!open)); document.body.classList.toggle('menu-open', open); });
     $$('a', menu).forEach(link => link.addEventListener('click', close));
     addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+  }
+
+  function initActiveNavigation() {
+    const sections = ['work', 'services', 'about'].map(id => document.getElementById(id)).filter(Boolean);
+    const links = $$('a[href="#work"], a[href="#services"], a[href="#about"]');
+    if (!sections.length || !links.length) return;
+    const activate = id => links.forEach(link => {
+      const active = link.getAttribute('href') === `#${id}`;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+    });
+    const update = () => {
+      const marker = innerHeight * .34;
+      let current = '';
+      sections.forEach(section => { if (section.getBoundingClientRect().top <= marker) current = section.id; });
+      if (scrollY < innerHeight * .45) current = '';
+      activate(current);
+    };
+    update();
+    addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update, { passive: true });
   }
 
   function initReveal() {
@@ -232,43 +266,56 @@
     addEventListener('resize', () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(rebuild, 180); }, { passive: true });
   }
 
-  function initCaseModal() {
-    const modal = $('#caseModal'); if (!modal) return;
-    let returnFocus = null;
-    const closeModal = () => { modal.classList.remove('is-open'); modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('modal-open'); setTimeout(() => returnFocus?.focus(), 100); };
-    $('#portfolioProjects')?.addEventListener('click', event => {
-      const button = event.target.closest('[data-project-id]'); if (!button) return;
-      const project = projects.find(item => item.id === button.dataset.projectId); if (!project) return;
-      returnFocus = button; const index = projects.indexOf(project) + 1;
-      const name = language === 'en' ? project.nameEn : project.name;
-      const desc = language === 'en' ? project.descEn : project.desc;
-      const brief = language === 'en' ? project.briefEn : project.brief;
-      const features = language === 'en' ? project.featuresEn : project.features;
-      $('#caseModalNumber').textContent = String(index).padStart(2, '0');
-      $('#caseModalVisualCode').textContent = `W/${String(index).padStart(2, '0')}`;
-      $('#caseModalTitle').textContent = name; $('#caseModalDescription').textContent = desc; $('#caseModalBrief').textContent = brief;
-      $('#caseModalImage').src = normalizeImage(project.image); $('#caseModalImage').alt = name;
-      $('#caseModalFeatures').innerHTML = features.map(item => `<li>${escapeHTML(item)}</li>`).join('');
-      $('#caseModalTech').innerHTML = project.tech.map(item => `<b>${escapeHTML(item)}</b>`).join('');
-      $('#caseModalRole').textContent = project.role; $('#caseModalYear').textContent = project.year; $('#caseModalMediaYear').textContent = project.year;
-      $('#caseModalLink').href = project.link;
-      modal.classList.add('is-open'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('modal-open');
-      setTimeout(() => $('.case-modal__close')?.focus(), 120);
+  function initPageTransitions() {
+    const createLayer = () => {
+      const layer = document.createElement('div');
+      layer.className = 'page-transition';
+      layer.setAttribute('aria-hidden', 'true');
+      layer.innerHTML = `<span>WITER</span><small>${copy('ВІДКРИВАЮ КЕЙС', 'OPENING CASE')} / 0${Math.floor(Math.random() * 3) + 1}</small>`;
+      document.body.append(layer);
+      return layer;
+    };
+    try {
+      if (sessionStorage.getItem('witer_case_transition')) {
+        sessionStorage.removeItem('witer_case_transition');
+        const layer = createLayer();
+        layer.classList.add('is-covering');
+        requestAnimationFrame(() => requestAnimationFrame(() => layer.classList.add('is-entering')));
+        setTimeout(() => layer.remove(), reducedMotion ? 0 : 900);
+      }
+    } catch (_) {}
+    document.addEventListener('click', event => {
+      const link = event.target.closest('a[data-page-transition]');
+      if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || reducedMotion) return;
+      event.preventDefault();
+      const layer = createLayer();
+      requestAnimationFrame(() => layer.classList.add('is-leaving'));
+      try { sessionStorage.setItem('witer_case_transition', '1'); } catch (_) {}
+      setTimeout(() => { location.href = link.href; }, 620);
     });
-    $('.case-modal__close')?.addEventListener('click', closeModal);
-    addEventListener('keydown', event => { if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
   }
 
   function initContact() {
     const form = $('#contactForm'); const status = $('#formStatus'); if (!form) return;
-    form.addEventListener('submit', event => {
+    form.addEventListener('submit', async event => {
       event.preventDefault();
-      const name = $('[name="name"]', form).value.trim(); const email = $('[name="email"]', form).value.trim(); const message = $('[name="message"]', form).value.trim();
-      const category = $('[name="category"]:checked', form)?.value || 'Other'; const timeline = $('[name="timeline"]', form)?.value || 'Not decided';
-      const subject = encodeURIComponent(`WITER / ${category} — ${name}`);
-      const body = encodeURIComponent(`${copy('Категорія', 'Category')}: ${category}\n${copy('Бажаний старт', 'Preferred start')}: ${timeline}\n\n${message}\n\n—\n${name}\n${email}`);
-      if (status) status.textContent = copy('Відкриваю ваш поштовий застосунок…', 'Opening your email app…');
-      location.href = `mailto:studiowiter@outlook.com?subject=${subject}&body=${body}`;
+      const submit = $('button[type="submit"]', form);
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (submit) submit.disabled = true;
+      form.classList.add('is-sending');
+      if (status) status.textContent = copy('Надсилаю запит…', 'Sending your request…');
+      try {
+        const response = await fetch(form.action, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Request failed');
+        form.reset();
+        if (status) status.textContent = copy('Готово. Запит уже у WITER — відповім протягом одного робочого дня.', 'Done. WITER has your request — expect a reply within one business day.');
+      } catch (_) {
+        if (status) status.textContent = copy('Не вдалося надіслати. Напишіть напряму: studiowiter@outlook.com', 'Could not send. Email directly: studiowiter@outlook.com');
+      } finally {
+        if (submit) submit.disabled = false;
+        form.classList.remove('is-sending');
+      }
     });
   }
 
@@ -277,10 +324,11 @@
   initLoader();
   initHeaderAndProgress();
   initMenu();
+  initActiveNavigation();
   initReveal();
   initMotion();
   initHeroIdentity();
   initTicker();
-  initCaseModal();
+  initPageTransitions();
   initContact();
 })();

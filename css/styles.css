@@ -84,6 +84,24 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 .project-type input:checked+span,.project-type label:hover span{background:var(--black);color:var(--white)}
 .submit{margin-top:14px;border:1px solid var(--black)}
 .form-status{padding-top:12px}
+
+/* 505 / first-visit loader, section state and case transitions */
+.loader-seen .loader{display:none!important}
+.desktop-nav a.is-active:after{transform:scaleX(1);transform-origin:left}
+.desktop-nav a.is-active:before{content:"";position:absolute;left:-11px;top:50%;width:4px;height:4px;background:currentColor;transform:translateY(-50%) rotate(45deg)}
+.mobile-menu nav a.is-active{background:var(--white);color:var(--black);padding-left:12px;padding-right:12px}
+.project-card__button{text-decoration:none}
+.form-trap{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.submit:disabled{cursor:wait;opacity:.55}.brief-form.is-sending .submit i{animation:submit-spin .7s linear infinite}@keyframes submit-spin{to{transform:rotate(360deg)}}
+.page-transition{position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--white);color:var(--black);transform:translateY(101%);transition:transform .72s var(--ease);pointer-events:none}
+.page-transition span{font:700 clamp(82px,22vw,360px)/.7 var(--sans);letter-spacing:-.1em}
+.page-transition small{position:absolute;left:24px;bottom:22px;font:600 9px var(--mono);letter-spacing:.08em}
+.page-transition:after{content:"";position:absolute;left:24px;right:24px;top:23px;height:1px;background:var(--black);transform:scaleX(0);transform-origin:left;transition:transform .52s .12s var(--ease)}
+.page-transition.is-leaving,.page-transition.is-covering{transform:translateY(0)}
+.page-transition.is-leaving:after,.page-transition.is-covering:after{transform:scaleX(1)}
+.page-transition.is-covering.is-entering{transform:translateY(-101%)}
+@media(max-width:760px){.page-transition small{left:14px;bottom:14px}.page-transition:after{left:14px;right:14px;top:14px}}
+@media(prefers-reduced-motion:reduce){.page-transition{display:none}.brief-form.is-sending .submit i{animation:none}}
 @media(max-width:760px){
   .hero{background:radial-gradient(ellipse at 50% 38%,#101010 0,#050505 70%)}
   .hero-title--witer .hero-title__line em{position:static;margin-top:.2em;font-size:7px}

@@ -24,7 +24,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=504">
+  <script>try{if(localStorage.getItem('witer_loader_seen_v1'))document.documentElement.classList.add('loader-seen')}catch(e){}</script>
+  <link rel="stylesheet" href="css/styles.css?v=505">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["ProfessionalService","Organization"],"@id":"https://witerstudio.online/#studio","name":"WITER Digital Studio","url":"https://witerstudio.online/","logo":"https://witerstudio.online/witer-favicon-v2.svg","description":"Digital-студія з Києва: вебдизайн, розробка сайтів, Telegram-боти, API-інтеграції та автоматизація.","founder":{"@id":"https://witerstudio.online/#founder"},"areaServed":"Worldwide","serviceType":["Web design","Website development","Telegram bot development","API integrations","Business automation"],"sameAs":["https://t.me/abstractually","https://www.instagram.com/vitthegrandfather","https://www.linkedin.com/in/vitalii-chursanov/"]},{"@type":"Person","@id":"https://witerstudio.online/#founder","name":"Віталій Чурсанов","url":"https://witerstudio.online/#about","jobTitle":"Designer and developer","worksFor":{"@id":"https://witerstudio.online/#studio"}},{"@type":"WebSite","@id":"https://witerstudio.online/#website","url":"https://witerstudio.online/","name":"WITER","inLanguage":["uk","en"],"publisher":{"@id":"https://witerstudio.online/#studio"}}]}</script>
 </head>
 <body>
@@ -131,13 +132,14 @@
       <h2>LET'S MAKE<br><span>IT MATTER.</span></h2>
       <div class="contact-grid">
         <div class="contact-direct"><span class="contact-direct__index">DIRECT CHANNEL / 01</span><p>Є ідея, продукт або процес, якому потрібен напрям?</p><a href="mailto:studiowiter@outlook.com"><small>EMAIL</small><strong>STUDIOWITER@OUTLOOK.COM</strong><i>↗</i></a><a href="https://t.me/abstractually" target="_blank" rel="noopener"><small>TELEGRAM</small><strong>@ABSTRACTUALLY</strong><i>↗</i></a></div>
-        <form class="brief-form" id="contactForm">
+        <form class="brief-form" id="contactForm" action="https://contact.witerstudio.online/submit" method="post">
           <fieldset class="project-type full"><legend>ОБЕРІТЬ КАТЕГОРІЮ</legend><div><label><input type="radio" name="category" value="Website" checked><span>01 / WEBSITE</span></label><label><input type="radio" name="category" value="Telegram bot"><span>02 / TELEGRAM BOT</span></label><label><input type="radio" name="category" value="Automation"><span>03 / AUTOMATION</span></label><label><input type="radio" name="category" value="Art direction"><span>04 / ART DIRECTION</span></label><label><input type="radio" name="category" value="Other"><span>05 / OTHER</span></label></div></fieldset>
           <label><span>ІМ'Я / КОМПАНІЯ</span><input name="name" autocomplete="name" required placeholder="Як до вас звертатись?"></label>
           <label><span>EMAIL</span><input type="email" name="email" autocomplete="email" required placeholder="hello@company.com"></label>
           <label class="full form-select"><span>БАЖАНИЙ СТАРТ</span><select name="timeline"><option value="As soon as possible">Якомога швидше</option><option value="Within 1–2 months">Протягом 1–2 місяців</option><option value="Within 3+ months">Через 3+ місяці</option><option value="Not decided">Ще не визначено</option></select></label>
           <label class="full"><span>ПРО ЩО ПРОЄКТ?</span><textarea name="message" rows="3" required placeholder="Контекст, цілі, строки..."></textarea></label>
-          <button class="submit magnetic" type="submit"><span>ПІДГОТУВАТИ ЛИСТ</span><i>↗</i></button>
+          <label class="form-trap" aria-hidden="true"><span>WEBSITE</span><input name="website" tabindex="-1" autocomplete="off"></label>
+          <button class="submit magnetic" type="submit"><span>НАДІСЛАТИ ЗАПИТ</span><i>↗</i></button>
           <p class="form-status" id="formStatus" role="status"></p>
         </form>
       </div>
@@ -150,19 +152,6 @@
     <nav><a href="https://www.instagram.com/vitthegrandfather" target="_blank" rel="noopener">INSTAGRAM</a><a href="https://www.linkedin.com/in/vitalii-chursanov/" target="_blank" rel="noopener">LINKEDIN</a></nav>
   </footer>
 
-  <div class="case-modal" id="caseModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="caseModalTitle">
-    <button class="case-modal__close" type="button" aria-label="Закрити кейс">×</button>
-    <div class="case-modal__media"><div class="case-modal__visual-code" id="caseModalVisualCode">W/01</div><img id="caseModalImage" src="" alt=""><span class="case-modal__media-label">CONCEPT / <b id="caseModalMediaYear">2026</b></span></div>
-    <div class="case-modal__content">
-      <div class="case-modal__index">SELECTED CONCEPT / <span id="caseModalNumber">01</span></div>
-      <h2 id="caseModalTitle"></h2><p id="caseModalDescription"></p>
-      <div class="case-modal__story"><div><span>ЗАВДАННЯ</span><p id="caseModalBrief"></p></div><div><span>КЛЮЧОВІ РІШЕННЯ</span><ul id="caseModalFeatures"></ul></div></div>
-      <div class="case-modal__tech"><span>ВИКОРИСТАНО</span><div id="caseModalTech"></div></div>
-      <div class="case-modal__meta"><div><span>ROLE</span><strong id="caseModalRole"></strong></div><div><span>YEAR</span><strong id="caseModalYear"></strong></div></div>
-      <a class="case-modal__link magnetic" id="caseModalLink" href="#" target="_blank" rel="noopener"><span>ПЕРЕГЛЯНУТИ КОНЦЕПТ</span><i>↗</i></a>
-    </div>
-  </div>
-
-  <script defer src="js/main.js?v=504"></script>
+  <script defer src="js/main.js?v=505"></script>
 </body>
 </html>
