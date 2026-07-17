@@ -3,6 +3,31 @@
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
   const KEYS = ['witer_projects', 'witer_messages', 'witer_texts', 'witer_settings'];
+  const API_URL = 'https://contact.witerstudio.online';
+  let adminToken = sessionStorage.getItem('witer_admin_token') || '';
+  let messagesCache = [];
+
+  async function api(path, options = {}) {
+    const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+    if (adminToken) headers.Authorization = `Bearer ${adminToken}`;
+    const response = await fetch(`${API_URL}${path}`, { ...options, headers });
+    const payload = await response.json().catch(() => ({}));
+    if (response.status === 401 && path !== '/admin/login') {
+      sessionStorage.removeItem('witer_logged_in');
+      sessionStorage.removeItem('witer_admin_token');
+      adminToken = '';
+      throw new Error('Сесія завершилась. Увійдіть повторно.');
+    }
+    if (!response.ok) throw new Error(payload.error || 'Помилка сервера');
+    return payload;
+  }
+
+  async function remoteLogin(password) {
+    const payload = await api('/admin/login', { method: 'POST', body: JSON.stringify({ password }) });
+    adminToken = payload.token;
+    sessionStorage.setItem('witer_admin_token', adminToken);
+    sessionStorage.setItem('witer_logged_in', 'true');
+  }
 
   function hashStr(value) { let hash = 0; for (let i = 0; i < value.length; i++) hash = ((hash << 5) - hash + value.charCodeAt(i)) | 0; return `h_${Math.abs(hash).toString(36)}`; }
   function getData(key, fallback) { try { const value = localStorage.getItem(key); return value === null ? fallback : JSON.parse(value); } catch { return fallback; } }
@@ -94,34 +119,34 @@
     loadDashboard(); updateDate();
   }
   function initAuth() {
-    const hasPassword = Boolean(getData('witer_password', ''));
-    if (sessionStorage.getItem('witer_logged_in') === 'true' && hasPassword) return showDashboard();
-    loginScreen.hidden = !hasPassword;
-    setupScreen.hidden = hasPassword;
+    if (sessionStorage.getItem('witer_logged_in') === 'true' && adminToken) return showDashboard();
+    loginScreen.hidden = false;
+    setupScreen.hidden = true;
     dashboard.hidden = true;
   }
-  $('#loginForm').addEventListener('submit', event => {
+  $('#loginForm').addEventListener('submit', async event => {
     event.preventDefault();
     if (loginAttempts.count >= 5 && Date.now() - loginAttempts.ts < 300000) return showToast('Забагато спроб. Спробуйте через 5 хвилин.', true);
     const password = $('#loginPassword').value;
-    if (hashStr(password) === getData('witer_password', '')) {
-      sessionStorage.setItem('witer_logged_in', 'true');
+    try {
+      await remoteLogin(password);
+      setData('witer_password', hashStr(password), false);
       loginAttempts = { count: 0, ts: 0 }; setData('witer_login_attempts', loginAttempts, false);
       showDashboard();
-    } else {
+    } catch (error) {
       loginAttempts = { count: loginAttempts.count + 1, ts: Date.now() }; setData('witer_login_attempts', loginAttempts, false);
-      showToast('Пароль не підходить.', true);
+      showToast(error.message === 'Invalid password' ? 'Пароль не підходить.' : error.message, true);
     }
   });
-  $('#setupForm').addEventListener('submit', event => {
+  $('#setupForm').addEventListener('submit', async event => {
     event.preventDefault(); const password = $('#setupPassword').value;
     if (password.length < 6) return showToast('Пароль має містити щонайменше 6 символів.', true);
-    setData('witer_password', hashStr(password)); sessionStorage.setItem('witer_logged_in', 'true'); showDashboard(); showToast('Доступ створено. Ласкаво просимо!');
+    try { await remoteLogin(password); setData('witer_password', hashStr(password), false); showDashboard(); } catch (error) { showToast(error.message, true); }
   });
   $$('.password-toggle').forEach(button => button.addEventListener('click', () => {
     const input = $('input', button.parentElement); const visible = input.type === 'text'; input.type = visible ? 'password' : 'text'; button.textContent = visible ? 'Показати' : 'Сховати';
   }));
-  $('#logoutBtn').addEventListener('click', () => { sessionStorage.removeItem('witer_logged_in'); location.reload(); });
+  $('#logoutBtn').addEventListener('click', () => { sessionStorage.removeItem('witer_logged_in'); sessionStorage.removeItem('witer_admin_token'); location.reload(); });
 
   const tabMeta = { overview: ['Огляд', 'CONTROL ROOM / 01'], texts: ['Тексти', 'CONTENT / 02'], projects: ['Проєкти', 'PORTFOLIO / 03'], messages: ['Повідомлення', 'INBOX / 04'], settings: ['Налаштування', 'SYSTEM / 05'] };
   function goToTab(name) {
@@ -129,7 +154,7 @@
     $$('.tab').forEach(tab => tab.classList.toggle('active', tab.id === `tab-${name}`));
     $('#pageTitle').textContent = tabMeta[name][0]; $('#pageEyebrow').textContent = tabMeta[name][1];
     closeSidebar(); window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (name === 'messages') loadAllMessages();
+    if (name === 'messages') loadAllMessages('', true);
   }
   $$('.sidebar__link[data-tab]').forEach(link => link.addEventListener('click', () => goToTab(link.dataset.tab)));
   $$('[data-go]').forEach(button => button.addEventListener('click', () => goToTab(button.dataset.go)));
@@ -140,11 +165,11 @@
 
   function updateDate() { $('#currentDate').textContent = new Intl.DateTimeFormat('uk-UA', { day: '2-digit', month: 'long', year: 'numeric' }).format(new Date()); }
   function loadDashboard() {
-    const projects = getData('witer_projects', []), messages = getData('witer_messages', []);
-    $('#statVisits').textContent = getData('witer_visits', 0); $('#statMessages').textContent = messages.length; $('#statProjects').textContent = projects.length;
-    $('#navProjects').textContent = projects.length; $('#navMessages').textContent = messages.length; $('#unreadLabel').textContent = messages.length === 1 ? 'нове повідомлення' : 'нових повідомлень';
+    const projects = getData('witer_projects', []);
+    $('#statVisits').textContent = getData('witer_visits', 0); $('#statMessages').textContent = '—'; $('#statProjects').textContent = projects.length;
+    $('#navProjects').textContent = projects.length; $('#navMessages').textContent = '—'; $('#unreadLabel').textContent = 'нових повідомлень';
     const recent = $('#recentMessages');
-    recent.innerHTML = messages.length ? messages.slice(-3).reverse().map(messageTemplate).join('') : '<div class="empty">Нових повідомлень поки немає</div>';
+    recent.innerHTML = '<div class="empty">Завантаження повідомлень…</div>';
     loadTexts(); loadProjects(); loadAllMessages(); loadSettings();
   }
 
@@ -180,14 +205,48 @@
   function editProject(id) { const project = withProjectDetails(getData('witer_projects', []).find(item => item.id === id) || {}); if (!project.id) return; editingProjectId = id; $('#projectFormTitle').textContent = 'Редагувати проєкт'; $('#projName').value = project.name || ''; $('#projNameEn').value = project.nameEn || ''; $('#projDesc').value = project.desc || ''; $('#projDescEn').value = project.descEn || ''; $('#projBrief').value = project.brief || ''; $('#projBriefEn').value = project.briefEn || ''; $('#projFeatures').value = (project.features || []).join('\n'); $('#projFeaturesEn').value = (project.featuresEn || []).join('\n'); $('#projTech').value = (project.tech || []).join('\n'); $('#projStack').value = project.stack || ''; $('#projLink').value = project.link || ''; $('#projRole').value = project.role || ''; $('#projYear').value = project.year || ''; $('#projEditId').value = id; const preview = $('#projImagePreview'); preview.src = project.image || ''; preview.classList.toggle('has-image', Boolean(project.image)); openProjectForm(); }
   function deleteProject(id) { if (!confirm('Видалити цей проєкт?')) return; setData('witer_projects', getData('witer_projects', []).filter(item => item.id !== id)); loadDashboard(); showToast('Проєкт видалено.'); }
 
-  function messageTemplate(message, index = '') { const name = esc(message.name || 'Без імені'); const initials = name.split(/\s+/).slice(0,2).map(part => part[0]).join('').toUpperCase(); return `<article class="message-card"><span class="message-card__avatar">${initials || 'W'}</span><div><p class="message-card__name">${name}</p><p class="message-card__email">${esc(message.email || '')}</p><p class="message-card__text">${esc(message.message || '')}</p></div><div class="message-card__side"><span class="message-card__date">${esc(message.date || '')}</span>${index !== '' ? `<button class="message-card__delete" type="button" data-delete-message="${index}" aria-label="Видалити">×</button>` : ''}</div></article>`; }
-  function loadAllMessages(query = '') { const messages = getData('witer_messages', []); const filtered = messages.map((message, index) => ({ message, index })).filter(({ message }) => `${message.name} ${message.email} ${message.message}`.toLowerCase().includes(query.toLowerCase())); $('#messageCount').textContent = `${filtered.length} повідомлень`; $('#navMessages').textContent = messages.length; $('#allMessages').innerHTML = filtered.length ? filtered.reverse().map(({ message, index }) => messageTemplate(message, index)).join('') : '<div class="empty">Нічого не знайдено</div>'; $$('[data-delete-message]').forEach(button => button.addEventListener('click', () => { const items = getData('witer_messages', []); items.splice(Number(button.dataset.deleteMessage), 1); setData('witer_messages', items); loadDashboard(); showToast('Повідомлення видалено.'); })); }
-  $('#messageSearch').addEventListener('input', event => loadAllMessages(event.target.value.trim()));
-  $('#clearMessages').addEventListener('click', () => { if (!getData('witer_messages', []).length) return showToast('Список уже порожній.'); if (confirm('Очистити всі повідомлення без можливості відновлення?')) { setData('witer_messages', []); loadDashboard(); showToast('Повідомлення очищено.'); } });
+  function messageTemplate(message, withDelete = false) {
+    const name = esc(message.name || 'Без імені');
+    const initials = name.split(/\s+/).slice(0,2).map(part => part[0]).join('').toUpperCase();
+    const date = message.created_at ? new Intl.DateTimeFormat('uk-UA', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(message.created_at)) : '';
+    const meta = [message.category, message.timeline].filter(Boolean).map(esc).join(' / ');
+    return `<article class="message-card${message.is_read ? '' : ' is-unread'}"><span class="message-card__avatar">${initials || 'W'}</span><div><p class="message-card__name">${name}</p><p class="message-card__email">${esc(message.email || '')}${meta ? ` · ${meta}` : ''}</p><p class="message-card__text">${esc(message.message || '')}</p></div><div class="message-card__side"><span class="message-card__date">${esc(date)}</span>${withDelete ? `<button class="message-card__delete" type="button" data-delete-message="${message.id}" aria-label="Видалити">×</button>` : ''}</div></article>`;
+  }
+  function renderMessages(query = '') {
+    const normalized = query.toLowerCase();
+    const filtered = messagesCache.filter(message => `${message.name} ${message.email} ${message.category} ${message.timeline} ${message.message}`.toLowerCase().includes(normalized));
+    const unread = messagesCache.filter(message => !message.is_read).length;
+    $('#messageCount').textContent = `${filtered.length} повідомлень`;
+    $('#navMessages').textContent = unread || messagesCache.length;
+    $('#statMessages').textContent = messagesCache.length;
+    $('#unreadLabel').textContent = unread === 1 ? 'нове повідомлення' : 'нових повідомлень';
+    $('#allMessages').innerHTML = filtered.length ? filtered.map(message => messageTemplate(message, true)).join('') : '<div class="empty">Нічого не знайдено</div>';
+    $('#recentMessages').innerHTML = messagesCache.length ? messagesCache.slice(0, 3).map(message => messageTemplate(message)).join('') : '<div class="empty">Нових повідомлень поки немає</div>';
+    $$('[data-delete-message]').forEach(button => button.addEventListener('click', async () => {
+      try { await api(`/admin/messages/${button.dataset.deleteMessage}`, { method: 'DELETE' }); await loadAllMessages('', true); showToast('Повідомлення видалено.'); } catch (error) { showToast(error.message, true); }
+    }));
+  }
+  async function loadAllMessages(query = '', refresh = true) {
+    try {
+      if (refresh || !messagesCache.length) messagesCache = (await api('/admin/messages')).messages || [];
+      renderMessages(query);
+    } catch (error) {
+      $('#allMessages').innerHTML = `<div class="empty">${esc(error.message)}</div>`;
+      $('#recentMessages').innerHTML = `<div class="empty">${esc(error.message)}</div>`;
+      showToast(error.message, true);
+      if (!adminToken) setTimeout(() => location.reload(), 800);
+    }
+  }
+  $('#messageSearch').addEventListener('input', event => renderMessages(event.target.value.trim()));
+  $('#clearMessages').addEventListener('click', async () => {
+    if (!messagesCache.length) return showToast('Список уже порожній.');
+    if (!confirm('Очистити всі повідомлення без можливості відновлення?')) return;
+    try { await api('/admin/messages', { method: 'DELETE' }); await loadAllMessages('', true); showToast('Повідомлення очищено.'); } catch (error) { showToast(error.message, true); }
+  });
 
   function loadSettings() { $('#settingsEmail').value = getData('witer_settings', {}).email || ''; updateLastUpdated(); }
   function updateLastUpdated() { const value = getData('witer_last_updated', null); $('#lastUpdated').textContent = value ? new Intl.DateTimeFormat('uk-UA', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(value)) : '—'; }
-  $('#saveSettings').addEventListener('click', () => { const password = $('#newPassword').value; if (password && password.length < 6) return showToast('Новий пароль має містити мінімум 6 символів.', true); if (password) { setData('witer_password', hashStr(password)); $('#newPassword').value = ''; } setData('witer_settings', { ...getData('witer_settings', {}), email: $('#settingsEmail').value.trim() }); updateLastUpdated(); showToast('Налаштування збережено.'); });
+  $('#saveSettings').addEventListener('click', () => { setData('witer_settings', { ...getData('witer_settings', {}), email: $('#settingsEmail').value.trim() }); updateLastUpdated(); showToast('Налаштування збережено.'); });
   function exportData() { const payload = { version: 1, exportedAt: new Date().toISOString() }; KEYS.forEach(key => payload[key] = getData(key, key.endsWith('s') ? [] : {})); const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const anchor = document.createElement('a'); anchor.href = url; anchor.download = `witer-backup-${new Date().toISOString().slice(0,10)}.json`; anchor.click(); URL.revokeObjectURL(url); showToast('Резервну копію завантажено.'); }
   $('#exportData').addEventListener('click', exportData); $('#backupQuick').addEventListener('click', exportData);
   $('#importData').addEventListener('change', async event => { const file = event.target.files[0]; if (!file) return; try { const payload = JSON.parse(await file.text()); if (!payload.version) throw new Error(); if (!confirm('Замінити поточні локальні дані даними з backup?')) return; KEYS.forEach(key => { if (payload[key] !== undefined) setData(key, payload[key]); }); loadDashboard(); showToast('Дані успішно відновлено.'); } catch { showToast('Не вдалося прочитати цей backup-файл.', true); } finally { event.target.value = ''; } });

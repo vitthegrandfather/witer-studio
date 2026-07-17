@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/admin.css?v=500">
+  <link rel="stylesheet" href="css/admin.css?v=501">
 </head>
 <body>
   <div class="auth" id="loginScreen">
@@ -24,7 +24,7 @@
         <label class="field"><span>Пароль</span><span class="password-wrap"><input type="password" id="loginPassword" autocomplete="current-password" placeholder="Введіть пароль" required><button type="button" class="password-toggle" aria-label="Показати пароль">Показати</button></span></label>
         <button type="submit" class="primary-btn"><span>Увійти</span><i>→</i></button>
       </form>
-      <small>Дані адмін-панелі зберігаються локально у цьому браузері.</small>
+      <small>Захищений серверний доступ до панелі WITER.</small>
     </div>
   </div>
 
@@ -119,11 +119,11 @@
 
       <section class="tab" id="tab-settings">
         <div class="section-intro"><div><span>SYSTEM</span><h2>Налаштування</h2><p>Доступ, контакти та резервна копія локальних даних.</p></div></div>
-        <div class="settings-grid"><section class="panel settings-card"><div class="panel__head"><div><span>SECURITY</span><h3>Доступ</h3></div></div><div class="form-stack"><label class="field"><span>Новий пароль</span><input type="password" id="newPassword" minlength="6" placeholder="Залиште порожнім без змін"></label><label class="field"><span>Email для повідомлень</span><input type="email" id="settingsEmail" placeholder="studio@example.com"></label><button class="primary-btn compact" id="saveSettings"><span>Зберегти</span><i>✓</i></button></div></section><section class="panel settings-card"><div class="panel__head"><div><span>DATA</span><h3>Резервна копія</h3></div></div><p>Завантажте всі проєкти, тексти, повідомлення та налаштування одним JSON-файлом.</p><div class="backup-actions"><button class="secondary-btn" id="exportData">Завантажити backup <i>↓</i></button><label class="secondary-btn">Відновити з файлу <i>↑</i><input type="file" id="importData" accept="application/json"></label></div><small>Останнє локальне оновлення: <span id="lastUpdated">—</span></small></section></div>
+        <div class="settings-grid"><section class="panel settings-card"><div class="panel__head"><div><span>SECURITY</span><h3>Доступ</h3></div></div><div class="form-stack"><label class="field"><span>Пароль</span><input type="password" id="newPassword" value="••••••••" disabled aria-label="Пароль керується сервером"></label><label class="field"><span>Email для повідомлень</span><input type="email" id="settingsEmail" placeholder="studio@example.com"></label><button class="primary-btn compact" id="saveSettings"><span>Зберегти</span><i>✓</i></button></div></section><section class="panel settings-card"><div class="panel__head"><div><span>DATA</span><h3>Резервна копія</h3></div></div><p>Завантажте локальні проєкти, тексти та налаштування одним JSON-файлом. Повідомлення надійно зберігаються у Cloudflare D1.</p><div class="backup-actions"><button class="secondary-btn" id="exportData">Завантажити backup <i>↓</i></button><label class="secondary-btn">Відновити з файлу <i>↑</i><input type="file" id="importData" accept="application/json"></label></div><small>Останнє локальне оновлення: <span id="lastUpdated">—</span></small></section></div>
       </section>
     </main>
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="js/admin.js?v=509"></script>
+  <script src="js/admin.js?v=510"></script>
 </body>
 </html>

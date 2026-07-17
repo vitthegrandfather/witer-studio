@@ -14,3 +14,8 @@ CONTACT_FROM = "contact@witerstudio.online"
 [[send_email]]
 name = "EMAIL"
 destination_address = "studiowiter@outlook.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "witer-contact-messages"
+database_id = "e1b40cbf-7605-414a-b646-40b740b544a1"

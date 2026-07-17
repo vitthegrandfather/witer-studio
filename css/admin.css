@@ -32,4 +32,5 @@
 .panel__head span,.section-intro>div>span,.project-card__stack,.quick-actions>button i,.message-card__email{color:var(--ink)}
 .project-card__image img{filter:grayscale(1) contrast(1.1)}.project-card:hover .project-card__image img{filter:grayscale(1) contrast(1.25)}
 .message-card__avatar{border-radius:0;background:var(--ink);color:var(--bg)}
+.message-card.is-unread{border-left:3px solid var(--ink)}
 .toast{border:1px solid var(--line)}
