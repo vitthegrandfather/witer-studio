@@ -185,6 +185,36 @@
     setTimeout(reveal, 1900);
   }
 
+  function initHeroWordmark() {
+    const svg = $('.hero-wordmark__svg');
+    if (!svg) return;
+    const letters = $$('[data-wordmark-letter]', svg);
+    if (letters.length !== 5) return;
+    const layout = () => {
+      letters.forEach(letter => letter.setAttribute('x', '0'));
+      let cursor = 2;
+      const opticalGap = 7;
+      letters.forEach(letter => {
+        const box = letter.getBBox();
+        letter.setAttribute('x', String(cursor - box.x));
+        const placed = letter.getBBox();
+        cursor = placed.x + placed.width + opticalGap;
+      });
+      const boxes = letters.map(letter => letter.getBBox());
+      const minY = Math.min(...boxes.map(box => box.y));
+      const maxY = Math.max(...boxes.map(box => box.y + box.height));
+      const width = cursor - opticalGap + 2;
+      const height = maxY - minY + 4;
+      svg.setAttribute('viewBox', `0 ${minY - 2} ${width} ${height}`);
+      const ratio = String(width / height);
+      svg.style.setProperty('--wordmark-ratio', ratio);
+      svg.parentElement?.style.setProperty('--wordmark-ratio', ratio);
+      svg.classList.add('is-laid-out');
+    };
+    if (document.fonts?.ready) document.fonts.ready.then(() => requestAnimationFrame(layout));
+    else requestAnimationFrame(layout);
+  }
+
   function initHeaderAndProgress() {
     const header = $('#header'); const progress = $('#pageProgress'); let previous = scrollY;
     const update = () => {
@@ -430,6 +460,7 @@
   applyPersonalTextOverrides();
   renderProjects();
   initLoader();
+  initHeroWordmark();
   initHeroEntrance();
   initHeaderAndProgress();
   initMenu();
