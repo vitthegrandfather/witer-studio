@@ -140,6 +140,10 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
   filter:grayscale(1) contrast(1.08) brightness(1.12);
   text-shadow:0 0 20px rgba(255,255,255,.045);
 }
+.hero-title--witer .hero-title__line i>span{
+  display:inline-block;
+  margin-left:-.026em;
+}
 .hero-title--witer .hero-title__line em{
   color:transparent;
   -webkit-text-fill-color:transparent;
