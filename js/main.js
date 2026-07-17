@@ -174,6 +174,31 @@
     updateClock(); setInterval(updateClock, 1000);
   }
 
+  function initHeroMedia() {
+    const hero = $('.hero');
+    const video = hero ? $('.hero-media__video', hero) : null;
+    if (!hero) return;
+    if (reducedMotion) {
+      video?.pause();
+      return;
+    }
+    let frame = 0;
+    const update = () => {
+      const distance = Math.max(innerHeight, hero.offsetHeight) * .82;
+      const progress = Math.max(0, Math.min(1, scrollY / distance));
+      hero.style.setProperty('--hero-exit', progress.toFixed(3));
+      frame = 0;
+    };
+    const requestUpdate = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    addEventListener('scroll', requestUpdate, { passive: true });
+    addEventListener('resize', requestUpdate, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+      if (!video) return;
+      if (document.hidden) video.pause(); else video.play().catch(() => {});
+    });
+  }
+
   function initMenu() {
     const toggle = $('#menuToggle'); const menu = $('#mobileMenu'); if (!toggle || !menu) return;
     const close = () => { toggle.classList.remove('is-open'); toggle.setAttribute('aria-expanded', 'false'); menu.classList.remove('is-open'); menu.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); };
@@ -330,6 +355,7 @@
   renderProjects();
   initLoader();
   initHeaderAndProgress();
+  initHeroMedia();
   initMenu();
   initActiveNavigation();
   initReveal();
