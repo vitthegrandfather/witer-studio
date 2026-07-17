@@ -21,9 +21,13 @@ const json = (payload, status = 200, origin = '', extraHeaders = {}) => new Resp
     ...corsHeaders(origin),
     'Cache-Control': 'no-store, max-age=0',
     'Pragma': 'no-cache',
+    'Content-Security-Policy': "default-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'",
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': 'DENY',
     'Referrer-Policy': 'no-referrer',
+    'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+    'Cross-Origin-Resource-Policy': 'same-site',
+    'X-Robots-Tag': 'noindex, nofollow, noarchive, nosnippet',
     ...extraHeaders
   }
 });
