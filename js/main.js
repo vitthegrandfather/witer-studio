@@ -139,7 +139,7 @@
   function initLoader() {
     const loader = $('#loader');
     if (!loader) return;
-    const key = 'witer_loader_seen_v1';
+    const key = 'witer_loader_seen_v2';
     try {
       if (localStorage.getItem(key)) {
         loader.classList.add('is-done');
@@ -150,14 +150,39 @@
     } catch (_) {}
     document.body.classList.add('loading');
     const counter = $('#loaderCount');
+    const startedAt = performance.now();
+    let completed = false;
     let value = 0;
-    const tick = setInterval(() => { value = Math.min(99, value + Math.ceil(Math.random() * 14)); if (counter) counter.textContent = String(value).padStart(2, '0'); }, 75);
+    const tick = setInterval(() => { value = Math.min(96, value + Math.ceil(Math.random() * 11)); if (counter) counter.textContent = String(value).padStart(2, '0'); }, 70);
     const finish = () => {
-      clearInterval(tick); if (counter) counter.textContent = '100';
-      setTimeout(() => { loader.classList.add('is-done'); document.body.classList.remove('loading'); }, reducedMotion ? 0 : 170);
+      if (completed) return;
+      completed = true;
+      const delay = reducedMotion ? 0 : Math.max(0, 1100 - (performance.now() - startedAt));
+      setTimeout(() => {
+        clearInterval(tick);
+        if (counter) counter.textContent = '100';
+        loader.classList.add('is-done');
+        document.body.classList.remove('loading');
+        dispatchEvent(new CustomEvent('witer:loader-complete'));
+      }, delay);
     };
     if (document.readyState === 'complete') finish(); else addEventListener('load', finish, { once: true });
-    setTimeout(finish, 1600);
+    setTimeout(finish, 1450);
+  }
+
+  function initHeroEntrance() {
+    const hero = $('.hero');
+    if (!hero) return;
+    hero.classList.add('hero-enter');
+    let started = false;
+    const reveal = () => {
+      if (started) return;
+      started = true;
+      requestAnimationFrame(() => requestAnimationFrame(() => hero.classList.add('is-ready')));
+    };
+    if (reducedMotion || !document.body.classList.contains('loading')) reveal();
+    else addEventListener('witer:loader-complete', reveal, { once: true });
+    setTimeout(reveal, 1900);
   }
 
   function initHeaderAndProgress() {
@@ -405,6 +430,7 @@
   applyPersonalTextOverrides();
   renderProjects();
   initLoader();
+  initHeroEntrance();
   initHeaderAndProgress();
   initMenu();
   initActiveNavigation();
