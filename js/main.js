@@ -331,7 +331,6 @@
   initActiveNavigation();
   initReveal();
   initMotion();
-  initHeroIdentity();
   initTicker();
   initPageTransitions();
   initContact();

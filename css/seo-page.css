@@ -121,3 +121,32 @@
   .work-page .case-meta h3{font-size:21px}
   .work-page .cta{min-height:58svh}
 }
+
+/* 507 / cleaner case-study hero and stronger live-project action */
+.work-page .hero{background-color:var(--black);background-image:none}
+.work-page .round-link{
+  position:relative;
+  width:clamp(210px,17vw,270px);
+  height:76px;
+  padding:0 24px;
+  border:1px solid var(--white);
+  border-radius:0;
+  background:var(--white);
+  color:var(--black);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  text-align:left;
+  font:600 9px/1.3 var(--mono);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  box-shadow:7px 7px 0 transparent;
+  transition:transform .3s var(--ease),box-shadow .3s var(--ease),background .3s,color .3s;
+}
+.work-page .round-link:after{content:"↗";font:400 27px/1 var(--display)}
+.work-page .round-link:hover{background:var(--black);color:var(--white);transform:translate(-5px,-5px);box-shadow:7px 7px 0 var(--white)}
+@media(max-width:760px){
+  .work-page .hero{background-image:none}
+  .work-page .round-link{width:168px;height:60px;margin:0;padding:0 15px;font-size:7px}
+  .work-page .round-link:after{font-size:21px}
+}

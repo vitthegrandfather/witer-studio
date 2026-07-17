@@ -120,3 +120,51 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
   .footer{grid-template-columns:1fr auto;align-items:end}
   .footer>div{grid-column:1/-1;justify-self:stretch;align-items:center;text-align:center;width:100%;padding-top:20px;border-top:1px solid var(--line)}
 }
+
+/* 507 / liquid chrome identity and unified work posters */
+.hero-title--witer .hero-title__line i b{
+  color:transparent;
+  -webkit-text-fill-color:transparent;
+  background-image:
+    radial-gradient(ellipse at 48% 0%,rgba(255,255,255,.98) 0 4%,rgba(255,255,255,0) 31%),
+    linear-gradient(108deg,#181818 0%,#f7f7f2 11%,#73736f 23%,#fff 35%,#292929 49%,#d7d7d1 63%,#525250 77%,#f8f8f3 91%,#242424 100%);
+  background-size:170% 190%,240% 100%;
+  background-position:50% 20%,0% 50%;
+  -webkit-background-clip:text;
+  background-clip:text;
+  filter:drop-shadow(0 0 1px rgba(255,255,255,.2));
+  animation:liquid-chrome-flow 11s ease-in-out infinite alternate;
+  transform:none!important;
+  transition:none;
+  will-change:background-position;
+}
+.hero-title--witer .hero-title__line i b:nth-child(2){animation-delay:-1.4s}
+.hero-title--witer .hero-title__line i b:nth-child(3){animation-delay:-2.8s}
+.hero-title--witer .hero-title__line i b:nth-child(4){animation-delay:-4.2s}
+.hero-title--witer .hero-title__line i b:nth-child(5){animation-delay:-5.6s}
+.hero-title--witer .hero-title__line i b:after{display:none}
+@keyframes liquid-chrome-flow{
+  0%{background-position:50% 12%,0% 50%}
+  50%{background-position:38% 72%,62% 50%}
+  100%{background-position:62% 25%,100% 50%}
+}
+.projects{gap:clamp(34px,6vw,96px)}
+.project-card,
+.project-card:nth-child(2),
+.project-card:nth-child(3){grid-column:2/span 10;min-height:clamp(540px,56vw,850px);margin-top:0}
+.project-card h3{font-size:clamp(48px,7.2vw,124px)}
+@media(max-width:1100px){
+  .project-card,
+  .project-card:nth-child(2),
+  .project-card:nth-child(3){grid-column:1/-1;min-height:clamp(540px,72vw,790px)}
+}
+@media(max-width:760px){
+  .projects{display:block}
+  .project-card,
+  .project-card:nth-child(2),
+  .project-card:nth-child(3){min-height:132vw;margin:0 0 14px}
+  .project-card h3{font-size:14vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-title--witer .hero-title__line i b{animation:none;background-position:50% 30%,42% 50%}
+}
