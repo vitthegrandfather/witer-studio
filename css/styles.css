@@ -505,3 +505,15 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 @media(prefers-reduced-motion:reduce){
   .loader{transition:none}.hero.hero-enter .hero-top,.hero.hero-enter .hero-identity,.hero.hero-enter .hero-bottom>p,.hero.hero-enter .hero-bottom>.circle-link,.hero.hero-enter .hero-bottom>.hero-signature{opacity:1;transform:none;transition:none}
 }
+
+/* 518 / direct contact shortcuts */
+.hero-top{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:18px}
+.hero-top>span:last-child{justify-self:end}
+.hero-contact{justify-self:center;display:inline-flex;align-items:center;gap:13px;padding:9px 12px;border:1px solid var(--line);color:var(--white);font:600 8px/1 var(--mono);letter-spacing:.08em;transition:background .3s,color .3s,border-color .3s}
+.hero-contact i{font-style:normal;font-size:13px;transition:transform .3s var(--ease)}
+.hero-contact:hover{background:var(--white);color:var(--black);border-color:var(--white)}
+.hero-contact:hover i{transform:translate(3px,3px)}
+@media(max-width:760px){
+  .hero-top{grid-template-columns:minmax(0,1fr) auto;gap:10px}
+  .hero-contact{padding:8px 9px;font-size:7px;gap:8px}
+}

@@ -504,6 +504,24 @@
     });
   }
 
+  function initContactShortcuts() {
+    $$('.desktop-nav').forEach(nav => {
+      if ($('a[href="#contact"]', nav)) return;
+      const link = document.createElement('a');
+      link.href = '#contact';
+      link.textContent = copy('Контакти', 'Contact');
+      nav.appendChild(link);
+    });
+    const heroTop = $('.hero-top');
+    if (heroTop && !$('.hero-contact', heroTop)) {
+      const link = document.createElement('a');
+      link.className = 'hero-contact magnetic';
+      link.href = '#contact';
+      link.innerHTML = '<span>START A PROJECT</span><i>↘</i>';
+      heroTop.insertBefore(link, heroTop.lastElementChild);
+    }
+  }
+
   applyPersonalTextOverrides();
   renderProjects();
   initLoader();
@@ -511,6 +529,7 @@
   initHeroEntrance();
   initHeaderAndProgress();
   initMenu();
+  initContactShortcuts();
   initActiveNavigation();
   initReveal();
   initMotion();
