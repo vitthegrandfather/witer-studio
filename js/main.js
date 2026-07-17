@@ -35,7 +35,7 @@
       featuresEn: ['Four beauty directions and a signature service block', 'Five locations with opening hours and map links', 'Dynamic available slots by date and selected location', 'A clear booking flow without unnecessary steps', 'Validation, duplicate-booking protection and confirmation IDs'],
       tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Native HTTP API', 'JSON storage'],
       stack: 'Art direction · UX/UI · Development', role: 'Concept · Art direction · UX/UI · Development', year: '2026',
-      link: 'https://vitthegrandfather.github.io/salon/', image: '/images/projects/your-salon.jpg'
+      link: 'https://vitthegrandfather.github.io/salon/', image: '/images/projects/beauty-y2k-v2.webp'
     },
     {
       id: 'salon_tattoo', slug: 'tattoo', name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept',
@@ -47,7 +47,7 @@
       featuresEn: ['An editorial work gallery without heavy filtering', 'Individual resident artist profiles with a distinct visual character', 'A clear process, style directions and FAQ before consultation', 'A detailed brief covering style, artist, placement, size and date', 'Availability checks, server-side validation and unique booking IDs'],
       tech: ['Semantic HTML5', 'Responsive CSS', 'Vanilla JavaScript', 'Node.js 18+', 'Availability API', 'JSON storage'],
       stack: 'Strategy · Art direction · UX/UI · Development', role: 'Concept · Strategy · Art direction · UX/UI · Development', year: '2026',
-      link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: '/images/projects/tattoo-salon.jpg'
+      link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: '/images/projects/tattoo-y2k-v2.webp'
     },
     {
       id: 'forma17', slug: 'forma', name: 'FORMA17 / Concept', nameEn: 'FORMA17 / Concept',
@@ -79,7 +79,10 @@
     tech: cleanList(local.tech, base.tech), stack: cleanText(local.stack, base.stack, 180),
     role: cleanText(local.role, base.role, 220), year: cleanText(local.year, base.year, 8),
     link: /^https?:\/\//i.test(local.link || '') ? local.link : base.link,
-    image: local.image ? normalizeImage(local.image) : base.image
+    image: local.image && !(
+      (base.slug === 'beauty' && /(?:^|\/)your-salon\.jpg$/i.test(local.image)) ||
+      (base.slug === 'tattoo' && /(?:^|\/)tattoo-salon\.jpg$/i.test(local.image))
+    ) ? normalizeImage(local.image) : base.image
   });
 
   const localProjects = loadLocal();

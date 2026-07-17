@@ -56,8 +56,8 @@
     };
   };
   const defaultProjects = [
-    withProjectDetails({ id: 'salon_beauty', name: 'Beauty Space / Concept', nameEn: 'Beauty Space / Concept', desc: 'Концепт преміального сайту для beauty-простору.', descEn: 'Premium beauty space website concept.', stack: 'Art direction, UX/UI, Development', link: 'https://vitthegrandfather.github.io/salon/', image: 'images/projects/your-salon.jpg' }),
-    withProjectDetails({ id: 'salon_tattoo', name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept', desc: 'Концепт сайту сучасної тату-студії.', descEn: 'Contemporary tattoo studio website concept.', stack: 'Strategy, UX/UI, Development', link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: 'images/projects/tattoo-salon.jpg' })
+    withProjectDetails({ id: 'salon_beauty', name: 'Beauty Space / Concept', nameEn: 'Beauty Space / Concept', desc: 'Концепт преміального сайту для beauty-простору.', descEn: 'Premium beauty space website concept.', stack: 'Art direction, UX/UI, Development', link: 'https://vitthegrandfather.github.io/salon/', image: 'images/projects/beauty-y2k-v2.webp' }),
+    withProjectDetails({ id: 'salon_tattoo', name: 'Tattoo Studio / Concept', nameEn: 'Tattoo Studio / Concept', desc: 'Концепт сайту сучасної тату-студії.', descEn: 'Contemporary tattoo studio website concept.', stack: 'Strategy, UX/UI, Development', link: 'https://vitthegrandfather.github.io/tattoosalondemo/', image: 'images/projects/tattoo-y2k-v2.webp' })
   ];
   if (!getData('witer_seeded_projects', false)) {
     if (!getData('witer_projects', []).length) setData('witer_projects', defaultProjects);
@@ -72,6 +72,13 @@
   const projectsBeforeDetailsMigration = getData('witer_projects', []);
   const projectsWithDetails = projectsBeforeDetailsMigration.map(withProjectDetails);
   if (JSON.stringify(projectsWithDetails) !== JSON.stringify(projectsBeforeDetailsMigration)) setData('witer_projects', projectsWithDetails);
+  if (!getData('witer_y2k_covers_migrated', false)) {
+    const coverMap = { salon_beauty: 'images/projects/beauty-y2k-v2.webp', salon_tattoo: 'images/projects/tattoo-y2k-v2.webp' };
+    const legacyCover = /(?:^|\/)(?:your-salon|tattoo-salon)\.jpg$/i;
+    const migrated = getData('witer_projects', []).map(project => coverMap[project.id] && legacyCover.test(project.image || '') ? { ...project, image: coverMap[project.id] } : project);
+    setData('witer_projects', migrated);
+    setData('witer_y2k_covers_migrated', true, false);
+  }
   if (!getData('witer_messages', null)) setData('witer_messages', []);
   if (!getData('witer_texts', null)) setData('witer_texts', {});
   if (!getData('witer_settings', null)) setData('witer_settings', { email: 'studiowiter@outlook.com' });
