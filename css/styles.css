@@ -621,3 +621,19 @@ html[lang="uk"] .services-intro>p{font-weight:400;line-height:1.55;letter-spacin
 .footer,
 .loader,
 .page-transition{-webkit-user-select:none;user-select:none}
+
+/* 523 / balanced hero footer */
+.hero-bottom>.hero-signature{
+  display:block;
+  max-width:430px;
+  color:var(--white);
+  font:500 clamp(16px,1.35vw,23px)/1.32 var(--sans);
+  letter-spacing:-.025em;
+  text-align:right;
+}
+html[lang="uk"] .hero-bottom>.hero-signature{font-family:var(--cyr);letter-spacing:-.018em}
+@media(max-width:760px){
+  .hero{min-height:calc(100svh + 28px)}
+  .hero-bottom{transform:translateY(-14px)}
+  .hero-bottom>.hero-signature{display:none}
+}
