@@ -466,6 +466,7 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 .loader__bar i{background:var(--white);box-shadow:0 0 12px rgba(255,255,255,.42);animation-duration:1.1s}
 .hero-title--witer{letter-spacing:-.07em}
 .hero-title--witer .hero-title__line i{display:inline-block;overflow:visible;padding-right:.015em}
+.hero-title--witer .hero-title__line i{-webkit-text-stroke:0;text-rendering:geometricPrecision}
 .hero.hero-enter .hero-top,.hero.hero-enter .hero-bottom>p,.hero.hero-enter .hero-bottom>.circle-link,.hero.hero-enter .hero-bottom>.hero-signature{opacity:0;transform:translate3d(0,10px,0)}
 .hero.hero-enter .hero-identity{opacity:0;transform:translate3d(0,18px,0) scale(.992)}
 .hero.hero-enter.is-ready .hero-top{opacity:1;transform:none;transition:opacity .55s ease,transform .65s var(--ease)}
