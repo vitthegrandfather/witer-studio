@@ -1,4 +1,4 @@
-:root{--black:#050505;--soft:#0b0b0b;--white:#f2f2ed;--grey:#9a9a94;--line:rgba(242,242,237,.22);--line-soft:rgba(242,242,237,.1);--mono:"IBM Plex Mono",monospace;--sans:"Space Grotesk",Arial,sans-serif;--ease:cubic-bezier(.76,0,.24,1)}
+:root{--black:#050505;--soft:#0b0b0b;--white:#f2f2ed;--grey:#9a9a94;--line:rgba(242,242,237,.22);--line-soft:rgba(242,242,237,.1);--mono:"IBM Plex Mono",monospace;--sans:"Space Grotesk",Arial,sans-serif;--cyr:"Manrope","Segoe UI",Arial,sans-serif;--ease:cubic-bezier(.76,0,.24,1)}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;background:var(--black);scrollbar-width:thin;scrollbar-color:var(--white) var(--black)}
 body{background:var(--black);color:var(--white);font-family:var(--sans);font-size:16px;overflow-x:hidden}
@@ -572,3 +572,52 @@ a{color:inherit;text-decoration:none}button,input,textarea{font:inherit;color:in
 @media(max-width:760px) and (prefers-reduced-motion:reduce){
   .hero.hero-enter .hero-film,.hero.hero-enter.is-ready .hero-film{opacity:.48;transform:translate3d(0,-50%,0)}
 }
+
+/* 522 / Ukrainian reading type and intentional text selection */
+html[lang="uk"] .hero-bottom>p,
+html[lang="uk"] .section-head>p,
+html[lang="uk"] .services-intro>p,
+html[lang="uk"] .statement-note p,
+html[lang="uk"] .project-card__foot p,
+html[lang="uk"] .service-row>p,
+html[lang="uk"] .process-card p,
+html[lang="uk"] .about-copy .lead,
+html[lang="uk"] .about-copy>p:not(.lead),
+html[lang="uk"] .contact-direct p,
+html[lang="uk"] .case-modal__content>p,
+html[lang="uk"] .case-modal__story p,
+html[lang="uk"] .case-modal__story li,
+html[lang="uk"] .brief-form input,
+html[lang="uk"] .brief-form textarea,
+html[lang="uk"] .custom-select__trigger strong,
+html[lang="uk"] .custom-select__panel>button span{font-family:var(--cyr)}
+html[lang="uk"] .hero-bottom>p{font-weight:500;line-height:1.32;letter-spacing:-.018em}
+html[lang="uk"] .section-head>p,
+html[lang="uk"] .services-intro>p{font-weight:400;line-height:1.55;letter-spacing:-.012em}
+
+.site-header,
+.mobile-menu__index,
+.hero-top,
+.hero-identity,
+.hero-signature,
+.circle-link,
+.ticker,
+.section-tag,
+.project-card__chrome,
+.project-card__index,
+.project-card__type,
+.service-row>span,
+.service-row>i,
+.process-card>span,
+.process-card>b,
+.inversion-code,
+.inversion-foot,
+.about-media>span,
+.about-data,
+.contact-top,
+.contact-direct__index,
+.project-type legend,
+.brief-form label>span,
+.footer,
+.loader,
+.page-transition{-webkit-user-select:none;user-select:none}

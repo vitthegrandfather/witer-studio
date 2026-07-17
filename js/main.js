@@ -566,7 +566,7 @@
       const link = document.createElement('a');
       link.className = 'hero-contact magnetic';
       link.href = '#contact';
-      link.innerHTML = '<span>START A PROJECT</span><i>↘</i>';
+      link.innerHTML = `<span>${copy('ПОЧАТИ ПРОЄКТ', 'START A PROJECT')}</span><i>↘</i>`;
       heroTop.insertBefore(link, heroTop.lastElementChild);
     }
   }
