@@ -2,6 +2,9 @@
   'use strict';
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isEnglish = document.documentElement.lang === 'en';
+  const clearTransitionLayers = () => document.querySelectorAll('.page-transition').forEach(layer => layer.remove());
+  addEventListener('pagehide', clearTransitionLayers);
+  addEventListener('pageshow', event => { if (event.persisted) clearTransitionLayers(); });
 
   const createTransition = () => {
     const layer = document.createElement('div');
@@ -30,6 +33,7 @@
     requestAnimationFrame(() => layer.classList.add('is-leaving'));
     try { sessionStorage.setItem('witer_case_transition', '1'); } catch (_) {}
     setTimeout(() => { location.href = destination.href; }, 620);
+    setTimeout(() => layer.remove(), 2600);
   });
   const progress = document.querySelector('.page-progress i');
   const updateProgress = () => {

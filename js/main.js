@@ -267,6 +267,9 @@
   }
 
   function initPageTransitions() {
+    const clearLayers = () => $$('.page-transition').forEach(layer => layer.remove());
+    addEventListener('pagehide', clearLayers);
+    addEventListener('pageshow', event => { if (event.persisted) clearLayers(); });
     const createLayer = () => {
       const layer = document.createElement('div');
       layer.className = 'page-transition';
@@ -292,6 +295,7 @@
       requestAnimationFrame(() => layer.classList.add('is-leaving'));
       try { sessionStorage.setItem('witer_case_transition', '1'); } catch (_) {}
       setTimeout(() => { location.href = link.href; }, 620);
+      setTimeout(() => layer.remove(), 2600);
     });
   }
 
